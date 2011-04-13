@@ -1,0 +1,9 @@
+﻿include MANIFEST.in
+include setup.py
+
+recursive-include example *.py
+recursive-include doc *.py *.rst *.html *.png *.txt *.css *.js
+
+global-exclude *~
+global-exclude *.pyc
+global-exclude .svn
