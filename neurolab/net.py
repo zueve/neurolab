@@ -8,21 +8,20 @@ The module contains the basic network architectures
 |      Network Type       |  Function  | Count of|Support train fcn| Error fcn|
 |                         |            | layers  |                 |          |
 +=========================+============+=========+=================+==========+
-| Single-layer perceptron |    newp    |    1    |   TrainDelta    |   SSE    |
+| Single-layer perceptron |    newp    |    1    |   train_delta   |   SSE    |
 +-------------------------+------------+---------+-----------------+----------+
-| Multi-layer perceptron  |   newff    |  more 1 |   TrainGD,      |   SSE    |
-|                         |            |         |   TrainGDM,     |          |
-|                         |            |         |   TrainGDA,     |          |
-|                         |            |         |   TrainGDX*,    |          |
-|                         |            |         |   TrainRprop,   |          |
-|                         |            |         |   TrainRpropM,  |          |
-|                         |            |         |   TrainBFGS,    |          |
-|                         |            |         |   TrainCG       |          |
+| Multi-layer perceptron  |   newff    |  more 1 |   train_gd,     |   SSE    |
+|                         |            |         |   train_gdm,    |          |
+|                         |            |         |   train_gda,    |          |
+|                         |            |         |   train_gdx*,   |          |
+|                         |            |         |   train_rprop,  |          |
+|                         |            |         |   train_bfgs,   |          |
+|                         |            |         |   train_cg      |          |
 +-------------------------+------------+---------+-----------------+----------+
-|    Competitive layer    |    newc    |    1    |   TrainWTA,     |   SAE    |
-|                         |            |         |   TrainCWTA*    |          |
+|    Competitive layer    |    newc    |    1    |   train_wta,    |   SAE    |
+|                         |            |         |   train_cwta*   |          |
 +-------------------------+------------+---------+-----------------+----------+
-|           LVQ           |   newlvq   |    2    |   TrainLVQ      |   MSE    |
+|           LVQ           |   newlvq   |    2    |   train_lvq     |   MSE    |
 +-------------------------+------------+---------+-----------------+----------+
 
 .. note:: \* - defaulf function
