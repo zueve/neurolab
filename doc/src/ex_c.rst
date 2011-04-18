@@ -55,4 +55,4 @@ Plot results::
 	>>> pl.show()
 
 :Result:
-.. image:: _static/classifer.png
+	.. image:: _static/classifer.png

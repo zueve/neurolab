@@ -32,4 +32,4 @@ Aproximation of the 0.5*sin(x)
 	>>> pl.show()
 
 :Result:
-.. image:: _static/ff_sin.png
+	.. image:: _static/ff_sin.png

@@ -1,4 +1,5 @@
-﻿************
+﻿
+************
 Introduction
 ************
 
@@ -7,9 +8,9 @@ To simplify the using of the library, interface is similar to the package of Neu
 The library is based on the package numpy (http://numpy.scipy.org), some learning algorithms are used scipy.optymyze (http://scipy.org).
 
 :Create network:
-Created two-layer network(3-1) with 2-inputs and one output.
-Input layer contains 3 neurons, the output 1 neuron.
-Input range: 0.0, 0.5
+	Created two-layer network(3-1) with 2-inputs and one output.
+	Input layer contains 3 neurons, the output 1 neuron.
+	Input range: 0.0, 0.5
 	>>> import neurolab as nl
 	>>> # create feed forward multilayer perceptron
 	>>> net = nl.net.newff([[0, 0.5], [0, 0.5]], [3, 1])

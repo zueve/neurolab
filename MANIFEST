@@ -1,4 +1,3 @@
-MANIFEST.in
 setup.py
 doc\html\ex_c.html
 doc\html\ex_sin.html
@@ -12,6 +11,8 @@ doc\html\lib.html
 doc\html\py-modindex.html
 doc\html\search.html
 doc\html\searchindex.js
+doc\html\_images\classifer.png
+doc\html\_images\ff_sin.png
 doc\html\_sources\ex_c.txt
 doc\html\_sources\ex_sin.txt
 doc\html\_sources\example.txt
@@ -55,6 +56,11 @@ neurolab\init.py
 neurolab\layer.py
 neurolab\net.py
 neurolab\tool.py
-neurolab\train.py
 neurolab\trans.py
-neurolab\version.py
+neurolab\train\__init__.py
+neurolab\train\delta.py
+neurolab\train\gd.py
+neurolab\train\lvq.py
+neurolab\train\spo.py
+neurolab\train\train.py
+neurolab\train\wta.py
