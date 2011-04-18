@@ -28,7 +28,6 @@ trains = [nl.train.train_gd,
           nl.train.train_gda, 
           nl.train.train_gdx,
           nl.train.train_rprop, 
-          #nl.train.train_rpropm,
           nl.train.train_cg,
           nl.train.train_bfgs,
           ]

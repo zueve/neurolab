@@ -13,7 +13,7 @@ def read(fname):
         return ''
 
 version = __import__('neurolab').__version__
-status = __import__('neurolab').__version__
+status = __import__('neurolab').__status__
 
 setup(name='neurolab',
         version=version,
@@ -22,7 +22,7 @@ setup(name='neurolab',
         author='Zuev Evgenij',
         author_email='zueves@gmail.com',
         url='http://neurolab.googlecode.com',
-        packages=['neurolab'],
+        packages=['neurolab', 'neurolab.train'],
         scripts=[],
 
         classifiers=(

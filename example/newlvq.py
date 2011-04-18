@@ -32,7 +32,7 @@ target = np.array([[1, 0],
 
 # Create network with 2 layers:4 neurons in input layer(Competitive)
 # and 2 neurons in output layer(liner)
-net = nl.net.newlvq(nl.tool.minmax(input), 4, [.6, .4], 0.1)
+net = nl.net.newlvq(nl.tool.minmax(input), 4, [.6, .4])
 
 # Train network
 error = net.train(input, target, goal=-1)

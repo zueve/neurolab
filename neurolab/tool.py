@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Некоторые вспомогательные функции
+Some helpful tools
 
 """
 import numpy as np
@@ -100,10 +100,8 @@ def np_set(net, np_data):
     >>> x = np_get(net)
     >>> x.fill(100)
     >>> np_set(net, x)
-    >>> net.layers[0].np['w']
-    ... array([[ 100.],
-    ...        [ 100.],
-    ...        [ 100.]])
+    >>> net.layers[0].np['w'].tolist()
+    [[100.0], [100.0], [100.0]]
     
     """
     start = 0
@@ -125,10 +123,8 @@ def np_get_ref(net):
     >>> net = nl.net.newff([[-1, 1]], [3, 1])
     >>> x = np_get_ref(net)
     >>> x.fill(10)
-    >>> net.layers[0].np['w']
-    ... array([[ 10.],
-    ...        [ 10.],
-    ...        [ 10.]])
+    >>> net.layers[0].np['w'].tolist()
+    [[10.0], [10.0], [10.0]]
     
     """
     size = np_size(net)
@@ -141,6 +137,7 @@ def np_get_ref(net):
             l.np[k].shape = v.shape
             st += v.size
     return x
+
 #------------------------------------------------------------
 
 def ff_grad_step(net, out, tar, grad=None):
