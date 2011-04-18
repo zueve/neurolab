@@ -5,7 +5,7 @@ Introduction
 
 NeuroLab - a library of base nueral networks algorithms with flexible network configurations and learning algorithms.
 To simplify the using of the library, interface is similar to the package of Neural Network Toolbox (NNT) of MATLAB (c).
-The library is based on the package numpy (http://numpy.scipy.org), some learning algorithms are used scipy.optymyze (http://scipy.org).
+The library is based on the package numpy (http://numpy.scipy.org), some learning algorithms are used scipy.optymize (http://scipy.org).
 
 :Create network:
 	Created two-layer network(3-1) with 2-inputs and one output.
@@ -28,7 +28,6 @@ The library is based on the package numpy (http://numpy.scipy.org), some learnin
 	...          [0.3, 0.3], 
 	...          [0.3, 0.4], 
 	...          [0.4, 0.4]]
-	>>> 
 	>>> target = [[i[0] + i[1]] for i in input]
 	>>> # Train
 	>>> error = net.train(input, target, epochs=500, goal=0.1)
