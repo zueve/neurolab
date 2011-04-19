@@ -129,7 +129,7 @@ def newc(minmax, cn):
 
 def newlvq(minmax, cn0, pc):
     """
-    Create a learning vector quantization network
+    Create a learning vector quantization (LVQ) network
 
     :Parameters:
         minmax: list ci x 2
@@ -159,10 +159,7 @@ def newlvq(minmax, cn0, pc):
     layer_out.np['w'].fill(0.0)
     inx = np.floor(cn0 * pc.cumsum())
     for n, i in enumerate(inx):
-        if n == 0:
-            st = 0
-        else:
-            st = inx[n - 1]
+        st = 0 if n == 0 else inx[n - 1]
         layer_out.np['w'][n][st:i].fill(1.0)
     net = Net(minmax, cn1, [layer_inp, layer_out],
                             [[-1], [0], [1]], train.train_lvq, error.MSE())
