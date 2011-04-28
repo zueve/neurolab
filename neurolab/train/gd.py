@@ -130,6 +130,7 @@ class TrainGDM(TrainGD):
         self.db = [0] * len(net.layers)
     
     def learn(self, net, grad):
+        #print 'GDM.learn'
         mc = self.mc
         lr = self.lr
         for ln, layer in enumerate(net.layers):
@@ -175,15 +176,17 @@ class TrainGDA(TrainGD):
         self.lr_dec = 0.7
         self.max_perf_inc = 1.04
         self.err = []
-    
-    def calc(self, net, input, target):
+
+    def learn(self, net, grad):
+        #print 'GDA.learn'
         if len(self.err) > 1:
             f = self.err[-1] / self.err[-2]
             if f > self.max_perf_inc:
                 self.lr *= self.lr_dec
             elif f < 1:
                 self.lr *= self.lr_inc
-        return super(TrainGDA, self).calc(net, input, target)
+        super(TrainGDA, self).learn(net, grad)
+        return None
     
     def error(self, *args, **kwargs):
         e = super(TrainGDA, self).error(*args, **kwargs)
@@ -282,9 +285,6 @@ class TrainRprop(TrainGD2):
         self.rate[ind] *= self.rate_inc
         # Sign change
         ind = prod < 0
-        # Back step
-        #self.x[ind] -= self.rate[ind] * np.sign(grad[ind])
-        #grad[ind] *= -1
         self.rate[ind] *= self.rate_dec
         
         self.rate[self.rate > self.rate_max] = self.rate_max
@@ -294,10 +294,40 @@ class TrainRprop(TrainGD2):
         self.grad_prev = grad
         return None
 
-
-        
 class TrainRpropM(TrainRprop):
+    """
+    Resilient Backpropagation Modified
+    (with back-step when grad change sign)
+    :Support networks:
+        newff (multy-layers perceptron)
+    :Parameters:
+        input: array like (l x net.ci)
+            train input patterns
+        target: array like (l x net.co)
+            train target patterns
+        epochs: int (default 500)
+            Number of train epochs
+        show: int (default 100)
+            Print period
+        goal: float (default 0.01)
+            The goal of train
+        lr: float (defaults 0.07)
+            learning rate (init rate)
+        adapt bool (default False)
+            type of learning
+        rate_dec: float (default 0.5)
+            Decrement to weight change
+        rate_inc: float (defaunt 1.2)
+            Increment to weight change
+        rate_min: float (defaunt 1e-9)
+            Minimum performance gradient
+        rate_max: float (defaunt 50)
+            Maximum weight change
+    
+    """
+    
     def learn(self, net, grad):
+    
         prod = grad * self.grad_prev
         # Sign not change
         ind = prod > 0 
@@ -305,14 +335,14 @@ class TrainRpropM(TrainRprop):
         # Sign change
         ind = prod < 0
         # Back step
-        self.x[ind] -= self.rate[ind] * np.sign(self.grad_prev[ind])
+        self.x[ind] -= self.rate[ind] * np.sign(grad[ind])
         grad[ind] *= -1
+        
         self.rate[ind] *= self.rate_dec
         
         self.rate[self.rate > self.rate_max] = self.rate_max
         self.rate[self.rate < self.rate_min] = self.rate_min
         
-        sign = np.sign(grad)
-        self.x -= self.rate * sign
+        self.x -= self.rate * np.sign(grad)
         self.grad_prev = grad
         return None

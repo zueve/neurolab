@@ -260,8 +260,8 @@ class Trainer(object):
         """
         
         # Sets defaults train params
+        self.train_class = Train
         self.defaults = {}
-        self.defaults['Train'] = Train
         self.defaults['goal'] = goal
         self.defaults['show'] = show
         self.defaults['epochs'] = epochs
@@ -277,6 +277,9 @@ class Trainer(object):
         
         self.params = self.defaults.copy()
         self.error = []
+    
+    def __str__(self):
+        return 'Trainer(' + self.params['Train'].__name__ + ')'
             
     def __call__(self, net, input, target=None, **kwargs):
         """
@@ -320,7 +323,7 @@ class Trainer(object):
             if epoch >= self.params['epochs']:
                 raise TrainStop('The maximum number of train epochs is reached')
         
-        train = self.params['Train'](net, *args, **self.params['TrainParams'])
+        train = self.train_class(net, *args, **self.params['TrainParams'])
         Train.__init__(train, epochf, self.params['epochs'])
         self.error = []
         try:
