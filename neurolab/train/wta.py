@@ -10,10 +10,10 @@ import numpy as np
 
 class TrainWTA(Train):
     """ 
-    Winner Take All algoritm
+    Winner Take All algorithm
     
     :Support networks:
-        newc (cohonen layer)
+        newc (Kohonen layer)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -55,10 +55,10 @@ class TrainWTA(Train):
 
 class TrainCWTA(TrainWTA):
     """ 
-    Conscience Winner Take All algoritm
+    Conscience Winner Take All algorithm
     
     :Support networks:
-        newc (cohonen layer)
+        newc (Kohonen layer)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns

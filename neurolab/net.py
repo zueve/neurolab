@@ -24,7 +24,7 @@ The module contains the basic network architectures
 |           LVQ           |   newlvq   |    2    |   train_lvq     |   MSE    |
 +-------------------------+------------+---------+-----------------+----------+
 
-.. note:: \* - defaulf function
+.. note:: \* - default function
 
 """
 

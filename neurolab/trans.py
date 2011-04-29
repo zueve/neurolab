@@ -190,7 +190,7 @@ class Competitive:
     :Returns:
         y : ndarray
             may take the following values: 0, 1
-            1 if is a minimal element of x, esle 0
+            1 if is a minimal element of x, else 0
     :Example:
         >>> f = Competitive()
         >>> f([-5, -0.1, 0, 0.1, 100])

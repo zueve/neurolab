@@ -47,7 +47,7 @@ class Net(object):
             ...            [0],     # - layer 1 reseives the output
             ...                     # signal from the layer 0;
             ...            [1]]     # - the network exit reseives the output
-            ...                     # signal from the layer 1.
+            ...                     # signals from the layer 1.
 
         """
 
@@ -260,26 +260,26 @@ class Trainer(object):
         """
         
         # Sets defaults train params
-        self.train_class = Train
+        self._train_class = Train
         self.defaults = {}
         self.defaults['goal'] = goal
         self.defaults['show'] = show
         self.defaults['epochs'] = epochs
-        self.defaults['TrainParams'] = kwargs
+        self.defaults['train'] = kwargs
         if Train.__init__.__defaults__:
             cnt = Train.__init__.func_code.co_argcount
             names = Train.__init__.func_code.co_varnames
             vals = Train.__init__.__defaults__
             st = cnt - len(vals)
             for k, v in zip(names[st: cnt], vals):
-                if k not in self.defaults['TrainParams']:
-                    self.defaults['TrainParams'][k] = v
+                if k not in self.defaults['train']:
+                    self.defaults['train'][k] = v
         
         self.params = self.defaults.copy()
         self.error = []
     
     def __str__(self):
-        return 'Trainer(' + self.params['Train'].__name__ + ')'
+        return 'Trainer(' + self._train_class.__name__ + ')'
             
     def __call__(self, net, input, target=None, **kwargs):
         """
@@ -302,7 +302,7 @@ class Trainer(object):
             if key in self.params:
                 self.params[key] = kwargs[key]
             else:
-                self.params['TrainParams'][key] = kwargs[key]
+                self.params['process'][key] = kwargs[key]
         
         args = []
         args.append(np.asfarray(input))
@@ -323,7 +323,7 @@ class Trainer(object):
             if epoch >= self.params['epochs']:
                 raise TrainStop('The maximum number of train epochs is reached')
         
-        train = self.train_class(net, *args, **self.params['TrainParams'])
+        train = self._train_class(net, *args, **self.params['train'])
         Train.__init__(train, epochf, self.params['epochs'])
         self.error = []
         try:

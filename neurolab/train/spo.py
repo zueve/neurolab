@@ -45,7 +45,7 @@ class TrainBFGS(TrainSO):
     Using scipy.optimize.fmin_bfgs
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -77,7 +77,7 @@ class TrainCG(TrainSO):
     Using scipy.optimize.fmin_ncg
     
     :Support networks:
-        newff (multy-layers perceptron)  
+        newff (multi-layers perceptron)  
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -107,7 +107,7 @@ class TrainNCG(TrainSO):
     Using scipy.optimize.fmin_ncg
     
     :Support networks:
-        newff (multy-layers perceptron)  
+        newff (multi-layers perceptron)  
     :Parameters:
         input: array like (l x net.ci)
             train input patterns

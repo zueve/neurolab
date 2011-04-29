@@ -9,7 +9,7 @@ Aproximation of the 0.5*sin(x)
 	>>> input = np.linspace(-10, 10, 30).reshape([30,1])
 	>>> target = (np.sin(input) * 0.5)
 
-	>>> # Create network with 2 layers and rendom initialized
+	>>> # Create network with 2 layers and random initialized
 	>>> net = nl.net.newff([[-0.5, 0.5]],[15, 15, 1])
 	>>> # Change train function
 	>>> net.trainf = nl.train.train_bfgs

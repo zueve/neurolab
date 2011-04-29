@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Train algorithm based  gradients algorihms
+Train algorithm based  gradients algorithms
 
 """
 import numpy as np
@@ -12,7 +12,7 @@ class TrainGD(Train):
     Gradient descent backpropagation
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -67,7 +67,7 @@ class TrainGD2(TrainGD):
     (another realization of TrainGD)
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -104,7 +104,7 @@ class TrainGDM(TrainGD):
     Gradient descent with momentum backpropagation
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -145,7 +145,7 @@ class TrainGDA(TrainGD):
     Gradient descent with adaptive learning rate
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -198,7 +198,7 @@ class TrainGDX(TrainGDA, TrainGDM):
     Gradient descent with momentum backpropagation and adaptive lr
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Рarameters:
         input: array like (l x net.ci)
             train input patterns
@@ -238,7 +238,7 @@ class TrainRprop(TrainGD2):
     Resilient Backpropagation
     
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -256,11 +256,11 @@ class TrainRprop(TrainGD2):
             type of learning
         rate_dec: float (default 0.5)
             Decrement to weight change
-        rate_inc: float (defaunt 1.2)
+        rate_inc: float (default 1.2)
             Increment to weight change
-        rate_min: float (defaunt 1e-9)
+        rate_min: float (default 1e-9)
             Minimum performance gradient
-        rate_max: float (defaunt 50)
+        rate_max: float (default 50)
             Maximum weight change
     
     """
@@ -299,7 +299,7 @@ class TrainRpropM(TrainRprop):
     Resilient Backpropagation Modified
     (with back-step when grad change sign)
     :Support networks:
-        newff (multy-layers perceptron)
+        newff (multi-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -317,11 +317,11 @@ class TrainRpropM(TrainRprop):
             type of learning
         rate_dec: float (default 0.5)
             Decrement to weight change
-        rate_inc: float (defaunt 1.2)
+        rate_inc: float (default 1.2)
             Increment to weight change
-        rate_min: float (defaunt 1e-9)
+        rate_min: float (default 1e-9)
             Minimum performance gradient
-        rate_max: float (defaunt 50)
+        rate_max: float (default 50)
             Maximum weight change
     
     """

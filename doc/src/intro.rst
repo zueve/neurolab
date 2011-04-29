@@ -18,7 +18,7 @@ The library is based on the package numpy (http://numpy.scipy.org), some learnin
 
 
 :Train:
-	>>> # Create learning samples
+	>>> # Creates learning samples
 	>>> input = [[0.1, 0.1], 
 	...          [0.1, 0.2], 
 	...          [0.1, 0.3], 
@@ -64,13 +64,12 @@ The library is based on the package numpy (http://numpy.scipy.org), some learnin
 	{'epochs': 500, 
 	 'goal': 0.01, 
 	 'show': 100,
-	 'Train': <class 'neurolab.train.TrainGDX'>, 
-	 'TrainParams': {'adapt': False, 
-					 'lr': 0.01, 
-					 'max_perf_inc': 1.04, 
-					 'mc': 0.90000000000000002, 
-					 'lr_dec': 0.69999999999999996, 
-					 'lr_inc': 1.05}
+	 'train': { 'adapt': False, 
+				'lr': 0.01, 
+				'max_perf_inc': 1.04, 
+				'mc': 0.90000000000000002, 
+				'lr_dec': 0.69999999999999996, 
+				'lr_inc': 1.05}
 	 }
 
 :Save/Load:

@@ -18,6 +18,7 @@ Train algorithms based on spipy.optimize
 ========================================
 .. autofunction:: train_bfgs
 .. autofunction:: train_cg
+.. autofunction:: train_ncg
 
 Train algorithms for LVQ networks
 =================================
@@ -51,6 +52,7 @@ train_rprop = trainer(gd.TrainRprop)
 
 train_bfgs = trainer(spo.TrainBFGS)
 train_cg = trainer(spo.TrainCG)
+train_ncg = trainer(spo.TrainNCG)
 
 train_wta = trainer(wta.TrainWTA)
 train_cwta = trainer(wta.TrainCWTA)
