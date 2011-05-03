@@ -124,3 +124,35 @@ class SAE:
         """
         d = np.sign(e)
         return d
+
+
+class MAE:
+    """ 
+    Mean absolute error function
+    
+    :Parameters:
+        e: ndarray
+            current errors: target - output
+    :Returns:
+        v: float
+            Error value
+    """
+    
+    def __call__(self, e):
+        v = np.sum(np.abs(e)) / e.size
+        return v
+    
+    def deriv(self, e):
+        """
+        Derivative of SAE error function
+        
+        :Parameters:
+            e: ndarray
+                current errors: target - output
+        :Returns:
+            d: ndarray
+                Derivative: dE/d_out
+
+        """
+        d = np.sign(e) / e.size
+        return d
