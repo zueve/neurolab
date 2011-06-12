@@ -1,24 +1,22 @@
 ﻿""" Setup file for neurolab package """
 
 from distutils.core import setup
-import sys
 import os
-
 
 def read(fname):
     try:
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
     except IOError:
         return ''
 
-version = __import__('neurolab').__version__
-status = __import__('neurolab').__status__
+nl = __import__('neurolab')
+version = nl.__version__
+status = nl.__status__
 
 setup(name='neurolab',
         version=version,
         description='Simple and powerfull neural network library for python',
-        long_description = read('doc/src/intro.rst'),
+        long_description = nl.__doc__,
         author='Zuev Evgenij',
         author_email='zueves@gmail.com',
         url='http://neurolab.googlecode.com',

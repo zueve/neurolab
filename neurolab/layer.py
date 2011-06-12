@@ -69,7 +69,7 @@ class Competitive(Layer):
         self.transf = trans.Competitive()
         self.initf = init.midpoint
         self.out_minmax = np.array([self.transf.out_minmax])
-        
+        self.np['conscience'].fill(1.0)
         def euclidean(A, B):
             """
             Euclidean distance function.

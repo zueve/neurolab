@@ -1,6 +1,6 @@
 ﻿Welcome to NeuroLab's documentation!
 ====================================
-NeuroLab - a library of basic neural networks algorithms with flexible network configurations and learning algorithms. 
+NeuroLab - a library of basic neural networks algorithms with flexible network configurations and learning algorithms for Python. 
 To simplify the using of the library, interface is similar to the package of Neural Network Toolbox (NNT) of MATLAB (c). 
 The library is based on the package numpy (http://numpy.scipy.org), some learning algorithms are used scipy.optimize (http://scipy.org).
 
@@ -11,9 +11,9 @@ Contents:
    
    intro.rst
    install.rst
+   example.rst
    lib.rst
    fw.rst
-   example.rst
 
    
 

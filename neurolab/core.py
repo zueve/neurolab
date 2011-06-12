@@ -61,8 +61,10 @@ class Net(object):
         self.inp = np.zeros(self.ci)
         self.out = np.zeros(self.co)
         # Check connect format
+        assert self.inp_minmax.ndim == 2
+        assert self.inp_minmax.shape[1] == 2
         if len(connect) != len(layers) + 1:
-            raise ValueError(u"Connect error: неверный размер")
+            raise ValueError("Connect error")
         tmp = [0] * (len(connect))
         for con in connect:
             for s in con:
@@ -302,12 +304,19 @@ class Trainer(object):
             if key in self.params:
                 self.params[key] = kwargs[key]
             else:
-                self.params['process'][key] = kwargs[key]
+                self.params['train'][key] = kwargs[key]
         
         args = []
-        args.append(np.asfarray(input))
+        input = np.asfarray(input)
+        assert input.ndim == 2
+        assert input.shape[1] == net.ci
+        args.append(input)
         if target is not None:
-            args.append(np.asfarray(target))
+            target = np.asfarray(target)
+            assert target.ndim == 2
+            assert target.shape[1] == net.co
+            assert target.shape[0] == input.shape[0]
+            args.append(target)
         
         def epochf(err, net, *args):
             """Nead call on each epoch"""
