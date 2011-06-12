@@ -63,8 +63,8 @@ import net
 from tool import load
 
 
-__version__ = '0.0.9'
+__version__ = '0.1.0'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha, 
 # 4 - Beta, 5 - Production/Stable
-__status__ = '3 - Alpha'
+__status__ = '5 - Production/Stable'
