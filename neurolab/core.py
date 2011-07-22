@@ -300,6 +300,7 @@ class Trainer(object):
         """
         
         self.params = self.defaults.copy()
+        self.params['train'] = self.defaults['train'].copy()
         for key in kwargs:
             if key in self.params:
                 self.params[key] = kwargs[key]
