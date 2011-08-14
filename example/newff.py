@@ -17,7 +17,7 @@ size = len(x)
 inp = x.reshape(size,1)
 tar = y.reshape(size,1)
 
-# Create network with 2 layers and rendom initialized
+# Create network with 2 layers and random initialized
 net = nl.net.newff([[-10, 10]],[5, 1])
 
 # Train network
