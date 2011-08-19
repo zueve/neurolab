@@ -3,7 +3,6 @@
 The module contains the basic network architectures
 
 
-
 +-------------------------+------------+---------+-----------------+----------+
 |      Network Type       |  Function  | Count of|Support train fcn| Error fcn|
 |                         |            | layers  |                 |          |
@@ -171,7 +170,7 @@ def newlvq(minmax, cn0, pc):
 
 def newelm(minmax, size, transf=None):
     """
-    Create a Elman recurent network
+    Create a Elman recurrent network
 
     :Parameters:
         minmax: list ci x 2
@@ -205,7 +204,7 @@ def newelm(minmax, size, transf=None):
         #l.initf = init.InitRand([-0.1, 0.1], 'wb')
         layers.append(l)
     connect = [[i - 1] for i in range(len(layers) + 1)]
-    # recurents set
+    # recurrent set
     connect[0] = [-1, 0]
     
     net = Net(minmax, net_co, layers, connect, train.train_gdx, error.MSE())

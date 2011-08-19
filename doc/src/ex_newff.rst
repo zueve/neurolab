@@ -4,12 +4,13 @@ Feed Forward Multilayer Perceptron (newff)
 
 Use  :py:func:`neurolab.net.newff`
 
+Task: Approximation function: 1/2 * sin(x)
 ::
 
 	import neurolab as nl
 	import numpy as np
 
-	# Approximation function: 1/2 * sin(x)
+	# Create train samples
 	x = np.linspace(-7, 7, 20)
 	y = np.sin(x) * 0.5
 
@@ -18,7 +19,7 @@ Use  :py:func:`neurolab.net.newff`
 	inp = x.reshape(size,1)
 	tar = y.reshape(size,1)
 
-	# Create network with 2 layers and rendom initialized
+	# Create network with 2 layers and random initialized
 	net = nl.net.newff([[-10, 10]],[5, 1])
 
 	# Train network

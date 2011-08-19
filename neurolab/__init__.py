@@ -2,7 +2,7 @@
 """
 Neurolab is a simple and powerful Neural Network Library for Python.
 Contains based neural networks, train algorithms and flexible framework 
-to create and explore other networks.
+to create and explore other neural network types.
 
 
 :Features:
@@ -57,9 +57,14 @@ to create and explore other networks.
 		- create function: `neurolab.net.newlvq() <http://packages.python.org/neurolab/lib.html#neurolab.net.newlvq>`_
 		- example of use: `newlvq <http://packages.python.org/neurolab/ex_newlvq.html>`_
 		- default train function: `neurolab.train.train_lvq() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_lvq>`_
-
+	
+	**Elman Recurrent network**
+		- create function: `neurolab.net.newelm() <http://packages.python.org/neurolab/lib.html#neurolab.net.newelm>`_
+		- example of use: `newlvq <http://packages.python.org/neurolab/ex_newelm.html>`_
+		- default train function: `neurolab.train.train_gdx() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_gdx>`_
+		- support train functions: train_gd, train_gda, train_gdm, train_rprop, train_bfgs, train_cg
+	
 """
-import layer
 import net
 from tool import load
 

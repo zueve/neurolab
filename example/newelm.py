@@ -1,9 +1,10 @@
 ﻿# -*- coding: utf-8 -*-
 """ 
-Example of use Elman recurent network
+Example of use Elman recurrent network
 =====================================
 
 Task: Detect the amplitudes
+
 """
 
 import neurolab as nl
@@ -13,8 +14,8 @@ import numpy as np
 i1 = np.sin(np.arange(0, 20))
 i2 = np.sin(np.arange(0, 20)) * 2
 
-t1 = np.ones([1, 20]) * 2
-t2 = np.ones([1, 20])
+t1 = np.ones([1, 20])
+t2 = np.ones([1, 20]) * 2
 
 input = np.array([i1, i2, i1, i2]).reshape(20 * 4, 1)
 target = np.array([t1, t2, t1, t2]).reshape(20 * 4, 1)
