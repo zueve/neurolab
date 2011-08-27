@@ -1,6 +1,6 @@
-************
+********
 Examples
-************
+********
 .. toctree::
    :maxdepth: 2
    
@@ -9,3 +9,5 @@ Examples
    ex_newc.rst
    ex_newp.rst
    ex_newlvq.rst
+   ex_newelm.rst
+   ex_newhop.rst

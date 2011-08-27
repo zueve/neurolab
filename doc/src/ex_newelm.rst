@@ -7,6 +7,7 @@ Use  :py:func:`neurolab.net.newelm`
 Task: Detect the amplitudes
 
 ::
+
 	import neurolab as nl
 	import numpy as np
 
