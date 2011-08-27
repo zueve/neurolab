@@ -53,6 +53,7 @@ class Net(object):
 
     def __init__(self, inp_minmax, co, layers, connect, trainf, errorf):
         self.inp_minmax = np.asfarray(inp_minmax)
+        self.out_minmax = np.zeros([co, 2])
         self.ci = self.inp_minmax.shape[0]
         self.co = co
         self.layers = layers
@@ -80,7 +81,6 @@ class Net(object):
         # Set inp_minmax for all layers
         for nl, nums_signal in enumerate(self.connect):
             if nl == len(self.layers):
-                self.out_minmax = np.zeros([self.co, 2])
                 minmax = self.out_minmax
             else:
                 self.layers[nl].inp_minmax = np.zeros([self.layers[nl].ci, 2])

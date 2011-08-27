@@ -223,7 +223,7 @@ class SatLins:
         >>> f = SatLins()
         >>> x = np.array([-5, -1, 0, 0.1, 100])
         >>> f(x)
-        array([-1., -1., 0,  0.1,  100])
+        array([-1. , -1. ,  0. ,  0.1,  1. ])
         
     """
     
@@ -238,11 +238,11 @@ class SatLins:
     
     def deriv(self, x, y):
         """ 
-        Derivative of transfer function HardLims
+        Derivative of transfer function SatLins
         
         """
         d = np.zeros_like(x)
-        d[x > -1 & x < 1 ] = 1
+        d[(x > -1) & (x < 1) ] = 1
         
         return d
 
@@ -260,7 +260,7 @@ class SatLin:
         >>> f = SatLin()
         >>> x = np.array([-5, -0.1, 0, 0.1, 100])
         >>> f(x)
-        array([0., 0., 0,  0.1,  100])
+        array([ 0. ,  0. ,  0. ,  0.1,  1. ])
         
     """
     
@@ -275,10 +275,11 @@ class SatLin:
     
     def deriv(self, x, y):
         """ 
-        Derivative of transfer function HardLims
+        Derivative of transfer function SatLin
         
         """
+        
         d = np.zeros_like(x)
-        d[x > 0 & x < 1 ] = 1
+        d[(x > 0) & (x < 1) ] = 1
         
         return d

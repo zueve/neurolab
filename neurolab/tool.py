@@ -255,8 +255,8 @@ def simhop(net, input, n=10):
         >>> target = [[-1, -1, -1], [1, -1, 1]]
         >>> net = newhop(target)
         >>> simhop(net, target)[0]
-        array([-1., -1., -1.], 
-            [1., -1., 1.])
+        array([[-1., -1., -1.],
+               [ 1., -1.,  1.]])
     
     """
     

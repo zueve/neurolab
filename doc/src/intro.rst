@@ -7,4 +7,3 @@ Introduction
 
 
 .. include:: support_nets.rst
-	:lines: 10-

@@ -187,9 +187,9 @@ def newelm(minmax, size, transf=None):
         >>> net.layers[0].np['b'][:] = 0
         >>> net.sim([[1], [1] ,[1], [3]])
         array([[ 1.],
-           [ 2.],
-           [ 3.],
-           [ 6.]])
+               [ 2.],
+               [ 3.],
+               [ 6.]])
     """
 
     net_ci = len(minmax)
@@ -225,7 +225,7 @@ def newhop(target, transf=None):
     :Returns:
         net: Net
     :Example:
-        >>> net = nl.net.newhop([[-1, -1, -1], [1, -1, 1]])
+        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
     
     """
     
