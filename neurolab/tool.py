@@ -231,3 +231,49 @@ def ff_grad(net, input, target):
         ff_grad_step(net, out, tar, grad)
         output.append(out)
     return grad, grad_flat, np.row_stack(output)
+
+
+def simhop(net, input, n=10):
+    """
+    Simuate hopfied network
+    
+    :Parameters:
+        net: Net
+            Simulated recurrent neural network like Hopfield (newhop)
+        input: array like (N x net.ci)
+            Train input patterns
+        n: int (default 10)
+            Maximum number of simulated steps
+    
+    :Return:
+        output: array 
+            Network outputs
+        full_output: list of array
+            Network outputs, including the intermediate results
+    :Exmamle:
+        >>> from net import newhop
+        >>> target = [[-1, -1, -1], [1, -1, 1]]
+        >>> net = newhop(target)
+        >>> simhop(net, target)[0]
+        array([-1., -1., -1.], 
+            [1., -1., 1.])
+    
+    """
+    
+    input = np.asfarray(input)
+    
+    assert input.ndim == 2
+    assert input.shape[1] == net.layers[-1].co
+    assert input.shape[1] == net.ci
+    
+    output = []
+    for inp in input:
+        net.layers[-1].out = inp
+        out = []
+        for i in range(n):
+            o = net.step(inp)
+            if i>0 and np.all(out[-1] == o):
+                break
+            out.append(o)
+        output.append(np.array(out))
+    return np.array([r[-1] for r in output]), output

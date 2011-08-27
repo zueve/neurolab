@@ -24,6 +24,8 @@ The module contains the basic network architectures
 +-------------------------+------------+---------+-----------------+----------+
 |           Elman         |   newelm   |  >=1    |   train_gdx     |   MSE    |
 +-------------------------+------------+---------+-----------------+----------+
+|         Hopield         |   newhop   |    1    |       None      |   None   |
++-------------------------+------------+---------+-----------------+----------+
 
 .. note:: \* - default function
 
@@ -208,4 +210,44 @@ def newelm(minmax, size, transf=None):
     connect[0] = [-1, 0]
     
     net = Net(minmax, net_co, layers, connect, train.train_gdx, error.MSE())
+    return net
+
+
+def newhop(target, transf=None):
+    """
+    Create a Hopfield recurrent network
+    
+    :Parameters:
+        target: array like (l x net.co)
+            train target patterns
+        transf: func (default HardLims)
+            Activation function
+    :Returns:
+        net: Net
+    :Example:
+        >>> net = nl.net.newhop([[-1, -1, -1], [1, -1, 1]])
+    
+    """
+    
+    target = np.asfarray(target)
+    ci = len(target[0])
+    if transf is None:
+        transf = trans.HardLims()
+    l = layer.Perceptron(ci, ci, transf)
+    w = l.np['w']
+    b = l.np['b']
+    
+    # init weight
+    for i in range(ci):
+        for j in range(ci):
+            if i == j:
+                w[i, j] = 0.0
+            else:
+                w[i, j] = np.sum(target[:, i] * target[:, j]) / ci
+        b[i] = 0.0
+    l.initf = None
+    
+    minmax = transf.out_minmax if hasattr(transf, 'out_minmax') else [-1, 1]
+    
+    net = Net([minmax] * ci, ci, [l], [[0], [0]], None, None)
     return net

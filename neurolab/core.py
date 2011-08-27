@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Base classes
+Define Core Classes
 
 """
 import numpy as np
@@ -65,15 +65,16 @@ class Net(object):
         assert self.inp_minmax.shape[1] == 2
         if len(connect) != len(layers) + 1:
             raise ValueError("Connect error")
-        tmp = [0] * (len(connect))
+        
+        tmp = [0] * len(connect)
         for con in connect:
             for s in con:
-                tmp[s] += 1
+                if s != -1:
+                    tmp[s] += 1
         for l, c in enumerate(tmp):
-            if c == 0:
-                raise ValueError(u"Connect error: Lost the signal " +
-                                    "from the layer " + (l - 1))
-
+            if c == 0 and l != len(layers):
+                raise ValueError("Connect error: Lost the signal " +
+                                    "from the layer " + str(l - 1))
         self.connect = connect
 
         # Set inp_minmax for all layers
@@ -89,6 +90,9 @@ class Net(object):
                 t = self.layers[ns].out_minmax if ns != -1 else self.inp_minmax
                 minmax[ni: ni + len(t)] = t
                 ni += len(t)
+            if ni != len(minmax):
+                raise ValueError("Connect error: Empty inputs on layer " + 
+                                                                    str(l - 1))
         self.init()
 
     def step(self, inp):
@@ -211,13 +215,13 @@ class Layer(object):
         self.co = co
         self.np = {}
         for p, shape in property.items():
-            self.np[p] = np.zeros(shape)
+            self.np[p] = np.empty(shape)
         self.inp = np.zeros(ci)
         self.out = np.zeros(co)
         # Property must be change when init Layer
-        self.out_minmax = np.zeros([self.co, 2])
+        self.out_minmax = np.empty([self.co, 2])
         # Property will be change when init Net
-        self.inp_minmax = np.zeros([self.ci, 2])
+        self.inp_minmax = np.empty([self.ci, 2])
         self.initf = None
 
     def step(self, inp):
@@ -349,6 +353,7 @@ class Trainer(object):
 
 class Train(object):
     """Base train abstract class"""
+    
     def __init__(self, epochf, epochs):
         self.epochf = epochf
         self.epochs = epochs
