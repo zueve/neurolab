@@ -83,11 +83,12 @@ class Net(object):
             if nl == len(self.layers):
                 minmax = self.out_minmax
             else:
-                self.layers[nl].inp_minmax = np.zeros([self.layers[nl].ci, 2])
                 minmax = self.layers[nl].inp_minmax
             ni = 0
             for ns in nums_signal:
                 t = self.layers[ns].out_minmax if ns != -1 else self.inp_minmax
+                if ni + len(t) > len(minmax):
+                    raise ValueError("Connect error: on layer " + str(l - 1))
                 minmax[ni: ni + len(t)] = t
                 ni += len(t)
             if ni != len(minmax):

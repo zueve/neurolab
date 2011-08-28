@@ -1,6 +1,6 @@
-﻿**************************************************
-Example of use Hopfield Recurrent network (newhop)
-**************************************************
+﻿***********************************
+Hopfield Recurrent network (newhop)
+***********************************
 
 Use  :py:func:`neurolab.net.newhop`, :py:func:`neurolab.tool.simhop`
 
