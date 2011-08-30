@@ -1,6 +1,0 @@
-:Version 0.2.0:
-
-	- net: Add Elman Recurrent network (newelm)
-	- net: Add Hopfield Recurrent network (newhop)
-	- trans: Add Satlin, Satlins activation functions
-	- core: Some refactoring and bug fix
