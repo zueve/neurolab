@@ -34,8 +34,9 @@ to create and explore other neural network types.
 	array([[ 0.28757596]])
 
 :Links:
+
     - `Home Page <http://code.google.com/p/neurolab/>`_
-    - `PIPY Page <http://pypi.python.org/pypi/neurolab>`_
+    - `PyPI Page <http://pypi.python.org/pypi/neurolab>`_
     - `Documentation <http://packages.python.org/neurolab/>`_
     - `Examples <http://packages.python.org/neurolab/example.html>`_
 
@@ -45,8 +46,8 @@ import net
 from tool import load
 
 
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha, 
 #                       4 - Beta, 5 - Production/Stable
-__status__ = '3 - Alpha'
+__status__ = '5 - Production/Stable'
