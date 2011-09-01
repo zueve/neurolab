@@ -68,7 +68,7 @@ class Competitive(Layer):
         Layer.__init__(self, ci, cn, cn, {'w': (cn, ci), 'conscience': cn})
         self.transf = trans.Competitive()
         self.initf = init.midpoint
-        self.out_minmax[:] = np.array([self.transf.out_minmax] * cn)
+        self.out_minmax = np.array([self.transf.out_minmax])
         self.np['conscience'].fill(1.0)
         def euclidean(A, B):
             """

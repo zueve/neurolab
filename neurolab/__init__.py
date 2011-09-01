@@ -1,8 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Neurolab is a simple and powerful Neural Network Library for Python.
-Contains based neural networks, train algorithms and flexible framework 
-to create and explore other neural network types.
+Contains based neural networks, train algorithms and flexible framework to create and explore other networks.
 
 
 :Features:
@@ -11,7 +10,6 @@ to create and explore other neural network types.
     - API like Neural Network Toolbox (NNT) from MATLAB
     - Interface to use train algorithms form scipy.optimize
     - Flexible network configurations and learning algorithms. You may change: train, error, initializetion and activation functions
-    - Unlimited number of neural layers and number of neurons in layers
     - Variety of supported types of Artificial Neural Network and learning algorithms
 
 :Example:
@@ -33,21 +31,40 @@ to create and explore other neural network types.
 	>>> net.sim([[0.2, 0.1]]) # 0.2 + 0.1
 	array([[ 0.28757596]])
 
-:Links:
 
-    - `Home Page <http://code.google.com/p/neurolab/>`_
-    - `PyPI Page <http://pypi.python.org/pypi/neurolab>`_
-    - `Documentation <http://packages.python.org/neurolab/>`_
-    - `Examples <http://packages.python.org/neurolab/example.html>`_
+:Now support neural networks types:
 
+	**Single layer perceptron**
+		- create function: `neurolab.net.newp() <http://packages.python.org/neurolab/lib.html#neurolab.net.newp>`_
+		- example of use: `newp <http://packages.python.org/neurolab/ex_newp.html>`_
+		- default train function: `neurolab.train.train_delta() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_delta>`_
+		- support train functions: train_gd, train_gda, train_gdm, train_gdx, train_rprop, train_bfgs, train_cg
+	
+	**Multilayer feed forward perceptron**
+		- create function: `neurolab.net.newff() <http://packages.python.org/neurolab/lib.html#neurolab.net.newff>`_
+		- example of use: `newff <http://packages.python.org/neurolab/ex_newff.html>`_
+		- default train function: `neurolab.train.train_gdx() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_gdx>`_
+		- support train functions: train_gd, train_gda, train_gdm, train_rprop, train_bfgs, train_cg
+		
+	**Competing layer (Kohonen Layer)**
+		- create function: `neurolab.net.newc() <http://packages.python.org/neurolab/lib.html#neurolab.net.newc>`_
+		- example of use: `newc <http://packages.python.org/neurolab/ex_newc.html>`_
+		- default train function: `neurolab.train.train_cwta() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_cwta>`_
+		- support train functions: train_wta
+		
+	**Learning Vector Quantization (LVQ)**
+		- create function: `neurolab.net.newlvq() <http://packages.python.org/neurolab/lib.html#neurolab.net.newlvq>`_
+		- example of use: `newlvq <http://packages.python.org/neurolab/ex_newlvq.html>`_
+		- default train function: `neurolab.train.train_lvq() <http://packages.python.org/neurolab/lib.html#neurolab.train.train_lvq>`_
 
 """
+import layer
 import net
 from tool import load
 
 
-__version__ = '0.2.0'
+__version__ = '0.1.1'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha, 
 #                       4 - Beta, 5 - Production/Stable
-__status__ = '5 - Production/Stable'
+__status__ = '3 - Alpha'

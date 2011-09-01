@@ -11,7 +11,6 @@ Contents:
    
    intro.rst
    install.rst
-   support_nets.rst
    example.rst
    lib.rst
    fw.rst

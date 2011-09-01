@@ -13,7 +13,6 @@ nl = __import__('neurolab')
 version = nl.__version__
 status = nl.__status__
 
-
 setup(name='neurolab',
         version=version,
         description='Simple and powerfull neural network library for python',

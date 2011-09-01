@@ -3,14 +3,12 @@
 Example of use multi-layer perceptron
 =====================================
 
-Task: Approximation function: 1/2 * sin(x)
-
 """
 
 import neurolab as nl
 import numpy as np
 
-# Create train samples
+# Approximation function: 1/2 * sin(x)
 x = np.linspace(-7, 7, 20)
 y = np.sin(x) * 0.5
 
@@ -19,7 +17,7 @@ size = len(x)
 inp = x.reshape(size,1)
 tar = y.reshape(size,1)
 
-# Create network with 2 layers and random initialized
+# Create network with 2 layers and rendom initialized
 net = nl.net.newff([[-10, 10]],[5, 1])
 
 # Train network
