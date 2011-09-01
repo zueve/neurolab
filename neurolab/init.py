@@ -10,9 +10,7 @@ import numpy as np
         
 def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
     """
-    Initialize the specified property of the layer 
-    random numbers within specified limits
-    
+    Initialize the specified property of the layer random numbers within specified limits
     :Parameters:
         layer:
             Initialized layer
@@ -58,14 +56,6 @@ class InitRand:
     
     """
     def __init__(self, minmax, init_prop):
-        """
-        :Parameters:
-            minmax: list of float
-                [min, max] init range
-            init_prop: list of dicts
-                names of initialized propertis. Example ['w', 'b']
-        
-        """
         self.min = minmax[0]
         self.max = minmax[1]
         self.properties = init_prop

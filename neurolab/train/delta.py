@@ -13,7 +13,7 @@ class TrainDelta(Train):
     Train with Delta rule
     
     :Support networks:
-        newp (one-layer perceptron)
+        newp (one-layers perceptron)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
@@ -23,7 +23,7 @@ class TrainDelta(Train):
             Print period
         goal: float (default 0.01)
             The goal of train
-        lr: float (default 0.01)
+        lr: float (defaults 0.01)
             learning rate
     
     """

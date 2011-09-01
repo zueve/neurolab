@@ -1,5 +1,4 @@
-﻿include README
-include CHANGELOG
+﻿include MANIFEST.in
 include setup.py
 
 recursive-include example *.py

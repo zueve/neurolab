@@ -20,8 +20,3 @@ trans: Transfer functions
 =========================
 .. automodule:: neurolab.trans
     :members:
-
-init: Initializing functions
-============================
-.. automodule:: neurolab.init
-    :members:

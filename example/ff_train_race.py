@@ -19,7 +19,7 @@ size = len(x)
 input = x.reshape(size, 1)
 target = y.reshape(size, 1)
 
-# Create network with 2 layers and random initialized
+# Create network with 2 layers and rendom initialized
 net = nl.net.newff([[-0.5, 0.5]], [5, 1])
 
 # Train algorinms
@@ -29,7 +29,6 @@ trains = [nl.train.train_gd,
           nl.train.train_gdx,
           nl.train.train_rprop, 
           nl.train.train_cg,
-          #nl.train.train_ncg,
           nl.train.train_bfgs,
           ]
 # Test process
@@ -48,7 +47,7 @@ for train in trains:
 print sum(times)
     
 # Plot result
-lables = [t._train_class.__name__[5:] for t in trains]
+lables = [t.params['Train'].__name__[5:] for t in trains]
 ind = np.arange(len(errors))
 width = 0.8
 pl.subplot(211)

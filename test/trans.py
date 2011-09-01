@@ -1,6 +1,6 @@
 ﻿import unittest
 import numpy as np
-from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive, SatLin, SatLins
+from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive
 
 class TestTrans(unittest.TestCase):
     
@@ -41,23 +41,7 @@ class TestTrans(unittest.TestCase):
         for m, t in zip(m_res, t_res):
             self.assertEqual(m, t)
     
-    def test_satlin(self):
-        test_fcn = SatLin()
-        vars = [-2.5, -0.5, 0.0, 0.1, 3.0]
-        m_res = [0, 0, 0, 0.1, 1.0]
-        t_res = test_fcn(np.array(vars)).tolist()
-        for m, t in zip(m_res, t_res):
-            self.assertEqual(m, t)
-    
-    def test_satlins(self):
-        test_fcn = SatLins()
-        vars = [-2.5, -0.5, 0.0, 0.1, 3.0]
-        m_res = [-1.0, -0.5, 0.0, 0.1, 1.0]
-        t_res = test_fcn(np.array(vars)).tolist()
-        for m, t in zip(m_res, t_res):
-            self.assertEqual(m, t)
-    
-    def test_competitive(self):
+    def test_hardlim(self):
         test_fcn = Competitive()
         vars = [-2.5, -0.5, 0.0, 0.1, 3.0]
         m_res = [1, 0, 0, 0, 0]
@@ -66,8 +50,8 @@ class TestTrans(unittest.TestCase):
             self.assertEqual(m, t)
     
     def test_deriv(self):
-        vars = np.arange(-100, 100, 2.5)
-        test_fcns = [TanSig(), PureLin(), LogSig(), HardLim(), HardLims(), SatLin(), SatLins()]
+        vars = [-2.5, -0.5, 0.0, 0.1, 3.0]
+        test_fcns = [TanSig(), PureLin(), LogSig(), HardLim(), HardLims()]
         def diff(f, x, h=1E-6):
             x1 = np.array([x - h])
             x2 = np.array([x])
@@ -83,12 +67,7 @@ class TestTrans(unittest.TestCase):
     
     def test_props(self):
         test_fcns = [TanSig(), PureLin(), LogSig(), 
-                        HardLim(), HardLims(), Competitive(), SatLin(), SatLins()]
-        vars = [-1e50, -2.5, -0.5, 0.0, 0.1, 3.0, 1e50]
+                        HardLim(), HardLims(), Competitive()]
         for test_fcn in test_fcns:
             self.assertEqual(test_fcn.out_minmax[1] >= test_fcn.out_minmax[0], True)
             self.assertEqual(test_fcn.inp_active[1] >= test_fcn.inp_active[0], True)
-            
-            for v in vars:
-                r = test_fcn(np.array([v]))
-                self.assertEqual(test_fcn.out_minmax[0] <= r <= test_fcn.out_minmax[1], True)

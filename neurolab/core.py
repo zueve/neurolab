@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Define Core Classes
+Base classes
 
 """
 import numpy as np
@@ -47,13 +47,12 @@ class Net(object):
             ...            [0],     # - layer 1 reseives the output
             ...                     # signal from the layer 0;
             ...            [1]]     # - the network exit reseives the output
-            ...                     # signals from the layer 1.
+            ...                     # signal from the layer 1.
 
         """
 
     def __init__(self, inp_minmax, co, layers, connect, trainf, errorf):
         self.inp_minmax = np.asfarray(inp_minmax)
-        self.out_minmax = np.zeros([co, 2])
         self.ci = self.inp_minmax.shape[0]
         self.co = co
         self.layers = layers
@@ -62,38 +61,32 @@ class Net(object):
         self.inp = np.zeros(self.ci)
         self.out = np.zeros(self.co)
         # Check connect format
-        assert self.inp_minmax.ndim == 2
-        assert self.inp_minmax.shape[1] == 2
         if len(connect) != len(layers) + 1:
-            raise ValueError("Connect error")
-        
-        tmp = [0] * len(connect)
+            raise ValueError(u"Connect error: неверный размер")
+        tmp = [0] * (len(connect))
         for con in connect:
             for s in con:
-                if s != -1:
-                    tmp[s] += 1
+                tmp[s] += 1
         for l, c in enumerate(tmp):
-            if c == 0 and l != len(layers):
-                raise ValueError("Connect error: Lost the signal " +
-                                    "from the layer " + str(l - 1))
+            if c == 0:
+                raise ValueError(u"Connect error: Lost the signal " +
+                                    "from the layer " + (l - 1))
+
         self.connect = connect
 
         # Set inp_minmax for all layers
         for nl, nums_signal in enumerate(self.connect):
             if nl == len(self.layers):
+                self.out_minmax = np.zeros([self.co, 2])
                 minmax = self.out_minmax
             else:
+                self.layers[nl].inp_minmax = np.zeros([self.layers[nl].ci, 2])
                 minmax = self.layers[nl].inp_minmax
             ni = 0
             for ns in nums_signal:
                 t = self.layers[ns].out_minmax if ns != -1 else self.inp_minmax
-                if ni + len(t) > len(minmax):
-                    raise ValueError("Connect error: on layer " + str(l - 1))
                 minmax[ni: ni + len(t)] = t
                 ni += len(t)
-            if ni != len(minmax):
-                raise ValueError("Connect error: Empty inputs on layer " + 
-                                                                    str(l - 1))
         self.init()
 
     def step(self, inp):
@@ -216,13 +209,13 @@ class Layer(object):
         self.co = co
         self.np = {}
         for p, shape in property.items():
-            self.np[p] = np.empty(shape)
+            self.np[p] = np.zeros(shape)
         self.inp = np.zeros(ci)
         self.out = np.zeros(co)
         # Property must be change when init Layer
-        self.out_minmax = np.empty([self.co, 2])
+        self.out_minmax = np.zeros([self.co, 2])
         # Property will be change when init Net
-        self.inp_minmax = np.empty([self.ci, 2])
+        self.inp_minmax = np.zeros([self.ci, 2])
         self.initf = None
 
     def step(self, inp):
@@ -267,26 +260,23 @@ class Trainer(object):
         """
         
         # Sets defaults train params
-        self._train_class = Train
         self.defaults = {}
+        self.defaults['Train'] = Train
         self.defaults['goal'] = goal
         self.defaults['show'] = show
         self.defaults['epochs'] = epochs
-        self.defaults['train'] = kwargs
+        self.defaults['TrainParams'] = kwargs
         if Train.__init__.__defaults__:
             cnt = Train.__init__.func_code.co_argcount
             names = Train.__init__.func_code.co_varnames
             vals = Train.__init__.__defaults__
             st = cnt - len(vals)
             for k, v in zip(names[st: cnt], vals):
-                if k not in self.defaults['train']:
-                    self.defaults['train'][k] = v
+                if k not in self.defaults['TrainParams']:
+                    self.defaults['TrainParams'][k] = v
         
         self.params = self.defaults.copy()
         self.error = []
-    
-    def __str__(self):
-        return 'Trainer(' + self._train_class.__name__ + ')'
             
     def __call__(self, net, input, target=None, **kwargs):
         """
@@ -305,24 +295,16 @@ class Trainer(object):
         """
         
         self.params = self.defaults.copy()
-        self.params['train'] = self.defaults['train'].copy()
         for key in kwargs:
             if key in self.params:
                 self.params[key] = kwargs[key]
             else:
-                self.params['train'][key] = kwargs[key]
+                self.params['TrainParams'][key] = kwargs[key]
         
         args = []
-        input = np.asfarray(input)
-        assert input.ndim == 2
-        assert input.shape[1] == net.ci
-        args.append(input)
+        args.append(np.asfarray(input))
         if target is not None:
-            target = np.asfarray(target)
-            assert target.ndim == 2
-            assert target.shape[1] == net.co
-            assert target.shape[0] == input.shape[0]
-            args.append(target)
+            args.append(np.asfarray(target))
         
         def epochf(err, net, *args):
             """Nead call on each epoch"""
@@ -338,7 +320,7 @@ class Trainer(object):
             if epoch >= self.params['epochs']:
                 raise TrainStop('The maximum number of train epochs is reached')
         
-        train = self._train_class(net, *args, **self.params['train'])
+        train = self.params['Train'](net, *args, **self.params['TrainParams'])
         Train.__init__(train, epochf, self.params['epochs'])
         self.error = []
         try:
@@ -354,7 +336,6 @@ class Trainer(object):
 
 class Train(object):
     """Base train abstract class"""
-    
     def __init__(self, epochf, epochs):
         self.epochf = epochf
         self.epochs = epochs

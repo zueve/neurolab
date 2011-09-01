@@ -3,13 +3,14 @@
 The module contains the basic network architectures
 
 
+
 +-------------------------+------------+---------+-----------------+----------+
 |      Network Type       |  Function  | Count of|Support train fcn| Error fcn|
 |                         |            | layers  |                 |          |
 +=========================+============+=========+=================+==========+
 | Single-layer perceptron |    newp    |    1    |   train_delta   |   SSE    |
 +-------------------------+------------+---------+-----------------+----------+
-| Multi-layer perceptron  |   newff    |  >=1    |   train_gd,     |   SSE    |
+| Multi-layer perceptron  |   newff    |  more 1 |   train_gd,     |   SSE    |
 |                         |            |         |   train_gdm,    |          |
 |                         |            |         |   train_gda,    |          |
 |                         |            |         |   train_gdx*,   |          |
@@ -22,12 +23,8 @@ The module contains the basic network architectures
 +-------------------------+------------+---------+-----------------+----------+
 |           LVQ           |   newlvq   |    2    |   train_lvq     |   MSE    |
 +-------------------------+------------+---------+-----------------+----------+
-|           Elman         |   newelm   |  >=1    |   train_gdx     |   MSE    |
-+-------------------------+------------+---------+-----------------+----------+
-|         Hopield         |   newhop   |    1    |       None      |   None   |
-+-------------------------+------------+---------+-----------------+----------+
 
-.. note:: \* - default function
+.. note:: \* - defaulf function
 
 """
 
@@ -167,87 +164,4 @@ def newlvq(minmax, cn0, pc):
     net = Net(minmax, cn1, [layer_inp, layer_out],
                             [[-1], [0], [1]], train.train_lvq, error.MSE())
 
-    return net
-
-
-def newelm(minmax, size, transf=None):
-    """
-    Create a Elman recurrent network
-
-    :Parameters:
-        minmax: list ci x 2
-            Range of input value
-        size: list of length equal to the number of layers
-            Contains the number of neurons for each layer
-    :Returns:
-        net: Net
-    :Example:
-        >>> net = newelm([[-1, 1]], [1], [trans.PureLin()])
-        >>> net.layers[0].np['w'][:] = 1
-        >>> net.layers[0].np['b'][:] = 0
-        >>> net.sim([[1], [1] ,[1], [3]])
-        array([[ 1.],
-               [ 2.],
-               [ 3.],
-               [ 6.]])
-    """
-
-    net_ci = len(minmax)
-    net_co = size[-1]
-
-    if transf is None:
-        transf = [trans.TanSig()] * len(size)
-    assert len(transf) == len(size)
-
-    layers = []
-    for i, nn in enumerate(size):
-        layer_ci = size[i - 1] if i > 0 else net_ci + size[0]
-        l = layer.Perceptron(layer_ci, nn, transf[i])
-        #l.initf = init.InitRand([-0.1, 0.1], 'wb')
-        layers.append(l)
-    connect = [[i - 1] for i in range(len(layers) + 1)]
-    # recurrent set
-    connect[0] = [-1, 0]
-    
-    net = Net(minmax, net_co, layers, connect, train.train_gdx, error.MSE())
-    return net
-
-
-def newhop(target, transf=None):
-    """
-    Create a Hopfield recurrent network
-    
-    :Parameters:
-        target: array like (l x net.co)
-            train target patterns
-        transf: func (default HardLims)
-            Activation function
-    :Returns:
-        net: Net
-    :Example:
-        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
-    
-    """
-    
-    target = np.asfarray(target)
-    ci = len(target[0])
-    if transf is None:
-        transf = trans.HardLims()
-    l = layer.Perceptron(ci, ci, transf)
-    w = l.np['w']
-    b = l.np['b']
-    
-    # init weight
-    for i in range(ci):
-        for j in range(ci):
-            if i == j:
-                w[i, j] = 0.0
-            else:
-                w[i, j] = np.sum(target[:, i] * target[:, j]) / ci
-        b[i] = 0.0
-    l.initf = None
-    
-    minmax = transf.out_minmax if hasattr(transf, 'out_minmax') else [-1, 1]
-    
-    net = Net([minmax] * ci, ci, [l], [[0], [0]], None, None)
     return net
