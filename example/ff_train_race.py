@@ -20,7 +20,7 @@ input = x.reshape(size, 1)
 target = y.reshape(size, 1)
 
 # Create network with 2 layers and random initialized
-net = nl.net.newff([[-0.5, 0.5]], [5, 1])
+net = nl.net.newff([[-7, 7]], [5, 1])
 
 # Train algorinms
 trains = [nl.train.train_gd, 

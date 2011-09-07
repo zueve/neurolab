@@ -31,15 +31,15 @@ class Perceptron(Layer):
     
     def __init__(self, ci, cn, transf):
 
-        Layer.__init__(self, ci, cn, cn, {'w':(cn, ci), 'b': cn})
+        Layer.__init__(self, ci, cn, cn, {'w': (cn, ci), 'b': cn})
         
         self.transf = transf
         if not hasattr(transf, 'out_minmax'):
-            Inf = 1e100
-            self.out_minmax = np.array([(self.transf(-Inf), self.transf(Inf))] * self.co)
+            test = np.asfarry([-1e100, -100, -10, -1, 0, 1, 10, 100, 1e100])
+            val = self.transf(test)
+            self.out_minmax = np.array([val.min(), val.max()] * self.co)
         else:
-            self.out_minmax = np.array([np.asfarray(transf.out_minmax)] * self.co)
-        
+            self.out_minmax = np.asfarray([transf.out_minmax] * self.co)
         # default init function
         self.initf = init.initwb_reg
         self.s = np.zeros(self.cn)

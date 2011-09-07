@@ -101,7 +101,7 @@ class LogSig:
     """
     
     out_minmax = [0, 1]
-    inp_active =[-4, 4]
+    inp_active = [-4, 4]
     
     def __call__(self, x):
         return 1/(1+np.exp(-x))

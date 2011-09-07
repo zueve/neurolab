@@ -29,6 +29,31 @@ def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
         raise ValueError('Layer not have attibute "' + init_prop + '"')
     layer.np[init_prop] = np.random.uniform(min, max, layer.np[init_prop].shape)
 
+
+def initwb(layer):
+    """ 
+    Simple initialize weights and bias 
+    random values in range [min(active)/(2* cn); max(active)/(2* cn)]
+    
+    Where active is layer.transf.inp_active, cn Number of neurons
+    
+    """
+    active = layer.transf.inp_active[:]
+    
+    if np.isinf(active[0]):
+        active[0] = -10.0
+    
+    if np.isinf(active[1]):
+        active[1] = 10.0
+    
+    min = active[0] / (2 * layer.cn)
+    max = active[1] / (2 * layer.cn)
+
+    init_rand(layer, min, max, 'w')
+    if 'b' in layer.np:
+        init_rand(layer, min, max, 'b')
+
+
 def initwb_reg(layer):
     """ 
     Initialize weights and bias 
@@ -38,19 +63,52 @@ def initwb_reg(layer):
     active = layer.transf.inp_active[:]
     
     if np.isinf(active[0]):
-        active[0] = -100.0
+        active[0] = -10.0
     
     if np.isinf(active[1]):
-        active[1] = 100.0
+        active[1] = 10.0
     
-    min = active[0] / (2 * layer.cn)
-    max = active[1] / (2 * layer.cn)
+    ci = layer.ci if 'b' not in layer.np else layer.ci + 1
+    dist = float(active[1] - active[0]) / ci
+    
+    inp = layer.inp_minmax
+    out = [0, 0]
+    out[0] = active[0] + (active[1] - active[0]) / 2 - dist / 2
+    out[1] = out[0] + dist
+    
+    max_p = (out[1] - out[0]) / (inp[:, 1] - inp[:, 0])
+    max_n = - max_p
+    
+    w = np.random.randint(2, size=layer.np['w'].shape)
+    layer.np['w'][w==0] = np.random.uniform(max_n, 0, layer.np['w'].shape)[w==0]
+    layer.np['w'][w==1] = np.random.uniform(0, max_p, layer.np['w'].shape)[w==1]
 
-    init_rand(layer, min, max, 'w')
     if 'b' in layer.np:
-        init_rand(layer, min, max, 'b')
-        
+        layer.np['b'] = np.random.uniform(out[0], out[1], layer.np['b'].shape)
 
+def initwb_nw(layer):
+    """ 
+    Initialize weights and bias 
+    in the range defined by the activation function (transf.inp_active)
+    
+    """
+    active = layer.transf.inp_active[:]
+    
+    if np.isinf(active[0]):
+        active[0] = -10.0
+    
+    if np.isinf(active[1]):
+        active[1] = 10.0
+    inp = layer.inp_minmax
+    
+    w = np.random.uniform(-1, 1, layer.np['w'].shape)
+    k = 0.7 * layer.cn**(1./layer.cn)
+    w *= k * (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
+    
+    layer.np['w'][:] = w
+    if 'b' in layer.np:
+        layer.np['b'] = np.random.uniform(-0.5, 0.5, layer.np['b'].shape)
+        
 class InitRand:
     """
     Initialize the specified properties of the layer 
@@ -75,6 +133,7 @@ class InitRand:
             init_rand(layer, self.min, self.max, property)
         return
 
+
 def init_zeros(layer):
     """
     Set all layer properties of zero
@@ -83,6 +142,7 @@ def init_zeros(layer):
     for k in layer.np:
         layer.np[k].fill(0.0)
     return
+
 
 def midpoint(layer):
     """
