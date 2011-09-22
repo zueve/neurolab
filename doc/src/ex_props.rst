@@ -12,7 +12,8 @@ Modified network property
 	>>> # Change train function
 	>>> net.trainf = nl.train.train_bfgs
 	>>> # Change init function
-	>>> net.initf = nl.init.InitRand([-2., 2.], ['w', 'b'])
+	>>> for l in net.layers:
+	...     l.initf = nl.init.InitRand([-2., 2.], ['w', 'b'])
 	>>> # new inicialized
 	>>> net.init()
 	>>> # Change error function
