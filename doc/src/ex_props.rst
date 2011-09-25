@@ -13,7 +13,7 @@ Modified network property
 	>>> net.trainf = nl.train.train_bfgs
 	>>> # Change init function
 	>>> for l in net.layers:
-	...     l.initf = nl.init.InitRand([-2., 2.], ['w', 'b'])
+	...     l.initf = nl.init.InitRand([-2., 2.], 'wb')
 	>>> # new inicialized
 	>>> net.init()
 	>>> # Change error function
