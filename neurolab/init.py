@@ -143,7 +143,7 @@ def initwb_nw(layer):
     scale = (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
     
     w = k * np.random.uniform(-1, 1, layer.np['w'].shape)
-    b = k * np.linspace(-1, 1, layer.np['b'].size)
+    b = k * np.linspace(-1, 1, layer.np['b'].size)*np.sign(w[:,0])
     
     # Scale
     x = 0.5 * (active[1] - active[0])
@@ -159,7 +159,7 @@ def initwb_nw(layer):
 def initwb_nw_old(layer):
     """ 
     Initialize weights and bias 
-    in the range defined by the activation function (transf.inp_active)
+    
     
     """
     active = layer.transf.inp_active[:]
