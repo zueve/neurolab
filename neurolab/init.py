@@ -86,7 +86,77 @@ def initwb_reg(layer):
     if 'b' in layer.np:
         layer.np['b'] = np.random.uniform(out[0], out[1], layer.np['b'].shape)
 
+def initwb_reg2(layer):
+    """ 
+    Initialize weights and bias 
+    in the range defined by the activation function (transf.inp_active)
+    
+    """
+    active = layer.transf.inp_active[:]
+    
+    if np.isinf(active[0]):
+        active[0] = -10.0
+    
+    if np.isinf(active[1]):
+        active[1] = 10.0
+    
+    ci = layer.ci if 'b' not in layer.np else layer.ci + 1
+    dist = float(active[1] - active[0]) / ci
+    
+    inp = layer.inp_minmax
+    out = [0, 0]
+    out[0] = active[0] + (active[1] - active[0]) / 2 - dist / 2
+    out[1] = out[0] + dist
+    
+    max_p = (out[1] - out[0]) / (inp[:, 1] - inp[:, 0])
+    max_n = - max_p
+    
+    w = np.random.randint(2, size=layer.np['w'].shape)
+    layer.np['w'][w==0] = np.random.uniform(max_n, 0, layer.np['w'].shape)[w==0]
+    layer.np['w'][w==1] = np.random.uniform(0, max_p, layer.np['w'].shape)[w==1]
+
+    k = 0.7 * layer.cn**(1./layer.ci)
+    layer.np['w'] *= k
+    
+    if 'b' in layer.np:
+        layer.np['b'] = np.random.uniform(out[0], out[1], layer.np['b'].shape)
+        layer.np['b'] *= k
+
+
 def initwb_nw(layer):
+    """ 
+    Initialize weights and bias with Nguyen-Widrow rule 
+    In the range defined by the activation function (transf.inp_active)
+    
+    """
+    
+    active = layer.transf.inp_active[:]
+    
+    if np.isinf(active[0]):
+        active[0] = -10.0
+    
+    if np.isinf(active[1]):
+        active[1] = 10.0
+    inp = layer.inp_minmax
+    
+    k = 0.7 * layer.cn**(1./layer.ci)
+    scale = (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
+    
+    w = k * np.random.uniform(-1, 1, layer.np['w'].shape)
+    b = k * np.linspace(-1, 1, layer.np['b'].size)
+    
+    # Scale
+    x = 0.5 * (active[1] - active[0])
+    y = 0.5 * (active[1] + active[0])
+    
+    w = w * x
+    b = b * x + y
+    
+    layer.np['w'][:] = w
+    if 'b' in layer.np:
+        layer.np['b'] = b
+
+def initwb_nw_old(layer):
     """ 
     Initialize weights and bias 
     in the range defined by the activation function (transf.inp_active)
@@ -101,14 +171,21 @@ def initwb_nw(layer):
         active[1] = 10.0
     inp = layer.inp_minmax
     
+    k = 0.7 * layer.cn**(1./layer.ci)
+    scale = (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
+    
     w = np.random.uniform(-1, 1, layer.np['w'].shape)
-    k = 0.7 * layer.cn**(1./layer.cn)
-    w *= k * (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
+    b = np.linspace(-1, 1, layer.np['b'].size)
+    
+    w *= k * scale
+    b *= k * (active[1] - active[0])/2. + active[0]
     
     layer.np['w'][:] = w
+    
     if 'b' in layer.np:
-        layer.np['b'] = np.random.uniform(-0.5, 0.5, layer.np['b'].shape)
-        
+        layer.np['b'] = np.random.uniform(-0.5, 0.5, layer.np['b'].shape)        
+
+
 class InitRand:
     """
     Initialize the specified properties of the layer 
