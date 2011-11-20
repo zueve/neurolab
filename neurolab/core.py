@@ -209,7 +209,7 @@ class Layer(object):
             Number of outputs
         property: dict
             propety: array shape
-            example: {'w: (10, 1), 'b': 10}
+            example: {'w': (10, 1), 'b': 10}
 
     """
     def __init__(self, ci, cn, co, property):
@@ -327,7 +327,7 @@ class Trainer(object):
             args.append(target)
         
         def epochf(err, net, *args):
-            """Nead call on each epoch"""
+            """Need call on each epoch"""
             if err is None:
                 err = train.error(net, *args)
             self.error.append(err)

@@ -29,22 +29,19 @@ def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
         raise ValueError('Layer not have attibute "' + init_prop + '"')
     layer.np[init_prop] = np.random.uniform(min, max, layer.np[init_prop].shape)
 
-
-def initwb(layer):
+def initwb_reg(layer):
     """ 
-    Simple initialize weights and bias 
-    random values in range [min(active)/(2* cn); max(active)/(2* cn)]
-    
-    Where active is layer.transf.inp_active, cn Number of neurons
+    Initialize weights and bias 
+    in the range defined by the activation function (transf.inp_active)
     
     """
     active = layer.transf.inp_active[:]
     
     if np.isinf(active[0]):
-        active[0] = -10.0
+        active[0] = -100.0
     
     if np.isinf(active[1]):
-        active[1] = 10.0
+        active[1] = 100.0
     
     min = active[0] / (2 * layer.cn)
     max = active[1] / (2 * layer.cn)
@@ -53,8 +50,7 @@ def initwb(layer):
     if 'b' in layer.np:
         init_rand(layer, min, max, 'b')
 
-
-def initwb_reg(layer):
+def initwb_reg2(layer):
     """ 
     Initialize weights and bias 
     in the range defined by the activation function (transf.inp_active)
@@ -86,7 +82,7 @@ def initwb_reg(layer):
     if 'b' in layer.np:
         layer.np['b'] = np.random.uniform(out[0], out[1], layer.np['b'].shape)
 
-def initwb_reg2(layer):
+def initwb_reg3(layer):
     """ 
     Initialize weights and bias 
     in the range defined by the activation function (transf.inp_active)
@@ -130,60 +126,45 @@ def initwb_nw(layer):
     
     """
     
-    active = layer.transf.inp_active[:]
+    inp = np.asfarray(layer.inp_minmax)
+    active = np.asfarray(layer.transf.inp_active)
     
     if np.isinf(active[0]):
         active[0] = -10.0
     
     if np.isinf(active[1]):
         active[1] = 10.0
-    inp = layer.inp_minmax
     
-    k = 0.7 * layer.cn**(1./layer.ci)
-    scale = (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
-    
-    w = k * np.random.uniform(-1, 1, layer.np['w'].shape)
-    b = k * np.linspace(-1, 1, layer.np['b'].size)*np.sign(w[:,0])
+    k = 1. / layer.cn / layer.ci
+    w = k * np.ones([layer.cn, layer.ci])
+    #b = k * (np.linspace(-1, 1, layer.cn) if layer.cn > 1 else np.zeros(1))# - (inp.max()+inp.min())/2.
+    scale = (active[1] - active[0]) / (np.max(inp) - np.min(inp))
+    w *= scale
+    if layer.cn > 1:
+        #b = k*np.linspace(-1, 1, layer.cn) #* (inp.max() + inp.min())*1.8#*layer.cn/2 +1.9 #- k * (inp.max() + inp.min()) / 2
+        #b = np.linspace(active[0] + (active[1] - active[0])/layer.cn/2, active[1] - (active[1] - active[0])/layer.cn/2, layer.cn)
+        b = k*np.linspace(active[0] - scale * inp.max(), active[1] - scale * inp.min(), layer.cn) - 4.5
+    else:
+        b = np.zeros(1) - k * (inp.max() + inp.min()) / 2
+    print 'k', k
     
     # Scale
-    x = 0.5 * (active[1] - active[0])
-    y = 0.5 * (active[1] + active[0])
+    #b = np.array([-1., 1.])
+    #print 'b', layer.np['b']
+    #print 'b2', b
+    #print 's', scale
+    #b *= scale 
+    #b += active[1] + active[0]
     
-    w = w * x
-    b = b * x + y
+    #x = 0.5 * (active[1] - active[0])
+    #y = 0.5 * (active[1] + active[0])
+    
+    #w = w * x
+    #b = b * x + y
     
     layer.np['w'][:] = w
     if 'b' in layer.np:
         layer.np['b'] = b
-
-def initwb_nw_old(layer):
-    """ 
-    Initialize weights and bias 
-    
-    
-    """
-    active = layer.transf.inp_active[:]
-    
-    if np.isinf(active[0]):
-        active[0] = -10.0
-    
-    if np.isinf(active[1]):
-        active[1] = 10.0
-    inp = layer.inp_minmax
-    
-    k = 0.7 * layer.cn**(1./layer.ci)
-    scale = (active[1] - active[0]) / (inp[:, 1] - inp[:, 0])
-    
-    w = np.random.uniform(-1, 1, layer.np['w'].shape)
-    b = np.linspace(-1, 1, layer.np['b'].size)
-    
-    w *= k * scale
-    b *= k * (active[1] - active[0])/2. + active[0]
-    
-    layer.np['w'][:] = w
-    
-    if 'b' in layer.np:
-        layer.np['b'] = np.random.uniform(-0.5, 0.5, layer.np['b'].shape)        
 
 
 class InitRand:

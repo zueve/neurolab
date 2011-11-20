@@ -42,6 +42,7 @@ class Perceptron(Layer):
             self.out_minmax = np.asfarray([transf.out_minmax] * self.co)
         # default init function
         self.initf = init.initwb_reg
+        #self.initf = init.initwb_nw
         self.s = np.zeros(self.cn)
 
     def _step(self, inp):

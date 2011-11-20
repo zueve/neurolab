@@ -129,3 +129,32 @@ class TrainNCG(TrainSO):
         x = fmin_ncg(self.fcn, self.x.copy(), fprime=self.grad, callback=self.step, **self.kwargs)
         self.x[:] = x
         return None
+        
+class TrainLM(TrainSO):
+    """
+    Conjugate gradient algorithm
+    Using scipy.optimize.fmin_ncg
+    
+    :Support networks:
+        newff (multi-layers perceptron)  
+    :Parameters:
+        input: array like (l x net.ci)
+            train input patterns
+        target: array like (l x net.co)
+            train target patterns
+        epochs: int (default 500)
+            Number of train epochs
+        show: int (default 100)
+            Print period
+        goal: float (default 0.01)
+            The goal of train
+    
+    """
+
+    def __call__(self, net, input, target):
+        from scipy.optimize import fmin_ncg 
+        #if 'disp' not in self.kwargs:
+        #    self.kwargs['disp'] = 0
+        x = fmin_ncg(self.fcn, self.x.copy(), fprime=self.grad, callback=self.step, **self.kwargs)
+        self.x[:] = x
+        return None
