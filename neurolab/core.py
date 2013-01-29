@@ -61,12 +61,12 @@ class Net(object):
         self.errorf = errorf
         self.inp = np.zeros(self.ci)
         self.out = np.zeros(self.co)
-        # Check connect format
+        # Check connect format 
         assert self.inp_minmax.ndim == 2
         assert self.inp_minmax.shape[1] == 2
         if len(connect) != len(layers) + 1:
             raise ValueError("Connect error")
-        
+        # Check connect links
         tmp = [0] * len(connect)
         for con in connect:
             for s in con:
