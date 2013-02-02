@@ -1,6 +1,6 @@
 ﻿import unittest
 import numpy as np
-from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive, SatLin, SatLins
+from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive, SatLin, SatLins, SoftMax
 
 class TestTrans(unittest.TestCase):
     
@@ -62,6 +62,14 @@ class TestTrans(unittest.TestCase):
         vars = [-2.5, -0.5, 0.0, 0.1, 3.0]
         m_res = [1, 0, 0, 0, 0]
         t_res = test_fcn(np.array(vars)).tolist()
+        for m, t in zip(m_res, t_res):
+            self.assertEqual(m, t)
+    
+    def test_softmax(self):
+        test_fcn = SoftMax()
+	vars = [0, 1, 0.5, -0.5]
+        m_res = [ 1.,  4.,  2.,  1.]
+        t_res = np.floor(test_fcn(np.array(vars))*10)
         for m, t in zip(m_res, t_res):
             self.assertEqual(m, t)
     

@@ -1,6 +1,6 @@
 ﻿import unittest
-from trans import TestTrans
-from error import TestError
+from test.trans import TestTrans
+from test.error import TestError
 
 suite = unittest.TestSuite()
 suite.addTest(unittest.makeSuite(TestTrans))

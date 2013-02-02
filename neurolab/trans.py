@@ -209,6 +209,33 @@ class Competitive:
         r[min] = 1.0
         return r
 
+
+class SoftMax:
+    """
+    Soft max transfer function
+    
+    :Parameters:
+        x: ndarray
+            Input array
+    :Returns:
+        y : ndarray
+            range values [0, 1]
+    :Example:
+        >>> from numpy import floor
+        >>> f = SoftMax()
+        >>> floor(f([0, 1, 0.5, -0.5] * 10)
+        array([ 1.,  4.,  2.,  1.])
+        
+    """
+    
+    out_minmax = [0, 1]
+    inp_active = [-np.Inf, np.Inf]
+    
+    def __call__(self, dist):
+        exp = np.exp(dist)
+        return exp / exp.sum()
+
+
 class SatLins:
     """
     Symmetric saturating linear transfer function
@@ -245,6 +272,7 @@ class SatLins:
         d[(x > -1) & (x < 1) ] = 1
         
         return d
+
 
 class SatLin:
     """
