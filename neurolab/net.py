@@ -215,8 +215,10 @@ def newelm(minmax, size, transf=None):
 
 def newhop_old(target, transf=None):
     """
-    Create a Hopfield recurrent network
-    old version need tool.simhop for use
+    Create a Hopfield recurrent network.
+
+    Old version need tool.simhop for use.
+    Will be removed in future versions.
 
     :Parameters:
         target: array like (l x net.co)
@@ -226,8 +228,9 @@ def newhop_old(target, transf=None):
     :Returns:
         net: Net
     :Example:
-        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
-
+        >>> from neurolab.tool import simhop
+        >>> net = newhop_old([[-1, 1, -1], [1, -1, 1]])
+        >>> output = simhop(net, [[-1, 1, -1], [1, -1, 1]])
     """
 
     target = np.asfarray(target)
@@ -251,4 +254,45 @@ def newhop_old(target, transf=None):
     minmax = transf.out_minmax if hasattr(transf, 'out_minmax') else [-1, 1]
 
     net = Net([minmax] * ci, ci, [l], [[0], [0]], None, None)
+    return net
+
+
+def newhop(target, transf=None, max_init=10, delta=0):
+    """
+    Create a Hopfield recurrent network
+
+    :Parameters:
+        target: array like (l x net.co)
+            train target patterns
+        transf: func (default HardLims)
+            Activation function
+    :Returns:
+        net: Net
+    :Example:
+        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
+        >>> output = net.sim([[-1, 1, -1], [1, -1, 1]])
+
+    """
+
+    target = np.asfarray(target)
+    ci = len(target[0])
+    if transf is None:
+        transf = trans.HardLims()
+    l = layer.Reccurent(ci, ci, transf, max_init, delta)
+    w = l.np['w']
+    b = l.np['b']
+
+    # init weight
+    for i in range(ci):
+        for j in range(ci):
+            if i == j:
+                w[i, j] = 0.0
+            else:
+                w[i, j] = np.sum(target[:, i] * target[:, j]) / ci
+        b[i] = 0.0
+    l.initf = None
+
+    minmax = transf.out_minmax if hasattr(transf, 'out_minmax') else [-1, 1]
+
+    net = Net([minmax] * ci, ci, [l], [[-1], [0]], None, None)
     return net
