@@ -266,6 +266,10 @@ def newhop(target, transf=None, max_init=10, delta=0):
             train target patterns
         transf: func (default HardLims)
             Activation function
+        max_init: int (default 10)
+            Maximum of recurent iterations
+        delta: float (default 0)
+            Minimum diference between 2 outputs for stop reccurent cycle
     :Returns:
         net: Net
     :Example:
@@ -275,6 +279,8 @@ def newhop(target, transf=None, max_init=10, delta=0):
     """
 
     target = np.asfarray(target)
+    assert target.ndim == 2
+
     ci = len(target[0])
     if transf is None:
         transf = trans.HardLims()
@@ -295,4 +301,57 @@ def newhop(target, transf=None, max_init=10, delta=0):
     minmax = transf.out_minmax if hasattr(transf, 'out_minmax') else [-1, 1]
 
     net = Net([minmax] * ci, ci, [l], [[-1], [0]], None, None)
+    return net
+
+
+def newhem(target, transf=None, max_iter=10, delta=0):
+    """
+    Create a Hemming recurrent network with 2 layers
+
+    :Parameters:
+        target: array like (l x net.co)
+            train target patterns
+        transf: func (default SatLinPrm(0.1, 0, 10))
+            Activation function of input layer
+        max_init: int (default 10)
+            Maximum of recurent iterations
+        delta: float (default 0)
+            Minimum diference between 2 outputs for stop reccurent cycle
+    :Returns:
+        net: Net
+    :Example:
+        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
+        >>> output = net.sim([[-1, 1, -1], [1, -1, 1]])
+
+    """
+
+    target = np.asfarray(target)
+    assert target.ndim == 2
+
+    cn = target.shape[0]
+    ci = target.shape[1]
+
+    if transf is None:
+        transf = trans.SatLinPrm(0.1, 0, 10)
+    layer_inp = layer.Perceptron(ci, cn, transf)
+
+    # init input layer
+    layer_inp.initf = None
+    layer_inp.np['b'][:] = float(ci) / 2
+    for i, tar in enumerate(target):
+        layer_inp.np['w'][i][:] = tar / 2
+
+    layer_out = layer.Reccurent(cn, cn, trans.SatLinPrm(1, 0, 1e6), max_iter, delta)
+    # init output layer
+    layer_out.initf = None
+    layer_out.np['b'][:] = 0
+    eps = - 1.0 / cn
+    for i in range(cn):
+        layer_out.np['w'][i][:] = [eps] * cn
+        layer_out.np['w'][i][i] = 1
+    # create network
+    minmax = [[-1, 1]] * ci
+    layers = [layer_inp, layer_out]
+    connect = [[-1], [0], [1]]
+    net = Net(minmax, cn, layers, connect, None, None)
     return net
