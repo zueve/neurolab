@@ -107,7 +107,7 @@ class Reccurent(Layer):
         transf: callable
             Transfer function
         max_iter: int
-            maximum of recurent iterations
+            Maximum of recurent iterations
         delta: float
             Minimum diference between 2 outputs for stop reccurent cycle
     :Example:
