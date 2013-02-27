@@ -4,3 +4,11 @@
 	- net: Add Hopfield Recurrent network (newhop)
 	- trans: Add Satlin, Satlins activation functions
 	- core: Some refactoring and bug fix
+
+:Version 0.2.1:
+
+	- net: Add Hemming Recurrent network (newhem)
+	- net: Aaa new Hopfield network, now use Reccurent layer and not need simhop function
+	- trans: Add SoftMax, SatlinPrm activation functions
+	- layer: Add Reccurent layer
+	- core: Some refactoring and bug fix

@@ -5,7 +5,7 @@ Hopfield Recurrent network (newhop)
 Use  :py:func:`neurolab.net.newhop`, :py:func:`neurolab.tool.simhop`
 
 
-.. literalinclude:: ..\..\example\newhop.py
+.. literalinclude:: ../../example/newhop.py
 
 :Result:
 

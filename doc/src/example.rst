@@ -11,3 +11,4 @@ Examples
    ex_newlvq.rst
    ex_newelm.rst
    ex_newhop.rst
+   ex_newhem.rst

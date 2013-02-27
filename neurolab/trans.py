@@ -223,7 +223,7 @@ class SoftMax:
     :Example:
         >>> from numpy import floor
         >>> f = SoftMax()
-        >>> floor(f([0, 1, 0.5, -0.5] * 10)
+        >>> floor(f([0, 1, 0.5, -0.5]) * 10)
         array([ 1.,  4.,  2.,  1.])
 
     """
@@ -285,10 +285,10 @@ class SatLin:
         y : ndarray
             0 if x < 0; x if 0 <= x <= 1; 1 if x >1
     :Example:
-        >>> f = SatLins()
+        >>> f = SatLin()
         >>> x = np.array([-5, -0.1, 0, 0.1, 100])
         >>> f(x)
-        array([ 0. ,  -0.1 ,  0. ,  0.1,  1. ])
+        array([ 0. ,  0. ,  0. ,  0.1,  1. ])
 
     """
 
@@ -317,6 +317,7 @@ class SatLinPrm:
     """
     Linear transfer function with parametric output
     May use instead Satlin and Satlins
+
     :Init Parameters:
         k: float default 1
             output scaling
@@ -338,7 +339,8 @@ class SatLinPrm:
         array([ 0. ,  0. ,  0. ,  0.1,  1. ])
         >>> f = SatLinPrm(1, -1, 1)
         >>> f(x)
-        array([ 0. ,  -0.1. ,  0. ,  0.1,  1. ])
+        array([-1. , -0.1,  0. ,  0.1,  1. ])
+
     """
     def __init__(self, k=1, out_min=0, out_max=1):
         """
