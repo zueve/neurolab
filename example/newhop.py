@@ -52,4 +52,4 @@ test =np.asfarray([0,0,0,0,0,
                    0,0,0,1,1])
 test[test==0] = -1
 out = net.sim([test])
-print (out[0] == target[0]).all()
+print (out[0] == target[0]).all(), 'Sim. steps',len(net.layers[0].outs)

@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
 Neurolab is a simple and powerful Neural Network Library for Python.
-Contains based neural networks, train algorithms and flexible framework 
+Contains based neural networks, train algorithms and flexible framework
 to create and explore other neural network types.
 
 
@@ -48,6 +48,6 @@ from tool import load
 
 __version__ = '0.2.1'
 
-# Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha, 
+# Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha,
 #                       4 - Beta, 5 - Production/Stable
-__status__ = '3 - Alpha'
+__status__ = '4 - Beta'
