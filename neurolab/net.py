@@ -38,6 +38,7 @@ import trans
 import layer
 import train
 import error
+import init
 import numpy as np
 
 
@@ -77,6 +78,7 @@ def newff(minmax, size, transf=None):
     for i, nn in enumerate(size):
         layer_ci = size[i - 1] if i > 0 else net_ci
         l = layer.Perceptron(layer_ci, nn, transf[i])
+        l.initf = init.initnw
         layers.append(l)
     connect = [[i - 1] for i in range(len(layers) + 1)]
 
