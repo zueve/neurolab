@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+﻿# coding: utf-8
 """
 Testing init algoritms
 =======================
@@ -20,7 +20,7 @@ input = x.reshape(len(x), 1)
 target = y.reshape(len(x), 1)
 
 # Create network with 2 layers and random initialized
-net = nl.net.newff([[-7, 7]], [10, 50, 1])
+net = nl.net.newff([[-7, 7]], [10, 1])
 
 # Init algorinms
 inits = {'reg': nl.init.initwb_reg,
@@ -52,8 +52,8 @@ pl.plot(errors.T)
 pl.legend(labels)
 
 pl.subplot(312)
-pl.bar(ind, errors[:, :15].mean(axis=1), width)
-pl.ylabel('AVG error on 15 epochs error')
+pl.bar(ind, errors[:, -1], width)
+pl.ylabel('AVG of last error')
 pl.xticks(ind + width/2, labels)
 pl.subplot(313)
 pl.bar(ind, errors.mean(axis=1), width)
