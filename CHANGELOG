@@ -1,9 +1,8 @@
-:Version 0.2.0:
-
-	- net: Add Elman Recurrent network (newelm)
-	- net: Add Hopfield Recurrent network (newhop)
-	- trans: Add Satlin, Satlins activation functions
-	- core: Some refactoring and bug fix
+:Version 0.2.2:
+	
+	- init: Add initnw Nguyen-Widrow initialization function
+	- net: Set initnw as default init function of ff (newff) neural network
+	- net: Set train_bgfs as default train function of ff (newff) neural network 
 
 :Version 0.2.1:
 
@@ -11,4 +10,11 @@
 	- net: Aaa new Hopfield network, now use Reccurent layer and not need simhop function
 	- trans: Add SoftMax, SatlinPrm activation functions
 	- layer: Add Reccurent layer
+	- core: Some refactoring and bug fix
+
+:Version 0.2.0:
+
+	- net: Add Elman Recurrent network (newelm)
+	- net: Add Hopfield Recurrent network (newhop)
+	- trans: Add Satlin, Satlins activation functions
 	- core: Some refactoring and bug fix
