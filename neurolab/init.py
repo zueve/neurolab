@@ -95,3 +95,39 @@ def midpoint(layer):
     for i, w in enumerate(layer.np['w']):
         layer.np['w'][i] = mid.copy()
     return
+
+def initnw(layer):
+    ci = layer.ci
+    cn = layer.cn
+    w_fix = 0.7 * cn ** (1. / ci)
+    w_rand = np.random.rand(cn, ci) * 2 - 1
+    # Normalize
+    if ci == 1:
+        w_rand = w_rand / np.abs(w_rand)
+    else:
+        w_rand = np.sqrt(1. / np.square(w_rand).sum(axis=1).reshape(cn, 1)) * w_rand
+
+    w = w_fix * w_rand
+
+    b = np.array([0]) if cn == 1 else w_fix * np.linspace(-1, 1, cn) * np.sign(w[:, 0])
+
+    # Scaleble to inp_active
+    active = layer.transf.inp_active
+    x = 0.5 * (active[1] - active[0])
+    y = 0.5 * (active[1] + active[0])
+    w = x * w
+    b = x * b + y
+
+    # Scaleble to inp_minmax
+    minmax = layer.inp_minmax
+    x = 2. / (minmax[:, 1] - minmax[:, 0])
+    y = 1. - minmax[:, 1] * x
+    w = w * x
+    #print w.shape, y.reshape(ci, 1).shape, b.shape
+    b = np.dot(w, y) + b
+
+    #print layer.np['w'].shape
+    layer.np['w'][:] = w
+    layer.np['b'][:] = b
+
+    return
