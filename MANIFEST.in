@@ -2,4 +2,5 @@
 include CHANGELOG
 
 recursive-include example *.py
+recursive-include test *.py
 recursive-include doc *.py *.rst *.html *.png *.txt *.css *.js
