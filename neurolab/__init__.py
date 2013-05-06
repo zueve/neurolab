@@ -50,4 +50,4 @@ __version__ = '0.2.2'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha,
 #                       4 - Beta, 5 - Production/Stable
-__status__ = '3 - Alpha'
+__status__ = '5 - Production/Stable'
