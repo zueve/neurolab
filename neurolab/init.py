@@ -115,9 +115,12 @@ def initnw(layer):
     b = np.array([0]) if cn == 1 else w_fix * np.linspace(-1, 1, cn) * np.sign(w[:, 0])
 
     # Scaleble to inp_active
-    active = layer.transf.inp_active
-    x = 0.5 * (active[1] - active[0])
-    y = 0.5 * (active[1] + active[0])
+    amin, amax  = layer.transf.inp_active
+    amin = -1 if amin == -np.Inf else amin
+    amax = 1 if amax == np.Inf else amax
+
+    x = 0.5 * (amax - amin)
+    y = 0.5 * (amax + amin)
     w = x * w
     b = x * b + y
 
