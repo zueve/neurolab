@@ -82,7 +82,7 @@ def newff(minmax, size, transf=None):
         layers.append(l)
     connect = [[i - 1] for i in range(len(layers) + 1)]
 
-    net = Net(minmax, net_co, layers, connect, train.train_gdx, error.SSE())
+    net = Net(minmax, net_co, layers, connect, train.train_bfgs, error.SSE())
     return net
 
 
