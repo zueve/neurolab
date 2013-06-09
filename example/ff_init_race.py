@@ -21,7 +21,7 @@ target = y.reshape(len(x), 1)
 
 # Create network with 2 layers and random initialized
 net = nl.net.newff([[-7, 7]], [10, 1])
-
+net.trainf = nl.train.train_gdx
 # Init algorinms
 inits = {'reg': nl.init.initwb_reg,
          'rand [-1, 1]': nl.init.InitRand([-1.0, 1.0], 'wb'),
