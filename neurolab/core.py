@@ -4,7 +4,7 @@ Define Core Classes
 
 """
 import numpy as np
-import tool
+from . import tool
 
 
 class NeuroLabError(Exception):
@@ -276,8 +276,10 @@ class Trainer(object):
         self.defaults['epochs'] = epochs
         self.defaults['train'] = kwargs
         if Train.__init__.__defaults__:
-            cnt = Train.__init__.func_code.co_argcount
-            names = Train.__init__.func_code.co_varnames
+            #cnt = Train.__init__.func_code.co_argcount
+            cnt = Train.__init__.__code__.co_argcount
+            #names = Train.__init__.func_code.co_varnames
+            names = Train.__init__.__code__.co_varnames
             vals = Train.__init__.__defaults__
             st = cnt - len(vals)
             for k, v in zip(names[st: cnt], vals):
@@ -334,7 +336,7 @@ class Trainer(object):
             epoch = len(self.error)
             show = self.params['show']
             if show and (epoch % show) == 0:
-                print "Epoch: {0}; Error: {1};".format(epoch, err)
+                print("Epoch: {0}; Error: {1};".format(epoch, err))
             if err < self.params['goal']:
                 raise TrainStop('The goal of learning is reached')
             if epoch >= self.params['epochs']:
@@ -347,10 +349,10 @@ class Trainer(object):
             train(net, *args)
         except TrainStop as msg:
             if self.params['show']:
-                print msg
+                print(msg)
         else:
             if self.params['show'] and len(self.error) >= self.params['epochs']:
-                print "The maximum number of train epochs is reached"
+                print("The maximum number of train epochs is reached")
         return self.error
 
 

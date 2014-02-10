@@ -33,12 +33,13 @@ The module contains the basic network architectures
 
 """
 
-from core import Net
-import trans
-import layer
-import train
-import error
-import init
+from .core import Net
+
+from . import trans
+from . import layer
+from . import train
+from . import error
+from . import init
 import numpy as np
 
 

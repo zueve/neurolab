@@ -31,7 +31,7 @@ Delta rule
 
 """
 
-import gd, spo, wta, lvq, delta
+from . import gd, spo, wta, lvq, delta
 
 def trainer(Train):
     """ Trainner init """

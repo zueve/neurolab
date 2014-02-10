@@ -3,9 +3,9 @@
 The module contains the basic layers architectures
 
 """
-from core import Layer
-import init
-import trans
+from .core import Layer
+from . import init
+from . import trans
 
 import numpy as np
 
