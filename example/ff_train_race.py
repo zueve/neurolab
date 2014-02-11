@@ -45,7 +45,6 @@ for train in trains:
     e = cnet.train(input, target, epochs=100, show=0, goal=0)
     times.append(time.clock() - st)
     errors.append(e)
-print sum(times)
     
 # Plot result
 lables = [t._train_class.__name__[5:] for t in trains]

@@ -41,11 +41,11 @@ target[target == 0] = -1
 net = nl.net.newhop(target)
 
 output, ows = simhop(net, target)
-print "Test on train samples:"
+print("Test on train samples:")
 for i in range(len(target)): 
-    print chars[i], (output[i] == target[i]).all(), 'Sim. steps',len(ows[i])
+    print(chars[i], (output[i] == target[i]).all(), 'Sim. steps',len(ows[i]))
 
-print "\nTest on defaced N:"
+print("\nTest on defaced N:")
 test =np.asfarray([0,0,0,0,0,
                    1,1,0,0,1,
                    1,1,0,0,1,
@@ -53,4 +53,4 @@ test =np.asfarray([0,0,0,0,0,
                    0,0,0,1,1])
 test[test==0] = -1
 out, ows = simhop(net, [test])
-print (out[0] == target[0]).all(), 'Sim. steps',len(ows[0])
+print((out[0] == target[0]).all(), 'Sim. steps',len(ows[0]))
