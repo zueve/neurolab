@@ -278,7 +278,7 @@ def newhop(target, transf=None, max_init=10, delta=0):
     :Returns:
         net: Net
     :Example:
-        >>> net = newhop([[-1, -1, -1], [1, -1, 1]])
+        >>> net = newhem([[-1, -1, -1], [1, -1, 1]])
         >>> output = net.sim([[-1, 1, -1], [1, -1, 1]])
 
     """

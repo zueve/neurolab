@@ -236,10 +236,13 @@ def ff_grad(net, input, target):
 def simhop(net, input, n=10):
     """
     Simuate hopfied network
+	
+	OLD VERSION, now you may use newhop new with native sim method
+	This function may be deleted in future (use newhop(...).sim())
     
     :Parameters:
         net: Net
-            Simulated recurrent neural network like Hopfield (newhop)
+            Simulated recurrent neural network like Hopfield (newhop_old only)
         input: array like (N x net.ci)
             Train input patterns
         n: int (default 10)
@@ -251,9 +254,9 @@ def simhop(net, input, n=10):
         full_output: list of array
             Network outputs, including the intermediate results
     :Exmamle:
-        >>> from net import newhop
+        >>> from .net import newhop_old
         >>> target = [[-1, -1, -1], [1, -1, 1]]
-        >>> net = newhop(target)
+        >>> net = newhop_old(target)
         >>> simhop(net, target)[0]
         array([[-1., -1., -1.],
                [ 1., -1.,  1.]])
