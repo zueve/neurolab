@@ -44,11 +44,11 @@ to create and explore other neural network types.
 """
 
 
-__version__ = '0.3.0'
+__version__ = '0.3.1a'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha,
 #                       4 - Beta, 5 - Production/Stable
-__status__ = '4 - Beta'
+__status__ = '3 - Alpha'
 
 from .tool import load
 from . import net

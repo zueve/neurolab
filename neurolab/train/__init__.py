@@ -32,13 +32,15 @@ Delta rule
 """
 
 from . import gd, spo, wta, lvq, delta
+import functools
 
 def trainer(Train):
     """ Trainner init """
     from neurolab.core import Trainer
-    
-    c = Trainer(Train)
-    c.__doc__ = Train.__doc__
+    w = functools.wraps(Train)
+    c = w(Trainer(Train))
+    #c.__doc__ = Train.__doc__
+    print w
     return c
 
 # Initializing mains train functors
