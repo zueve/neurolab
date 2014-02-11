@@ -3,7 +3,6 @@ import doctests
 from trans import TestTrans
 from error import TestError
 
-#suite = unittest.TestSuite()
 suite = unittest.TestLoader().loadTestsFromModule(doctests)
 suite.addTest(unittest.makeSuite(TestTrans))
 suite.addTest(unittest.makeSuite(TestError))
