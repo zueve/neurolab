@@ -1,4 +1,3 @@
-﻿#coding: utf-8
 """ Setup file for neurolab package """
 
 from distutils.core import setup
@@ -9,9 +8,6 @@ def read(fname):
         return open(os.path.join(os.path.dirname(__file__), fname)).read()
     except IOError:
         return ''
-
-import neurolab as nl
-
 
 version = '0.3.1'
 status = '4 - Beta'
