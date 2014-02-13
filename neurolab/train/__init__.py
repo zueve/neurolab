@@ -40,7 +40,6 @@ def trainer(Train):
     w = functools.wraps(Train)
     c = w(Trainer(Train))
     #c.__doc__ = Train.__doc__
-    print w
     return c
 
 # Initializing mains train functors

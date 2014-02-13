@@ -1,4 +1,5 @@
-﻿""" Setup file for neurolab package """
+﻿#coding: utf-8
+""" Setup file for neurolab package """
 
 from distutils.core import setup
 import os
@@ -9,9 +10,11 @@ def read(fname):
     except IOError:
         return ''
 
-nl = __import__('neurolab')
-version = nl.__version__
-status = nl.__status__
+import neurolab as nl
+
+
+version = '0.3.1'
+status = '4 - Beta'
 
 
 setup(name='neurolab',
@@ -30,6 +33,8 @@ setup(name='neurolab',
             'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
             'Operating System :: OS Independent',
             'Programming Language :: Python',
+			'Programming Language :: Python :: 2',
+			'Programming Language :: Python :: 3',
             'Intended Audience :: Developers',
             'Intended Audience :: Science/Research',
             'Topic :: Software Development :: Libraries :: Python Modules',
