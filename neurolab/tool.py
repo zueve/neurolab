@@ -9,7 +9,7 @@ import numpy as np
 def minmax(input):
     """
     Calculate min, max for each row
-    
+
     """
     input = np.asfarray(input)
     assert input.ndim == 2
@@ -21,44 +21,44 @@ def minmax(input):
 
 class Norm:
     def __init__(self, x):
-        
+
         x = np.asfarray(x)
         if x.ndim != 2:
-            raise ValueError(u'x mast have 2 dimensions')
+            raise ValueError('x mast have 2 dimensions')
         min = np.min(x, axis=0)
         dist = np.max(x, axis=0) - min
-        
+
         min.shape = 1, min.size
         dist.shape = 1, dist.size
-        
+
         self.min = min
         self.dist = dist
-    
+
     def __call__(self, x):
         x = np.asfarray(x)
         res = (x - self.min) / self.dist
-        
+
         return res
-    
+
     def renorm(self, x):
         x = np.asfarray(x)
-        
+
         res = x * self.dist + self.min
         return res
-    
+
 #------------------------------------------------------------
 
 def load(fname):
     from cPickle import load
-    
+
     with open(fname, 'r') as file:
         net = load(file)
-    
+
     return net
-    
+
 def save(net, fname):
     from cPickle import dump
-    
+
     with open(fname, 'w') as file:
         dump(net, file)
 
@@ -67,9 +67,9 @@ def save(net, fname):
 def np_size(net):
     """
     Calculete count of al network parameters (weight, bias, ect...)
-    
+
     """
-    
+
     size = 0
     for l in net.layers:
         for prop in l.np.values():
@@ -79,7 +79,7 @@ def np_size(net):
 def np_get(net):
     """
     Get all network parameters in one array
-    
+
     """
     size = np_size(net)
     result = np.zeros(size)
@@ -93,7 +93,7 @@ def np_get(net):
 def np_set(net, np_data):
     """
     Set network parameters
-    
+
     :Example:
     >>> import neurolab as nl
     >>> net = nl.net.newff([[-1, 1]], [3, 1])
@@ -102,7 +102,7 @@ def np_set(net, np_data):
     >>> np_set(net, x)
     >>> net.layers[0].np['w'].tolist()
     [[100.0], [100.0], [100.0]]
-    
+
     """
     start = 0
     for l in net.layers:
@@ -117,7 +117,7 @@ def np_get_ref(net):
     """
     Get all network parameters in one array as referance
     Change array -> change networks
-    
+
     :Example:
     >>> import neurolab as nl
     >>> net = nl.net.newff([[-1, 1]], [3, 1])
@@ -125,7 +125,7 @@ def np_get_ref(net):
     >>> x.fill(10)
     >>> net.layers[0].np['w'].tolist()
     [[10.0], [10.0], [10.0]]
-    
+
     """
     size = np_size(net)
     x = np.empty(size)
@@ -144,7 +144,7 @@ def ff_grad_step(net, out, tar, grad=None):
     """
     Calc gradient with backpropogete method,
     for feed-forward neuran networks on each step
-    
+
     :Parametrs:
         net: Net
             Feed-forward network
@@ -160,7 +160,7 @@ def ff_grad_step(net, out, tar, grad=None):
         grad: list of dict
             Gradient of net for each layer,
             format:[{'w':..., 'b':...},{'w':..., 'b':...},...]
-            
+
     """
     delt = [None] * len(net.layers)
     if grad is None:
@@ -177,26 +177,26 @@ def ff_grad_step(net, out, tar, grad=None):
     delt[ln].shape = delt[ln].size, 1
     grad[ln]['w'] += delt[ln] * layer.inp
     grad[ln]['b'] += delt[ln].reshape(delt[ln].size)
-    
+
     bp = range(len(net.layers) -2, -1, -1)
     for ln in bp:
         layer = net.layers[ln]
         next = ln + 1
-        
+
         dS = np.sum(net.layers[next].np['w'] * delt[next], axis=0)
         delt[ln] = dS * layer.transf.deriv(layer.s, layer.out)
         delt[ln].shape = delt[ln].size, 1
-            
+
         grad[ln]['w'] += delt[ln] * layer.inp
         grad[ln]['b'] += delt[ln].reshape(delt[ln].size)
     return grad
-    
+
 
 def ff_grad(net, input, target):
     """
     Calc and accumulate gradient with backpropogete method,
     for feed-forward neuran networks on each step
-    
+
     :Parametrs:
         net: Net
             Feed-forward network
@@ -236,10 +236,10 @@ def ff_grad(net, input, target):
 def simhop(net, input, n=10):
     """
     Simuate hopfied network
-	
+
 	OLD VERSION, now you may use newhop new with native sim method
 	This function may be deleted in future (use newhop(...).sim())
-    
+
     :Parameters:
         net: Net
             Simulated recurrent neural network like Hopfield (newhop_old only)
@@ -247,9 +247,9 @@ def simhop(net, input, n=10):
             Train input patterns
         n: int (default 10)
             Maximum number of simulated steps
-    
+
     :Return:
-        output: array 
+        output: array
             Network outputs
         full_output: list of array
             Network outputs, including the intermediate results
@@ -260,15 +260,15 @@ def simhop(net, input, n=10):
         >>> simhop(net, target)[0]
         array([[-1., -1., -1.],
                [ 1., -1.,  1.]])
-    
+
     """
-    
+
     input = np.asfarray(input)
-    
+
     assert input.ndim == 2
     assert input.shape[1] == net.layers[-1].co
     assert input.shape[1] == net.ci
-    
+
     output = []
     for inp in input:
         net.layers[-1].out = inp
