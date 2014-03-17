@@ -37,9 +37,12 @@ import functools
 def trainer(Train):
     """ Trainner init """
     from neurolab.core import Trainer
-    w = functools.wraps(Train)
-    c = w(Trainer(Train))
-    #c.__doc__ = Train.__doc__
+    #w = functools.wraps(Train)
+    #c = w(Trainer(Train))
+    c = Trainer(Train)
+    c.__doc__ = Train.__doc__
+    c.__name__ = Train.__name__
+    c.__module__ = Train.__module__
     return c
 
 # Initializing mains train functors
