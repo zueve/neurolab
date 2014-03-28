@@ -1,4 +1,5 @@
-﻿import unittest
+﻿# coding: utf-8
+import unittest
 import numpy as np
 from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive, SatLin, SatLins, SoftMax, SatLinPrm
 

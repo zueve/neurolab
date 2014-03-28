@@ -1,3 +1,4 @@
+# coding: utf-8
 """ Setup file for neurolab package """
 
 from distutils.core import setup
@@ -9,7 +10,7 @@ def read(fname):
     except IOError:
         return ''
 
-version = '0.3.2'
+version = '0.3.3'
 status = '4 - Beta'
 
 doc = """
