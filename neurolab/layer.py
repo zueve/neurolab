@@ -50,6 +50,18 @@ class Perceptron(Layer):
         self.s += self.np['b']
         return self.transf(self.s)
 
+def euclidean(A, B):
+    """
+    Euclidean distance function.
+    See scipi.spatial.distance.cdist()
+
+    :Example:
+        >>> import numpy as np
+        >>> euclidean(np.array([0,0]), np.array([[0,1], [0, 5.5]])).tolist()
+        [1.0, 5.5]
+
+    """
+    return np.sqrt(np.sum(np.square(A-B) ,axis=1))
 
 class Competitive(Layer):
     """
@@ -71,18 +83,6 @@ class Competitive(Layer):
         self.initf = init.midpoint
         self.out_minmax[:] = np.array([self.transf.out_minmax] * cn)
         self.np['conscience'].fill(1.0)
-        def euclidean(A, B):
-            """
-            Euclidean distance function.
-            See scipi.spatial.distance.cdist()
-
-            :Example:
-                >>> import numpy as np
-                >>> euclidean(np.array([0,0]), np.array([[0,1], [0, 5.5]])).tolist()
-                [1.0, 5.5]
-
-            """
-            return np.sqrt(np.sum(np.square(A-B) ,axis=1))
 
         self.distf = euclidean
 

@@ -49,17 +49,17 @@ class Norm:
 #------------------------------------------------------------
 
 def load(fname):
-    from cPickle import load
+    from pickle import load
 
-    with open(fname, 'r') as file:
+    with open(fname, 'rb') as file:
         net = load(file)
 
     return net
 
 def save(net, fname):
-    from cPickle import dump
+    from pickle import dump
 
-    with open(fname, 'w') as file:
+    with open(fname, 'wb') as file:
         dump(net, file)
 
 #------------------------------------------------------------
