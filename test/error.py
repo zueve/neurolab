@@ -1,9 +1,10 @@
-﻿import unittest
+﻿# coding: utf-8
+import unittest
 import numpy as np
 from neurolab.error import MSE, SSE, SAE, MAE
 
 class TestError(unittest.TestCase):
-    
+
     def test_deriv(self):
         vars = np.arange(-100, 100, 2.5)
         test_fcns = [MSE(), SSE(), SAE(), MAE()]
@@ -12,7 +13,7 @@ class TestError(unittest.TestCase):
             x1 = np.array([x])
             r = (f(x2) - f(x1))/h
             return r
-        
+
         for test_fcn in test_fcns:
             for var in vars:
                 d1 = diff(test_fcn, var)
