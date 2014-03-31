@@ -10,7 +10,7 @@ def read(fname):
     except IOError:
         return ''
 
-version = '0.3.3'
+version = '0.3.4'
 status = '4 - Beta'
 
 doc = """
