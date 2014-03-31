@@ -1,3 +1,7 @@
+:Version 0.3.4:
+
+    - Some code fix for support Python 3k
+
 :Version 0.3.0:
 
     - Python 3 support (test on Python 3.3)
