@@ -5,9 +5,9 @@ from error import TestError
 from tool import TestTool
 
 suite = unittest.TestSuite()
-#suite.addTest(unittest.TestLoader().loadTestsFromModule(doctests))
-#suite.addTest(unittest.makeSuite(TestTrans))
-#suite.addTest(unittest.makeSuite(TestError))
+suite.addTest(unittest.TestLoader().loadTestsFromModule(doctests))
+suite.addTest(unittest.makeSuite(TestTrans))
+suite.addTest(unittest.makeSuite(TestError))
 suite.addTest(unittest.makeSuite(TestTool))
 
 if __name__ == "__main__":
