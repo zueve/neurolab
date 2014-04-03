@@ -10,8 +10,8 @@ def read(fname):
     except IOError:
         return ''
 
-version = '0.3.4'
-status = '4 - Beta'
+version = '0.3.5'
+status = '3 - Alpha'
 
 doc = """
 Neurolab is a simple and powerful Neural Network Library for Python.
