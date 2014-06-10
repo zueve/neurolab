@@ -125,7 +125,10 @@ def initnw(layer):
     b = x * b + y
 
     # Scaleble to inp_minmax
-    minmax = layer.inp_minmax
+    minmax = layer.inp_minmax.copy()
+    minmax[np.isneginf(minmax)] = -1
+    minmax[np.isinf(minmax)] = 1
+
     x = 2. / (minmax[:, 1] - minmax[:, 0])
     y = 1. - minmax[:, 1] * x
     w = w * x
