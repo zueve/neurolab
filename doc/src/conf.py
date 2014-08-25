@@ -48,9 +48,9 @@ copyright = u'2011, eje'
 # built documents.
 #
 # The short X.Y version.
-sys.path.insert(0, '../../neurolab')
+sys.path.insert(0, os.path.dirname(__file__) + '../../neurolab')
 
-v = __import__('__init__').__version__
+v = '0.3.4'#__import__('__init__').__version__
 version = v[:-v[::-1].find('.') - 1]
 # The full version, including alpha/beta/rc tags.
 release = v
@@ -220,4 +220,4 @@ man_pages = [
 ]
 
 #import sys
-#sys.path.append(r'../..')
+#sys.path.append(r'../..')
