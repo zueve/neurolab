@@ -48,16 +48,21 @@ def newff(minmax, size, transf=None):
     Create multilayer perceptron
 
     :Parameters:
-        minmax: list ci x 2
+        minmax: list of list, the outer list is the number of input neurons, 
+			inner lists must contain 2 elements: min and max
             Range of input value
-        size: list of length equal to the number of layers
+        size: the length of list equal to the number of layers except input layer, 
+			the element of the list is the neuron number for corresponding layer
             Contains the number of neurons for each layer
         transf: list (default TanSig)
             List of activation function for each layer
     :Returns:
         net: Net
     :Example:
-        >>> # create neural net with 2 inputs, 1 output and 2 layers
+        >>> # create neural net with 2 inputs
+		>>> # input range for each input is [-0.5, 0.5]
+		>>> # 3 neurons for hidden layer, 1 neuron for output
+		>>> # 2 layers including hidden layer and output layer
         >>> net = newff([[-0.5, 0.5], [-0.5, 0.5]], [3, 1])
         >>> net.ci
         2
@@ -92,9 +97,10 @@ def newp(minmax, cn, transf=trans.HardLim()):
     Create one layer perceptron
 
     :Parameters:
-        minmax: list ci x 2
+        minmax: list of list, the outer list is the number of input neurons, 
+			inner lists must contain 2 elements: min and max
             Range of input value
-        cn: int
+        cn: int, number of output neurons
             Number of neurons
         transf: func (default HardLim)
             Activation function
@@ -117,9 +123,10 @@ def newc(minmax, cn):
     Create competitive layer (Kohonen network)
 
     :Parameters:
-        minmax: list ci x 2
+        minmax: list of list, the outer list is the number of input neurons, 
+			inner lists must contain 2 elements: min and max
             Range of input value
-        cn: int
+        cn: int, number of output neurons
             Number of neurons
     :Returns:
         net: Net
@@ -140,7 +147,8 @@ def newlvq(minmax, cn0, pc):
     Create a learning vector quantization (LVQ) network
 
     :Parameters:
-        minmax: list ci x 2
+        minmax: list of list, the outer list is the number of input neurons, 
+			inner lists must contain 2 elements: min and max
             Range of input value
         cn0: int
             Number of neurons in input layer
@@ -180,16 +188,19 @@ def newelm(minmax, size, transf=None):
     Create a Elman recurrent network
 
     :Parameters:
-        minmax: list ci x 2
+        minmax: list of list, the outer list is the number of input neurons, 
+			inner lists must contain 2 elements: min and max
             Range of input value
-        size: list of length equal to the number of layers
+        size: the length of list equal to the number of layers except input layer, 
+			the element of the list is the neuron number for corresponding layer
             Contains the number of neurons for each layer
     :Returns:
         net: Net
     :Example:
+		>>> # 1 input, input range is [-1, 1], 1 output neuron, 1 layer including output layer
         >>> net = newelm([[-1, 1]], [1], [trans.PureLin()])
-        >>> net.layers[0].np['w'][:] = 1
-        >>> net.layers[0].np['b'][:] = 0
+        >>> net.layers[0].np['w'][:] = 1 # set weight for all input neurons to 1
+        >>> net.layers[0].np['b'][:] = 0 # set bias for all input neurons to 0
         >>> net.sim([[1], [1] ,[1], [3]])
         array([[ 1.],
                [ 2.],
