@@ -234,6 +234,9 @@ class SoftMax:
     def __call__(self, dist):
         exp = np.exp(dist)
         return exp / exp.sum()
+    
+    def deriv(self, x, y):
+        return y * (1 - y)
 
 
 class SatLins:

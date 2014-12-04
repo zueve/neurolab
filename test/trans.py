@@ -49,6 +49,7 @@ class TestTrans(unittest.TestCase):
         t_res = test_fcn(np.array(vars)).tolist()
         for m, t in zip(m_res, t_res):
             self.assertEqual(m, t)
+    
     def test_satlinprm(self):
         # like SatLin
         test_fcn = SatLinPrm(1, 0, 1)
@@ -91,7 +92,7 @@ class TestTrans(unittest.TestCase):
 
     def test_deriv(self):
         vars = np.arange(-100, 100, 2.5)
-        test_fcns = [TanSig(), PureLin(), LogSig(), HardLim(), HardLims(), SatLin(), SatLins(), SatLinPrm(1, 0, 1), SatLinPrm(1, -1, 1)]
+        test_fcns = [TanSig(), PureLin(), LogSig(), HardLim(), HardLims(), SatLin(), SatLins(), SatLinPrm(1, 0, 1), SatLinPrm(1, -1, 1), SoftMax()]
         def diff(f, x, h=1E-6):
             x1 = np.array([x - h])
             x2 = np.array([x])
