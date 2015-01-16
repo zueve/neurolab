@@ -373,4 +373,4 @@ class Train(object):
         """Only for train with teacher"""
         if output is None:
             output = net.sim(input)
-        return net.errorf(target - output)
+        return net.errorf(target, output)

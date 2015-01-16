@@ -33,12 +33,13 @@ class MSE():
 
     """
 
-    def __call__(self, e):
+    def __call__(self, target, output):
+        e = target - output
         N = e.size
         v =  np.sum(np.square(e)) / N
         return v
 
-    def deriv(self, e):
+    def deriv(self, target, output):
         """
         Derivative of MSE error function
 
@@ -56,7 +57,8 @@ class MSE():
             array([ 1.,  0.])
 
         """
-
+        
+        e = target - output
         N = len(e)
         d = e * (2 / N)
         return d
@@ -75,11 +77,12 @@ class SSE:
 
     """
 
-    def __call__(self, e):
+    def __call__(self, target, output):
+        e = target - output
         v = 0.5 * np.sum(np.square(e))
         return v
 
-    def deriv(self, e):
+    def deriv(self, target, output):
         """
         Derivative of SSE error function
 
@@ -91,7 +94,8 @@ class SSE:
                 Derivative: dE/d_out
 
         """
-        return e
+        
+        return target - output
 
 
 class SAE:
@@ -106,11 +110,12 @@ class SAE:
             Error value
     """
 
-    def __call__(self, e):
+    def __call__(self, target, output):
+        e = target - output
         v = np.sum(np.abs(e))
         return v
 
-    def deriv(self, e):
+    def deriv(self, target, output):
         """
         Derivative of SAE error function
 
@@ -122,6 +127,7 @@ class SAE:
                 Derivative: dE/d_out
 
         """
+        e = target - output
         d = np.sign(e)
         return d
 
@@ -138,11 +144,12 @@ class MAE:
             Error value
     """
 
-    def __call__(self, e):
+    def __call__(self, target, output):
+        e = target - output
         v = np.sum(np.abs(e)) / e.size
         return v
 
-    def deriv(self, e):
+    def deriv(self, target, output):
         """
         Derivative of SAE error function
 
@@ -154,5 +161,59 @@ class MAE:
                 Derivative: dE/d_out
 
         """
+        e = target - output
         d = np.sign(e) / e.size
         return d
+        
+
+class CEE:
+    """
+    Cross-entropy error function.
+    For use when targets in {0,1}
+    From kwecht https://github.com/kwecht/NeuroLab/blob/master/code/error.py
+    :Parameters:
+        target: ndarray
+            target values for network
+        output: ndarray
+            simulated output of network
+    :Keywords:
+        reg_param_w: float
+            Magnitude of regularization parameter for network weights
+        reg_param_b: float
+            Magnitude of regularization parameter for network biases
+    :Returns:
+        v: float
+            Error value
+    :Example:
+        >>> f = CEE()
+        >>> tar = np.array([1,1,0,0])
+        >>> out = np.array([0.99,0.01,0.2,0.01])
+        >>> x = f(tar,out)
+        1.212
+    """
+
+    def __call__(self, target, output):
+        # Objective term in cost function
+        n = target.size
+        v = - np.sum(target * np.nan_to_num(np.log(output)) + 
+                       (1.0 - target) * np.nan_to_num(np.log(1.0 - output))) / n
+        
+        return v
+
+    def deriv(self, target, output):
+        """
+        Derivative of CEE error function
+        :Parameters:
+            e: ndarray
+                current errors: target - output
+        :Returns:
+            d: ndarray
+                Derivative: dE/d_out
+        
+        """
+        e = target - output
+        n = e.size
+        #d = e
+        #dC/dy = - d/y + (1-d)/(1-y)
+        d = target / output + (1 - target) / (1 - output)
+        return - d / n
