@@ -213,7 +213,6 @@ class CEE:
         """
         e = target - output
         n = e.size
-        #d = e
         #dC/dy = - d/y + (1-d)/(1-y)
-        d = target / output + (1 - target) / (1 - output)
+        d = target / output - (1 - target) / (1 - output)
         return - d / n
