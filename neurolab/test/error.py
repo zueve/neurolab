@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
 import numpy as np
-from neurolab.error import MSE, SSE, SAE, MAE
+from neurolab.error import MSE, SSE, SAE, MAE, CEE
 
 class TestError(unittest.TestCase):
 
