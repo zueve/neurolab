@@ -1,7 +1,7 @@
-﻿# coding: utf-8
+# coding: utf-8
 import unittest
 import numpy as np
-from neurolab.error import MSE, SSE, SAE, MAE, CEE
+from neurolab.error import MSE, SSE, SAE, MAE
 
 class TestError(unittest.TestCase):
 
@@ -9,7 +9,6 @@ class TestError(unittest.TestCase):
         vars = np.arange(-100, 100, 2.5)
         vars = np.random.randn(100,2) * 50
         test_fcns = [MSE(), SSE(), SAE(), MAE()]
-        test_fcns = [CEE()]
         def diff2(f, x, y, h=1E-6):
             x2 = np.array([x + h])
             x1 = np.array([x])
