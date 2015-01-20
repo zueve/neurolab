@@ -24,4 +24,4 @@ class TestError(unittest.TestCase):
                 #print var, v1, v2
                 if not isinstance(test_fcns, SAE) \
                     and var[0] != 0.0 and var[1] != 0:
-                    self.assertAlmostEqual(d1, d2, 5)
+                    self.assertAlmostEqual(d1, d2, 3)
