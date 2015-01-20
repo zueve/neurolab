@@ -212,6 +212,7 @@ def ff_grad(net, input, target):
             format:[{'w':..., 'b':...},{'w':..., 'b':...},...]
         grad_flat: array
             All neurons propertys in 1 array (reference of grad)
+            Is link to grad (changes grad is changes grad_flat)
         output: array
             output of network
 
@@ -232,6 +233,57 @@ def ff_grad(net, input, target):
         output.append(out)
     return grad, grad_flat, np.row_stack(output)
 
+
+def reg_norms(net, ord=2):
+    """
+    Calculate norm of weights and and biases for calculating
+    the regularization term.
+    :Parameters:
+        net: neurolab net object
+    :Keywords:
+        ord: int
+            order of norm for regularization term. Usually in {1,2}
+    
+    """
+
+    # Assemble weights and biases into 1D vectors
+    w = []
+    b = []
+    for layer in net.layers:
+        w.extend(layer.np['w'].reshape(layer.np['w'].size))
+        b.extend(layer.np['b'].reshape(layer.np['b'].size))
+
+    # Calculate norms 
+    w = np.linalg.norm(w, ord=ord)
+    b = np.linalg.norm(b, ord=ord)
+
+    return w, b
+
+def reg_error(e, rr, net, ord):
+    """
+    Apply regularization for result of error function
+    
+    """
+    
+    w, b = reg_norms(net, ord)
+    e = e + rr * w + rr * b
+    return e
+
+def reg_grad(grad, net, rr):
+    """
+    Correction to gragient for regularization
+    :Parameters:
+        net: neurolab net object
+        grad: list of dict
+            grad without regularization
+        rr: float
+            regularization rate [0, 1]
+    
+    """
+    for i, l in enumerate(net.layers):
+        grad[i]['w'] += rr * l.np['w']
+        grad[i]['b'] += rr * l.np['b']
+    return grad
 
 def simhop(net, input, n=10):
     """
