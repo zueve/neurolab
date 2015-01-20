@@ -202,7 +202,7 @@ class CEE:
         t[t > (1 - eps)] = 1 - eps
         t[t < eps] = eps
         n = target.size
-        v = - np.sum(t * np.nan_to_num(np.log(y)) + (1 - t) * np.nan_to_num(np.log(1 - y))) / n
+        v = - np.sum(t * np.log(y) + (1 - t) * np.log(1 - y))
         
         return v
 
@@ -215,7 +215,7 @@ class CEE:
         """
         y = output.copy()
         t = target.copy()
-        eps = 0
+        eps = 0.0
         y[y > (1 - eps)] = 1 - eps
         y[y < eps] = eps
         t[t > (1 - eps)] = 1 - eps
@@ -225,7 +225,7 @@ class CEE:
         eps = np.spacing(1)
         dy = -t / (y + eps) + (1 - t) / (1 - y + eps)
         
-        return dy / n
+        return dy
         
 
 class CEE2:
