@@ -37,9 +37,8 @@ class TrainWTA(Train):
         winner_output = np.zeros_like(input)
         output = net.sim(input)
         winners = np.argmax(output, axis=1)
-        e =  layer.np['w'][winners] - input
         
-        return net.errorf(e)
+        return net.errorf(layer.np['w'][winners], input)
     
     def learn(self, net, input):
         layer = net.layers[0]
