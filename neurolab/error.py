@@ -194,9 +194,48 @@ class CEE:
 
     def __call__(self, target, output):
         # Objective term in cost function
+        y = output.copy()
+        t = target.copy()
+        eps = np.spacing(1)
+        y[y > (1 - eps)] = 1 - eps
+        y[y < eps] = eps
+        t[t > (1 - eps)] = 1 - eps
+        t[t < eps] = eps
         n = target.size
-        v = - np.sum(target * np.nan_to_num(np.log(output)) + 
-                       (1.0 - target) * np.nan_to_num(np.log(1.0 - output))) / n
+        v = - np.sum(t * np.nan_to_num(np.log(y)) + (1 - t) * np.nan_to_num(np.log(1 - y))) / n
+        
+        return v
+
+    def deriv(self, target, output):
+        """
+        y = max(min(y,1),0);
+        t = max(min(t,1),0);
+        dy = (-t./(y+eps)) + ((1-t)./(1-y+eps));
+        
+        """
+        y = output.copy()
+        t = target.copy()
+        eps = 0
+        y[y > (1 - eps)] = 1 - eps
+        y[y < eps] = eps
+        t[t > (1 - eps)] = 1 - eps
+        t[t < eps] = eps
+        n = y.size
+        #dC/dy = - d/y + (1-d)/(1-y)
+        eps = np.spacing(1)
+        dy = -t / (y + eps) + (1 - t) / (1 - y + eps)
+        
+        return dy / n
+        
+
+class CEE2:
+
+    def __call__(self, target, output):
+        # Objective term in cost function
+        N = target.size
+        v = -1.*np.sum(target*np.nan_to_num(np.log(output)) + 
+                       (1-target)*np.nan_to_num(np.log(1-output))) / N
+
         
         return v
 
@@ -204,15 +243,16 @@ class CEE:
         """
         Derivative of CEE error function
         :Parameters:
-            e: ndarray
-                current errors: target - output
+            target: ndarray
+                target values
+            output: ndarray
+                network predictions
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
         
         """
-        e = target - output
-        n = e.size
-        #dC/dy = - d/y + (1-d)/(1-y)
-        d = target / output - (1 - target) / (1 - output)
-        return - d / n
+
+        N = target.size
+        e = -1.*(target - output) / N
+        return -e

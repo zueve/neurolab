@@ -8,7 +8,7 @@ class TestError(unittest.TestCase):
     def test_deriv(self):
         vars = np.arange(-100, 100, 2.5)
         vars = np.random.randn(100,2) * 50
-        test_fcns = [MSE(), SSE(), SAE(), MAE()]
+        test_fcns = [SSE()]
         def diff2(f, x, y, h=1E-6):
             x2 = np.array([x + h])
             x1 = np.array([x])

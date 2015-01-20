@@ -174,6 +174,7 @@ def ff_grad_step(net, out, tar, grad=None):
     ln = len(net.layers) - 1
     layer = net.layers[ln]
     delt[ln] = net.errorf.deriv(tar, out) * layer.transf.deriv(layer.s, out)
+    delt[ln] = np.negative(delt[ln])
     delt[ln].shape = delt[ln].size, 1
     grad[ln]['w'] += delt[ln] * layer.inp
     grad[ln]['b'] += delt[ln].reshape(delt[ln].size)
