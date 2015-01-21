@@ -4,10 +4,10 @@
     :Example:
         >>> msef = MSE()
         >>> x = np.array([[1.0, 0.0], [2.0, 0.0]])
-        >>> msef(x)
+        >>> msef(x, 0)
         1.25
         >>> # calc derivative:
-        >>> msef.deriv(x[0])
+        >>> msef.deriv(x[0], 0)
         array([ 1.,  0.])
 
 """
@@ -20,15 +20,17 @@ class MSE():
     Mean squared error function
 
     :Parameters:
-        e: ndarray
-            current errors: target - output
+        target: ndarray
+            target values for network
+        output: ndarray
+            simulated output of network
     :Returns:
         v: float
             Error value
     :Example:
         >>> f = MSE()
         >>> x = np.array([[1.0, 0.0], [2.0, 0.0]])
-        >>> f(x)
+        >>> f(x, 0)
         1.25
 
     """
@@ -44,8 +46,10 @@ class MSE():
         Derivative of MSE error function
 
         :Parameters:
-            e: ndarray
-                current errors: target - output
+            target: ndarray
+                target values for network
+            output: ndarray
+                simulated output of network
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
@@ -53,7 +57,7 @@ class MSE():
             >>> f = MSE()
             >>> x = np.array([1.0, 0.0])
             >>> # calc derivative:
-            >>> f.deriv(x)
+            >>> f.deriv(x, 0)
             array([ 1.,  0.])
 
         """
@@ -69,8 +73,10 @@ class SSE:
     Sum squared error function
 
     :Parameters:
-        e: ndarray
-            current errors: target - output
+        target: ndarray
+            target values for network
+        output: ndarray
+            simulated output of network
     :Returns:
         v: float
             Error value
@@ -87,8 +93,10 @@ class SSE:
         Derivative of SSE error function
 
         :Parameters:
-            e: ndarray
-                current errors: target - output
+            target: ndarray
+                target values for network
+            output: ndarray
+                simulated output of network
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
@@ -103,11 +111,14 @@ class SAE:
     Sum absolute error function
 
     :Parameters:
-        e: ndarray
-            current errors: target - output
+        target: ndarray
+            target values for network
+        output: ndarray
+            simulated output of network
     :Returns:
         v: float
             Error value
+    
     """
 
     def __call__(self, target, output):
@@ -120,8 +131,10 @@ class SAE:
         Derivative of SAE error function
 
         :Parameters:
-            e: ndarray
-                current errors: target - output
+            target: ndarray
+                target values for network
+            output: ndarray
+                simulated output of network
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
@@ -137,11 +150,14 @@ class MAE:
     Mean absolute error function
 
     :Parameters:
-        e: ndarray
-            current errors: target - output
+        target: ndarray
+            target values for network
+        output: ndarray
+            simulated output of network
     :Returns:
         v: float
             Error value
+    
     """
 
     def __call__(self, target, output):
@@ -154,8 +170,10 @@ class MAE:
         Derivative of SAE error function
 
         :Parameters:
-            e: ndarray
-                current errors: target - output
+            target: ndarray
+                target values for network
+            output: ndarray
+                simulated output of network
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
@@ -170,26 +188,19 @@ class CEE:
     """
     Cross-entropy error function.
     For use when targets in {0,1}
-    From kwecht https://github.com/kwecht/NeuroLab/blob/master/code/error.py
+    
+    C = -sum( t * log(o) + (1 - t) * log(1 - o))
+    
+    Thanks kwecht https://github.com/kwecht
     :Parameters:
         target: ndarray
             target values for network
         output: ndarray
             simulated output of network
-    :Keywords:
-        reg_param_w: float
-            Magnitude of regularization parameter for network weights
-        reg_param_b: float
-            Magnitude of regularization parameter for network biases
     :Returns:
         v: float
             Error value
-    :Example:
-        >>> f = CEE()
-        >>> tar = np.array([1,1,0,0])
-        >>> out = np.array([0.99,0.01,0.2,0.01])
-        >>> x = f(tar,out)
-        1.212
+    
     """
 
     def __call__(self, target, output):
@@ -207,9 +218,18 @@ class CEE:
 
     def deriv(self, target, output):
         """
-        y = max(min(y,1),0);
-        t = max(min(t,1),0);
-        dy = (-t./(y+eps)) + ((1-t)./(1-y+eps));
+        Derivative of CEE error function
+        
+        dC/dy = - t/o + (1 - t) / (1 - o)
+
+        :Parameters:
+            target: ndarray
+                target values for network
+            output: ndarray
+                simulated output of network
+        :Returns:
+            d: ndarray
+                Derivative: dE/d_out
         
         """
         y = output.copy()

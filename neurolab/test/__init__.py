@@ -8,7 +8,7 @@ from .netff import TestFF
 from .net import TestNet
 
 suite = unittest.TestSuite()
-#suite.addTest(unittest.TestLoader().loadTestsFromModule(doctests))
+suite.addTest(unittest.TestLoader().loadTestsFromModule(doctests))
 suite.addTest(unittest.makeSuite(TestTrans))
 suite.addTest(unittest.makeSuite(TestError))
 suite.addTest(unittest.makeSuite(TestTool))
