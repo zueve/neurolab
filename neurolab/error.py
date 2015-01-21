@@ -201,9 +201,8 @@ class CEE:
         y[y < eps] = eps
         t[t > (1 - eps)] = 1 - eps
         t[t < eps] = eps
-        n = target.size
         v = - np.sum(t * np.log(y) + (1 - t) * np.log(1 - y))
-        
+        v /= t.size
         return v
 
     def deriv(self, target, output):
@@ -220,39 +219,8 @@ class CEE:
         y[y < eps] = eps
         t[t > (1 - eps)] = 1 - eps
         t[t < eps] = eps
-        n = y.size
         #dC/dy = - d/y + (1-d)/(1-y)
         eps = np.spacing(1)
-        dy = -t / (y + eps) + (1 - t) / (1 - y + eps)
-        
+        dy = t / (y + eps) - (1 - t) / (1 - y + eps)
+        dy /= t.size
         return dy
-        
-
-class CEE2:
-
-    def __call__(self, target, output):
-        # Objective term in cost function
-        N = target.size
-        v = -1.*np.sum(target*np.nan_to_num(np.log(output)) + 
-                       (1-target)*np.nan_to_num(np.log(1-output))) / N
-
-        
-        return v
-
-    def deriv(self, target, output):
-        """
-        Derivative of CEE error function
-        :Parameters:
-            target: ndarray
-                target values
-            output: ndarray
-                network predictions
-        :Returns:
-            d: ndarray
-                Derivative: dE/d_out
-        
-        """
-
-        N = target.size
-        e = -1.*(target - output) / N
-        return -e
