@@ -18,7 +18,7 @@ rand.shuffle(inp)
 # Create net with 2 inputs and 4 neurons
 net = nl.net.newc([[0.0, 1.0],[0.0, 1.0]], 4)
 # train with rule: Conscience Winner Take All algoritm (CWTA)
-error = net.train(inp, epochs=200, show=20)
+error = net.train(inp, epochs=200,1 show=20)
 
 # Plot results:
 import pylab as pl
