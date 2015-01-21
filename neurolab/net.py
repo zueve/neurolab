@@ -12,9 +12,9 @@ The module contains the basic network architectures
 | Multi-layer perceptron  |   newff    |  >=1    |   train_gd,     |   SSE    |
 |                         |            |         |   train_gdm,    |          |
 |                         |            |         |   train_gda,    |          |
-|                         |            |         |   train_gdx*,   |          |
+|                         |            |         |   train_gdx,    |          |
 |                         |            |         |   train_rprop,  |          |
-|                         |            |         |   train_bfgs,   |          |
+|                         |            |         |   train_bfgs*,  |          |
 |                         |            |         |   train_cg      |          |
 +-------------------------+------------+---------+-----------------+----------+
 |    Competitive layer    |    newc    |    1    |   train_wta,    |   SAE    |
