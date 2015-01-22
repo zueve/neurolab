@@ -262,13 +262,13 @@ def reg_norms(net, ord=2):
 
     return w, b
 
-def reg_error(e, rr, net, ord):
+def reg_error(e, net, rr):
     """
     Apply regularization for result of error function
     
     """
     
-    w, b = reg_norms(net, ord)
+    w, b = reg_norms(net)
     e = e + rr * w + rr * b
     return e
 

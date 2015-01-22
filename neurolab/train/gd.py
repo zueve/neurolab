@@ -28,25 +28,42 @@ class TrainGD(Train):
             learning rate
         adapt bool (default False)
             type of learning
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
     """
     
-    def __init__(self, net, input, target, lr=0.01, adapt=False):
+    def __init__(self, net, input, target, lr=0.01, adapt=False, rr=0.0):
         self.adapt = adapt
         self.lr = lr
+        self.rr = rr
         
     def __call__(self, net, input, target):
+
         if not self.adapt:
             while True:
                 g, output = self.calc(net, input, target)
+                # regularization grad
+                if self.rr > 0:
+                    g = tool.reg_grad(g, net, self.rr)
                 e = self.error(net, input, target, output)
+                # regularization error
+                if self.rr:
+                    e = tool.reg_error(e, net, self.rr)
                 self.epochf(e, net, input, target)
                 self.learn(net, g)
         else:
             while True:
                 for i in range(input.shape[0]):
                     g = self.calc(net, [input[i]], [target[i]])[0]
+                    # regularization grad
+                    if self.rr > 0:
+                        g = tool.reg_grad(g, net, self.rr)
                     self.learn(net, g)
                 e = self.error(net, input, target)
+                # regularization error
+                if self.rr:
+                    e = reg_error(e, self.rr, net)
                 self.epochf(e, net, input, target)
         return None
             
@@ -90,6 +107,8 @@ class TrainGD2(TrainGD):
         self.adapt = adapt
         self.lr = lr
         self.x = tool.np_get_ref(net)
+        # Regularization not suppotr
+        self.rr = 0 
     
     def calc(self, net, input, target):
         g1, g2, output = tool.ff_grad(net, input, target)
@@ -120,11 +139,16 @@ class TrainGDM(TrainGD):
             learning rate
         adapt bool (default False)
             type of learning
+        mc: float (default 0.9)
+            Momentum constant
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
     
     """
 
-    def __init__(self, net, input, target, lr=0.01, adapt=False, mc=0.9):
-        super(TrainGDM, self).__init__(net, input, target, lr, adapt)
+    def __init__(self, net, input, target, lr=0.01, adapt=False, mc=0.9, rr=.0):
+        super(TrainGDM, self).__init__(net, input, target, lr, adapt, rr)
         self.mc = mc
         self.dw = [0] * len(net.layers)
         self.db = [0] * len(net.layers)
@@ -167,11 +191,15 @@ class TrainGDA(TrainGD):
             Ratio to decrease learning rate
         max_perf_inc:float (> 1, default 1.04)
             Maximum performance increase
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
     
     """
-    def __init__(self, net, input, target, lr=0.01, adapt=False, lr_inc=1.05, 
-                                                lr_dec=0.7, max_perf_inc=1.04):
-        super(TrainGDA, self).__init__(net, input, target, lr, adapt)
+    def __init__(self, net, input, target, lr=0.01, adapt=False, 
+                                                    lr_inc=1.05, lr_dec=0.7, 
+                                                    max_perf_inc=1.04, rr=.0):
+        super(TrainGDA, self).__init__(net, input, target, lr, adapt, rr)
         self.lr_inc = lr_inc
         self.lr_dec = lr_dec
         self.max_perf_inc = max_perf_inc
@@ -222,13 +250,17 @@ class TrainGDX(TrainGDA, TrainGDM):
             Maximum performance increase
         mc: float (default 0.9)
             Momentum constant
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
     
     """
     def __init__(self, net, input, target, lr=0.01, adapt=False, lr_inc=1.05, 
-                                        lr_dec=0.7, max_perf_inc=1.04, mc=0.9):
+                                        lr_dec=0.7, max_perf_inc=1.04, 
+                                        mc=0.9, rr =.0):
         """ init gdm"""
         super(TrainGDX, self).__init__(net, input, target, lr, adapt, lr_inc, 
-                                        lr_dec, max_perf_inc)
+                                        lr_dec, max_perf_inc, rr)
         self.mc = mc
         
     
