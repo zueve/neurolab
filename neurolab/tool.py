@@ -154,7 +154,7 @@ def ff_grad_step(net, out, tar, grad=None):
             Train target
         deriv: callable
             Derivative of error function
-        grad:list of dict default(None)
+        grad: list of dict default(None)
             Grad on previous step
     :Returns:
         grad: list of dict
@@ -213,13 +213,14 @@ def ff_grad(net, input, target):
             format:[{'w':..., 'b':...},{'w':..., 'b':...},...]
         grad_flat: array
             All neurons propertys in 1 array (reference of grad)
-            Is link to grad (changes grad is changes grad_flat)
+            It link to grad (changes grad is changes grad_flat)
         output: array
             output of network
 
     """
-    grad_flat = np.zeros(np_size(net))
+    # Init grad and link to grad_falt
     grad = []
+    grad_flat = np.zeros(np_size(net))
     st = 0
     for i, l in enumerate(net.layers):
         grad.append({})
@@ -228,6 +229,7 @@ def ff_grad(net, input, target):
             grad[i][k].shape = v.shape
             st += v.size
     output = []
+    # Calculate grad for all batch
     for inp, tar in zip(input, target):
         out = net.step(inp)
         ff_grad_step(net, out, tar, grad)
