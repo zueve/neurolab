@@ -13,22 +13,28 @@ class TrainSO(Train):
 
     """
 
-    def __init__(self, net, input, target, **kwargs):
+    def __init__(self, net, input, target, rr=0, **kwargs):
         self.net = net
         self.input = input
         self.target = target
         self.kwargs = kwargs
         self.x = tool.np_get_ref(net)
         self.lerr = 1e10
+        self.rr = rr
 
     def grad(self, x):
         self.x[:] = x
-        gr = tool.ff_grad(self.net, self.input, self.target)[1]
-        return gr
+        g, g_flat, output = tool.ff_grad(self.net, self.input, self.target)
+        if self.rr:
+            # g_flat is link to g
+            tool.reg_grad(g, self.net, self.rr)
+        return g_flat
 
     def fcn(self, x):
         self.x[:] = x
         err = self.error(self.net, self.input, self.target)
+        if self.rr:
+            eee = tool.reg_error(err, self.net, self.rr)
         self.lerr = err
         return err
 
@@ -57,6 +63,9 @@ class TrainBFGS(TrainSO):
             Print period
         goal: float (default 0.01)
             The goal of train
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
 
     """
 
@@ -89,7 +98,10 @@ class TrainCG(TrainSO):
             Print period
         goal: float (default 0.01)
             The goal of train
-
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
+        
     """
 
     def __call__(self, net, input, target):
@@ -119,7 +131,10 @@ class TrainNCG(TrainSO):
             Print period
         goal: float (default 0.01)
             The goal of train
-
+        rr float (defaults 0.0)
+            Regularization ratio
+            Must be between {0, 1}
+        
     """
 
     def __call__(self, net, input, target):
