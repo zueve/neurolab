@@ -283,9 +283,9 @@ def newhop(target, transf=None, max_init=10, delta=0):
         transf: func (default HardLims)
             Activation function
         max_init: int (default 10)
-            Maximum of recurent iterations
+            Maximum of recurrent iterations
         delta: float (default 0)
-            Minimum diference between 2 outputs for stop reccurent cycle
+            Minimum difference between 2 outputs for stop recurrent cycle
     :Returns:
         net: Net
     :Example:
@@ -330,9 +330,9 @@ def newhem(target, transf=None, max_iter=10, delta=0):
         transf: func (default SatLinPrm(0.1, 0, 10))
             Activation function of input layer
         max_init: int (default 10)
-            Maximum of recurent iterations
+            Maximum of recurrent iterations
         delta: float (default 0)
-            Minimum diference between 2 outputs for stop reccurent cycle
+            Minimum dereference between 2 outputs for stop recurrent cycle
     :Returns:
         net: Net
     :Example:

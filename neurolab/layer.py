@@ -96,8 +96,8 @@ class Competitive(Layer):
 
 class Reccurent(Layer):
     """
-    Perceptron like Layer class, with inner reccurent cycle
-    Reccurent cycle stop when layer output is not changes
+    Perceptron like Layer class, with inner recurrent cycle
+    Recurrent cycle stop when layer output is not changes
 
     :Parameters:
         ci: int
@@ -107,9 +107,9 @@ class Reccurent(Layer):
         transf: callable
             Transfer function
         max_iter: int
-            Maximum of recurent iterations
+            Maximum of recurrent iterations
         delta: float
-            Minimum diference between 2 outputs for stop reccurent cycle
+            Minimum difference between 2 outputs for stop recurrent cycle
     :Example:
         >>> import neurolab as nl
         >>> # create layer with 2 inputs and 4 outputs(neurons)

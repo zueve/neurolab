@@ -9,7 +9,7 @@ import neurolab.tool as tool
 
 class TrainGD(Train):
     """
-    Gradient descent backpropagation
+    Gradient descent backpropogation
     
     :Support networks:
         newff (multi-layers perceptron)
@@ -183,7 +183,7 @@ class TrainGDA(TrainGD):
             The goal of train
         lr: float (defaults 0.01)
             learning rate
-        adapt: bool (detault False)
+        adapt: bool (default False)
             type of learning
         lr_inc: float (> 1, default 1.05)
             Ratio to increase learning rate
@@ -240,7 +240,7 @@ class TrainGDX(TrainGDA, TrainGDM):
             The goal of train
         lr: float (defaults 0.01)
             learning rate
-        adapt: bool (detault False)
+        adapt: bool (default False)
             type of learning
         lr_inc: float (default 1.05)
             Ratio to increase learning rate
@@ -328,7 +328,7 @@ class TrainRprop(TrainGD2):
 
 class TrainRpropM(TrainRprop):
     """
-    Resilient Backpropagation Modified
+    Resilient Backpropogation Modified
     (with back-step when grad change sign)
     :Support networks:
         newff (multi-layers perceptron)

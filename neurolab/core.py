@@ -35,18 +35,18 @@ class Net(object):
         
     :Connect format:
         Example 1: for two-layers feed forwad network
-            >>> connect = [[-1], # - layer 0 reseives the input network signal;
-            ...            [0],  # - layer 1 reseives the output signal
+            >>> connect = [[-1], # - layer 0 receives the input network signal;
+            ...            [0],  # - layer 1 receives the output signal
             ...                  # from the layer 0;
-            ...            [1]]  # - the network exit reseives the output
+            ...            [1]]  # - the network exit receives the output
             ...                  # signal from the layer 1.
 
         Example 2: for two-layers Elman network with derivatives:
-            >>> connect = [[-1, 0], # - layer 0 reseives the input network
+            >>> connect = [[-1, 0], # - layer 0 receives the input network
             ...                     # signal and output signal from layer 0;
-            ...            [0],     # - layer 1 reseives the output
+            ...            [0],     # - layer 1 receives the output
             ...                     # signal from the layer 0;
-            ...            [1]]     # - the network exit reseives the output
+            ...            [1]]     # - the network exit receives the output
             ...                     # signals from the layer 1.
 
         """
@@ -208,7 +208,7 @@ class Layer(object):
         co: int
             Number of outputs
         property: dict
-            propety: array shape
+            property: array shape
             example: {'w': (10, 1), 'b': 10}
 
     """

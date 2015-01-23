@@ -66,7 +66,7 @@ def save(net, fname):
 
 def np_size(net):
     """
-    Calculete count of al network parameters (weight, bias, ect...)
+    Calculate count of al network parameters (weight, bias, etc...)
 
     """
 
@@ -115,7 +115,7 @@ def np_set(net, np_data):
 
 def np_get_ref(net):
     """
-    Get all network parameters in one array as referance
+    Get all network parameters in one array as reference
     Change array -> change networks
 
     :Example:
@@ -143,7 +143,7 @@ def np_get_ref(net):
 def ff_grad_step(net, out, tar, grad=None):
     """
     Calc gradient with backpropogete method,
-    for feed-forward neuran networks on each step
+    for feed-forward neuron networks on each step
 
     :Parametrs:
         net: Net
@@ -196,9 +196,9 @@ def ff_grad_step(net, out, tar, grad=None):
 def ff_grad(net, input, target):
     """
     Calc and accumulate gradient with backpropogete method,
-    for feed-forward neuran networks on each step
+    for feed-forward neuron networks on each step
 
-    :Parametrs:
+    :Parameters:
         net: Net
             Feed-forward network
         input: array, shape = N,net.ci
@@ -209,10 +209,10 @@ def ff_grad(net, input, target):
             Derivative of error function
     :Returns:
         grad: list of dict
-            Dradient of net for each layer,
+            Gradient of net for each layer,
             format:[{'w':..., 'b':...},{'w':..., 'b':...},...]
         grad_flat: array
-            All neurons propertys in 1 array (reference of grad)
+            All neurons property's in 1 array (reference of grad)
             It link to grad (changes grad is changes grad_flat)
         output: array
             output of network
@@ -264,24 +264,38 @@ def reg_norms(net, ord=2):
 
 def reg_error(e, net, rr):
     """
-    Apply regularization for result of error function
+    Apply regularization for result to error function
     
+    :Parameters:
+        e: float
+            current error position
+        net: neurolab net object
+        rr: float
+            regularization rate [0, 1]
+    :Return:
+        output: array
+        Gradient with regularization
+        
     """
     
     w, b = reg_norms(net)
-    e = e + rr * w + rr * b
+    e += rr * w + rr * b
     return e
 
 def reg_grad(grad, net, rr):
     """
-    Correction to gragient for regularization
+    Correction gradient for regularization
+    
     :Parameters:
-        net: neurolab net object
         grad: list of dict
             grad without regularization
+        net: neurolab net object
         rr: float
             regularization rate [0, 1]
-    
+    :Return:
+        output: array
+        Gradient with regularization
+        
     """
     for i, l in enumerate(net.layers):
         grad[i]['w'] += rr * l.np['w']
@@ -308,7 +322,7 @@ def simhop(net, input, n=10):
             Network outputs
         full_output: list of array
             Network outputs, including the intermediate results
-    :Exmamle:
+    :Example:
         >>> from .net import newhop_old
         >>> target = [[-1, -1, -1], [1, -1, 1]]
         >>> net = newhop_old(target)

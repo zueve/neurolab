@@ -9,10 +9,10 @@ from neurolab.core import TrainStop
         
 class TrainWTA(Train):
     """ 
-    Winner Take All algoritm
+    Winner Take All algorithm
     
     :Support networks:
-        newc (cohonen layer)
+        newc (kohonen layer)
     :Parameters:
         input: array like (l x net.ci)
             train input patterns

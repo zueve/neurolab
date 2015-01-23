@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 """
-Train algorithms based  gradients algorihms
+Train algorithms based  gradients algorithms
 ===========================================
 
 .. autofunction:: train_gd
