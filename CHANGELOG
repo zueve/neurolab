@@ -1,3 +1,10 @@
+:Version 0.3.5:
+	
+	- train: Add train with regularization to ff nets
+	- error: Add CEE cross entropy error function (Thx github.com/kwecht)
+	- Add more new tests
+	- Some doc fixs (Thx gaoshenghan199123)
+	
 :Version 0.3.4:
 
     - Some code fix for support Python 3k
@@ -15,9 +22,9 @@
 :Version 0.2.1:
 
 	- net: Add Hemming Recurrent network (newhem)
-	- net: Aaa new Hopfield network, now use Reccurent layer and not need simhop function
+	- net: Aaa new Hopfield network, now use Recurrent layer and not need simhop function
 	- trans: Add SoftMax, SatlinPrm activation functions
-	- layer: Add Reccurent layer
+	- layer: Add Recurrent layer
 	- core: Some refactoring and bug fix
 
 :Version 0.2.0:
