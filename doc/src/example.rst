@@ -17,4 +17,3 @@ IPython Notebooks
 #########
 
 * `Regularization <http://nbviewer.ipython.org/urls/neurolab.googlecode.com/svn/trunk/example/Neurolab%20-%20Regularization.ipynb>`_
-
