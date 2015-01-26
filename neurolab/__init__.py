@@ -44,7 +44,7 @@ to create and explore other neural network types.
 """
 
 
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 
 # Development Status :: 1 - Planning, 2 - Pre-Alpha, 3 - Alpha,
 #                       4 - Beta, 5 - Production/Stable
