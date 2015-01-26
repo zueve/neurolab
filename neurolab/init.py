@@ -14,8 +14,8 @@ def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
     random numbers within specified limits
 
     :Parameters:
-        layer:
-            Initialized layer
+        layer: core.Layer object
+            Initialization layer
         min: float (default -0.5)
             minimum value after the initialization
         max: float (default 0.5)
@@ -33,7 +33,11 @@ def initwb_reg(layer):
     """
     Initialize weights and bias
     in the range defined by the activation function (transf.inp_active)
-
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
+    
     """
     active = layer.transf.inp_active[:]
 
@@ -50,12 +54,43 @@ def initwb_reg(layer):
     if 'b' in layer.np:
         init_rand(layer, min, max, 'b')
 
+def initwb_lin(layer):
+    """
+    Initialize weights and bias
+    linspace betweene active space,
+    not random values
+    
+    This function need for tests
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
+    """
+    active = layer.transf.inp_active[:]
+
+    if np.isinf(active[0]):
+        active[0] = -100.0
+
+    if np.isinf(active[1]):
+        active[1] = 100.0
+
+    min = active[0] / (2 * layer.cn)
+    max = active[1] / (2 * layer.cn)
+    
+    for k in layer.np:
+        inits = np.linspace(min, max, layer.np[k].size)
+        inits.shape = layer.np[k].shape
+        layer.np[k] = inits
+    
 
 class InitRand:
     """
     Initialize the specified properties of the layer
     random numbers within specified limits
-
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
     """
     def __init__(self, minmax, init_prop):
         """
@@ -79,7 +114,10 @@ class InitRand:
 def init_zeros(layer):
     """
     Set all layer properties of zero
-
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
     """
     for k in layer.np:
         layer.np[k].fill(0.0)
@@ -89,7 +127,10 @@ def init_zeros(layer):
 def midpoint(layer):
     """
     Sets weight to the center of the input ranges
-
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
     """
     mid = layer.inp_minmax.mean(axis=1)
     for i, w in enumerate(layer.np['w']):
@@ -99,7 +140,10 @@ def midpoint(layer):
 def initnw(layer):
     """
     Nguyen-Widrow initialization function
-
+    
+    :Parameters:
+        layer: core.Layer object
+            Initialization layer
     """
     ci = layer.ci
     cn = layer.cn
