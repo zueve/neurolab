@@ -17,6 +17,8 @@ class TrainDelta(Train):
     :Parameters:
         input: array like (l x net.ci)
             train input patterns
+        target: array like (l x net.co)
+            train target patterns
         epochs: int (default 500)
             Number of train epochs
         show: int (default 100)
