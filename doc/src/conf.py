@@ -219,5 +219,5 @@ man_pages = [
      [u'Evgenij Zuev'], 1)
 ]
 
-#import sys
-#sys.path.append(r'../..')
+import sys
+sys.path.append(r'..')
