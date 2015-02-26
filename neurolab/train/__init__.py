@@ -34,6 +34,7 @@ Delta rule
 from . import gd, spo, wta, lvq, delta
 import functools
 
+
 def trainer(Train, **kwargs):
     """ Trainner init """
     from neurolab.core import Trainer

@@ -15,7 +15,8 @@ suite.addTest(unittest.makeSuite(TestTool))
 suite.addTest(unittest.makeSuite(TestFF))
 suite.addTest(unittest.makeSuite(TestNet))
 
+
 def test():
-    import neurolab as nl    
-    print('Neurolab version {}'.format(nl.__version__))    
+    import neurolab as nl
+    print('Neurolab version {}'.format(nl.__version__))
     unittest.TextTestRunner(verbosity=2).run(suite)

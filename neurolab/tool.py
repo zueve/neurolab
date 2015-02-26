@@ -20,6 +20,7 @@ def minmax(input):
 
 
 class Norm:
+
     def __init__(self, x):
 
         x = np.asfarray(x)
@@ -48,6 +49,7 @@ class Norm:
 
 #------------------------------------------------------------
 
+
 def load(fname):
     from pickle import load
 
@@ -56,6 +58,7 @@ def load(fname):
 
     return net
 
+
 def save(net, fname):
     from pickle import dump
 
@@ -63,6 +66,7 @@ def save(net, fname):
         dump(net, file)
 
 #------------------------------------------------------------
+
 
 def np_size(net):
     """
@@ -76,6 +80,7 @@ def np_size(net):
             size += prop.size
     return size
 
+
 def np_get(net):
     """
     Get all network parameters in one array
@@ -86,9 +91,10 @@ def np_get(net):
     start = 0
     for l in net.layers:
         for prop in l.np.values():
-            result[start: start+prop.size] = prop.flat[:]
+            result[start: start + prop.size] = prop.flat[:]
             start += prop.size
     return result
+
 
 def np_set(net, np_data):
     """
@@ -108,10 +114,11 @@ def np_set(net, np_data):
     for l in net.layers:
         for prop in l.np:
             size = l.np[prop].size
-            values = np_data[start: start+size]
+            values = np_data[start: start + size]
             values.shape = l.np[prop].shape
             l.np[prop][:] = values
             start += size
+
 
 def np_get_ref(net):
     """
@@ -139,6 +146,7 @@ def np_get_ref(net):
     return x
 
 #------------------------------------------------------------
+
 
 def ff_grad_step(net, out, tar, grad=None):
     """
@@ -179,7 +187,7 @@ def ff_grad_step(net, out, tar, grad=None):
     grad[ln]['w'] += delt[ln] * layer.inp
     grad[ln]['b'] += delt[ln].reshape(delt[ln].size)
 
-    bp = range(len(net.layers) -2, -1, -1)
+    bp = range(len(net.layers) - 2, -1, -1)
     for ln in bp:
         layer = net.layers[ln]
         next = ln + 1
@@ -246,7 +254,7 @@ def reg_norms(net, ord=2):
     :Keywords:
         ord: int
             order of norm for regularization term. Usually in {1,2}
-    
+
     """
 
     # Assemble weights and biases into 1D vectors
@@ -256,16 +264,17 @@ def reg_norms(net, ord=2):
         w.extend(layer.np['w'].reshape(layer.np['w'].size))
         b.extend(layer.np['b'].reshape(layer.np['b'].size))
 
-    # Calculate norms 
+    # Calculate norms
     w = np.linalg.norm(w, ord=ord)
     b = np.linalg.norm(b, ord=ord)
 
     return w, b
 
+
 def reg_error(e, net, rr):
     """
     Apply regularization for result to error function
-    
+
     :Parameters:
         e: float
             current error position
@@ -275,17 +284,18 @@ def reg_error(e, net, rr):
     :Return:
         output: array
         Gradient with regularization
-        
+
     """
-    
+
     w, b = reg_norms(net)
     e += rr * w + rr * b
     return e
 
+
 def reg_grad(grad, net, rr):
     """
     Correction gradient for regularization
-    
+
     :Parameters:
         grad: list of dict
             grad without regularization
@@ -295,7 +305,7 @@ def reg_grad(grad, net, rr):
     :Return:
         output: array
         Gradient with regularization
-        
+
     """
     for i, l in enumerate(net.layers):
         grad[i]['w'] += rr * l.np['w']

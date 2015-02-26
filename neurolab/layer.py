@@ -11,6 +11,7 @@ import numpy as np
 
 
 class Perceptron(Layer):
+
     """
     Perceptron Layer class
 
@@ -50,6 +51,7 @@ class Perceptron(Layer):
         self.s += self.np['b']
         return self.transf(self.s)
 
+
 def euclidean(A, B):
     """
     Euclidean distance function.
@@ -61,9 +63,11 @@ def euclidean(A, B):
         [1.0, 5.5]
 
     """
-    return np.sqrt(np.sum(np.square(A-B) ,axis=1))
+    return np.sqrt(np.sum(np.square(A - B), axis=1))
+
 
 class Competitive(Layer):
+
     """
     Competitive Layer class
 
@@ -88,13 +92,14 @@ class Competitive(Layer):
 
     def _step(self, inp):
 
-        d = self.distf(self.np['w'], inp.reshape([1,len(inp)]))
+        d = self.distf(self.np['w'], inp.reshape([1, len(inp)]))
         self.last_dist = d
         out = self.transf(self.np['conscience'] * d)
         return out
 
 
 class Reccurent(Layer):
+
     """
     Perceptron like Layer class, with inner recurrent cycle
     Recurrent cycle stop when layer output is not changes

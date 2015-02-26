@@ -27,17 +27,21 @@ def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
 
     if init_prop not in layer.np:
         raise ValueError('Layer not have attibute "' + init_prop + '"')
-    layer.np[init_prop] = np.random.uniform(min, max, layer.np[init_prop].shape)
+    layer.np[init_prop] = np.random.uniform(
+        min,
+        max,
+        layer.np[init_prop].shape)
+
 
 def initwb_reg(layer):
     """
     Initialize weights and bias
     in the range defined by the activation function (transf.inp_active)
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
-    
+
     """
     active = layer.transf.inp_active[:]
 
@@ -54,14 +58,15 @@ def initwb_reg(layer):
     if 'b' in layer.np:
         init_rand(layer, min, max, 'b')
 
+
 def initwb_lin(layer):
     """
     Initialize weights and bias
     linspace betweene active space,
     not random values
-    
+
     This function need for tests
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
@@ -76,22 +81,24 @@ def initwb_lin(layer):
 
     min = active[0] / (2 * layer.cn)
     max = active[1] / (2 * layer.cn)
-    
+
     for k in layer.np:
         inits = np.linspace(min, max, layer.np[k].size)
         inits.shape = layer.np[k].shape
         layer.np[k] = inits
-    
+
 
 class InitRand:
+
     """
     Initialize the specified properties of the layer
     random numbers within specified limits
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
     """
+
     def __init__(self, minmax, init_prop):
         """
         :Parameters:
@@ -114,7 +121,7 @@ class InitRand:
 def init_zeros(layer):
     """
     Set all layer properties of zero
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
@@ -127,7 +134,7 @@ def init_zeros(layer):
 def midpoint(layer):
     """
     Sets weight to the center of the input ranges
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
@@ -137,10 +144,11 @@ def midpoint(layer):
         layer.np['w'][i] = mid.copy()
     return
 
+
 def initnw(layer):
     """
     Nguyen-Widrow initialization function
-    
+
     :Parameters:
         layer: core.Layer object
             Initialization layer
@@ -153,13 +161,15 @@ def initnw(layer):
     if ci == 1:
         w_rand = w_rand / np.abs(w_rand)
     else:
-        w_rand = np.sqrt(1. / np.square(w_rand).sum(axis=1).reshape(cn, 1)) * w_rand
+        w_rand = np.sqrt(
+            1. / np.square(w_rand).sum(axis=1).reshape(cn, 1)) * w_rand
 
     w = w_fix * w_rand
-    b = np.array([0]) if cn == 1 else w_fix * np.linspace(-1, 1, cn) * np.sign(w[:, 0])
+    b = np.array([0]) if cn == 1 else w_fix * \
+        np.linspace(-1, 1, cn) * np.sign(w[:, 0])
 
     # Scaleble to inp_active
-    amin, amax  = layer.transf.inp_active
+    amin, amax = layer.transf.inp_active
     amin = -1 if amin == -np.Inf else amin
     amax = 1 if amax == np.Inf else amax
 

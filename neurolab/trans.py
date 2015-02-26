@@ -18,6 +18,7 @@ import numpy as np
 
 
 class TanSig:
+
     """
     Hyperbolic tangent sigmoid transfer function
 
@@ -49,6 +50,7 @@ class TanSig:
 
 
 class PureLin:
+
     """
     Linear transfer function
 
@@ -82,6 +84,7 @@ class PureLin:
 
 
 class LogSig:
+
     """
     Logarithmic sigmoid transfer function
 
@@ -116,6 +119,7 @@ class LogSig:
 
 
 class HardLim:
+
     """
     Hard limit transfer function
 
@@ -149,6 +153,7 @@ class HardLim:
 
 
 class HardLims:
+
     """
     Symmetric hard limit transfer function
 
@@ -181,6 +186,7 @@ class HardLims:
 
 
 class Competitive:
+
     """
     Competitive transfer function
 
@@ -211,6 +217,7 @@ class Competitive:
 
 
 class SoftMax:
+
     """
     Soft max transfer function
 
@@ -234,12 +241,13 @@ class SoftMax:
     def __call__(self, dist):
         exp = np.exp(dist)
         return exp / exp.sum()
-    
+
     def deriv(self, x, y):
         return y * (1 - y)
 
 
 class SatLins:
+
     """
     Symmetric saturating linear transfer function
 
@@ -272,12 +280,13 @@ class SatLins:
 
         """
         d = np.zeros_like(x)
-        d[(x > -1) & (x < 1) ] = 1
+        d[(x > -1) & (x < 1)] = 1
 
         return d
 
 
 class SatLin:
+
     """
     Saturating linear transfer function
 
@@ -311,12 +320,13 @@ class SatLin:
         """
 
         d = np.zeros_like(x)
-        d[(x > 0) & (x < 1) ] = 1
+        d[(x > 0) & (x < 1)] = 1
 
         return d
 
 
 class SatLinPrm:
+
     """
     Linear transfer function with parametric output
     May use instead Satlin and Satlins
@@ -345,6 +355,7 @@ class SatLinPrm:
         array([-1. , -0.1,  0. ,  0.1,  1. ])
 
     """
+
     def __init__(self, k=1, out_min=0, out_max=1):
         """
         Linear transfer function with parametric output
@@ -376,6 +387,6 @@ class SatLinPrm:
 
         """
         d = np.zeros_like(x)
-        d[(x > self.out_min) & (x < self.out_max) ] = 1
+        d[(x > self.out_min) & (x < self.out_max)] = 1
 
         return d

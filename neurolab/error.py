@@ -16,6 +16,7 @@ import numpy as np
 
 
 class MSE():
+
     """
     Mean squared error function
 
@@ -38,7 +39,7 @@ class MSE():
     def __call__(self, target, output):
         e = target - output
         N = e.size
-        v =  np.sum(np.square(e)) / N
+        v = np.sum(np.square(e)) / N
         return v
 
     def deriv(self, target, output):
@@ -61,7 +62,7 @@ class MSE():
             array([ 1.,  0.])
 
         """
-        
+
         e = target - output
         N = len(e)
         d = e * (2 / N)
@@ -69,6 +70,7 @@ class MSE():
 
 
 class SSE:
+
     """
     Sum squared error function
 
@@ -102,11 +104,12 @@ class SSE:
                 Derivative: dE/d_out
 
         """
-        
+
         return target - output
 
 
 class SAE:
+
     """
     Sum absolute error function
 
@@ -118,7 +121,7 @@ class SAE:
     :Returns:
         v: float
             Error value
-    
+
     """
 
     def __call__(self, target, output):
@@ -146,6 +149,7 @@ class SAE:
 
 
 class MAE:
+
     """
     Mean absolute error function
 
@@ -157,7 +161,7 @@ class MAE:
     :Returns:
         v: float
             Error value
-    
+
     """
 
     def __call__(self, target, output):
@@ -182,15 +186,16 @@ class MAE:
         e = target - output
         d = np.sign(e) / e.size
         return d
-        
+
 
 class CEE:
+
     """
     Cross-entropy error function.
     For use when targets in {0,1}
-    
+
     C = -sum( t * log(o) + (1 - t) * log(1 - o))
-    
+
     Thanks kwecht https://github.com/kwecht
     :Parameters:
         target: ndarray
@@ -200,7 +205,7 @@ class CEE:
     :Returns:
         v: float
             Error value
-    
+
     """
 
     def __call__(self, target, output):
@@ -219,7 +224,7 @@ class CEE:
     def deriv(self, target, output):
         """
         Derivative of CEE error function
-        
+
         dC/dy = - t/o + (1 - t) / (1 - o)
 
         :Parameters:
@@ -230,7 +235,7 @@ class CEE:
         :Returns:
             d: ndarray
                 Derivative: dE/d_out
-        
+
         """
         y = output.copy()
         t = target.copy()
@@ -239,7 +244,7 @@ class CEE:
         y[y < eps] = eps
         t[t > (1 - eps)] = 1 - eps
         t[t < eps] = eps
-        #dC/dy = - d/y + (1-d)/(1-y)
+        # dC/dy = - d/y + (1-d)/(1-y)
         eps = np.spacing(1)
         dy = t / (y + eps) - (1 - t) / (1 - y + eps)
         dy /= t.size

@@ -8,10 +8,12 @@ from neurolab.core import Train
 import neurolab.tool as tool
 import numpy as np
 
+
 class TrainWTA(Train):
-    """ 
+
+    """
     Winner Take All algorithm
-    
+
     :Support networks:
         newc (Kohonen layer)
     :Parameters:
@@ -23,9 +25,9 @@ class TrainWTA(Train):
             Print period
         goal: float (default 0.01)
             The goal of train
-    
+
     """
-       
+
     def __init__(self, net, input, lr=0.01):
         # Init network!
         self.lr = lr
@@ -37,9 +39,9 @@ class TrainWTA(Train):
         winner_output = np.zeros_like(input)
         output = net.sim(input)
         winners = np.argmax(output, axis=1)
-        
+
         return net.errorf(layer.np['w'][winners], input)
-    
+
     def learn(self, net, input):
         layer = net.layers[0]
 
@@ -47,15 +49,17 @@ class TrainWTA(Train):
             out = net.step(inp)
             winner = np.argmax(out)
             d = layer.last_dist
-            layer.np['w'][winner] += self.lr * d[winner] * (inp - layer.np['w'][winner])
-        
+            layer.np['w'][winner] += self.lr * \
+                d[winner] * (inp - layer.np['w'][winner])
+
         return None
 
 
 class TrainCWTA(TrainWTA):
-    """ 
+
+    """
     Conscience Winner Take All algorithm
-    
+
     :Support networks:
         newc (Kohonen layer)
     :Parameters:
@@ -67,18 +71,19 @@ class TrainCWTA(TrainWTA):
             Print period
         goal: float (default 0.01)
             The goal of train
-    
+
     """
-    
+
     def learn(self, net, input):
         layer = net.layers[0]
 
         for inp in input:
             out = net.step(inp)
             winner = np.argmax(out)
-            d = layer.last_dist #TODO:^^_^^
+            d = layer.last_dist  # TODO:^^_^^
             layer.np['conscience'][winner] += 1
-            layer.np['w'][winner] += self.lr * d[winner] * (inp - layer.np['w'][winner])
+            layer.np['w'][winner] += self.lr * \
+                d[winner] * (inp - layer.np['w'][winner])
 
         layer.np['conscience'].fill(1.0)
         return None

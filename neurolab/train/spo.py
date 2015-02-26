@@ -7,7 +7,9 @@ Train algorithm based on spipy.optimize
 from neurolab.core import Train
 import neurolab.tool as tool
 
+
 class TrainSO(Train):
+
     """
     Train class Based on scipy.optimize
 
@@ -46,6 +48,7 @@ class TrainSO(Train):
 
 
 class TrainBFGS(TrainSO):
+
     """
     BroydenFletcherGoldfarbShanno (BFGS) method
     Using scipy.optimize.fmin_bfgs
@@ -81,6 +84,7 @@ class TrainBFGS(TrainSO):
 
 
 class TrainCG(TrainSO):
+
     """
     Newton-CG method
     Using scipy.optimize.fmin_ncg
@@ -101,19 +105,25 @@ class TrainCG(TrainSO):
         rr float (defaults 0.0)
             Regularization ratio
             Must be between {0, 1}
-        
+
     """
 
     def __call__(self, net, input, target):
         from scipy.optimize import fmin_cg
         if 'disp' not in self.kwargs:
             self.kwargs['disp'] = 0
-        x = fmin_cg(self.fcn, self.x.copy(), fprime=self.grad, callback=self.step, **self.kwargs)
+        x = fmin_cg(
+            self.fcn,
+            self.x.copy(),
+            fprime=self.grad,
+            callback=self.step,
+            **self.kwargs)
         self.x[:] = x
         return None
 
 
 class TrainNCG(TrainSO):
+
     """
     Conjugate gradient algorithm
     Using scipy.optimize.fmin_ncg
@@ -134,13 +144,18 @@ class TrainNCG(TrainSO):
         rr float (defaults 0.0)
             Regularization ratio
             Must be between {0, 1}
-        
+
     """
 
     def __call__(self, net, input, target):
         from scipy.optimize import fmin_ncg
-        #if 'disp' not in self.kwargs:
+        # if 'disp' not in self.kwargs:
         #    self.kwargs['disp'] = 0
-        x = fmin_ncg(self.fcn, self.x.copy(), fprime=self.grad, callback=self.step, **self.kwargs)
+        x = fmin_ncg(
+            self.fcn,
+            self.x.copy(),
+            fprime=self.grad,
+            callback=self.step,
+            **self.kwargs)
         self.x[:] = x
         return None

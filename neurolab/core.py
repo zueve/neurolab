@@ -16,6 +16,7 @@ class TrainStop(NeuroLabError):
 
 
 class Net(object):
+
     """
     Neural Network class
 
@@ -32,7 +33,7 @@ class Net(object):
             Train function
         errorf: callable
             Error function with derivative
-        
+
     :Connect format:
         Example 1: for two-layers feed forwad network
             >>> connect = [[-1], # - layer 0 receives the input network signal;
@@ -61,7 +62,7 @@ class Net(object):
         self.errorf = errorf
         self.inp = np.zeros(self.ci)
         self.out = np.zeros(self.co)
-        # Check connect format 
+        # Check connect format
         assert self.inp_minmax.ndim == 2
         assert self.inp_minmax.shape[1] == 2
         if len(connect) != len(layers) + 1:
@@ -75,7 +76,7 @@ class Net(object):
         for l, c in enumerate(tmp):
             if c == 0 and l != len(layers):
                 raise ValueError("Connect error: Lost the signal " +
-                                    "from the layer " + str(l - 1))
+                                 "from the layer " + str(l - 1))
         self.connect = connect
 
         # Set inp_minmax for all layers
@@ -92,8 +93,8 @@ class Net(object):
                 minmax[ni: ni + len(t)] = t
                 ni += len(t)
             if ni != len(minmax):
-                raise ValueError("Connect error: Empty inputs on layer " + 
-                                                                    str(l - 1))
+                raise ValueError("Connect error: Empty inputs on layer " +
+                                 str(l - 1))
         self.init()
 
     def step(self, inp):
@@ -108,8 +109,8 @@ class Net(object):
                 Output vector
 
         """
-        #TODO: self.inp=np.asfarray(inp)?
-        
+        # TODO: self.inp=np.asfarray(inp)?
+
         self.inp = inp
         for nl, nums in enumerate(self.connect):
             if len(nums) > 1:
@@ -197,6 +198,7 @@ class Net(object):
 
 
 class Layer(object):
+
     """
     Abstract Neural Layer class
 
@@ -212,6 +214,7 @@ class Layer(object):
             example: {'w': (10, 1), 'b': 10}
 
     """
+
     def __init__(self, ci, cn, co, property):
         self.ci = ci
         self.cn = cn
@@ -236,7 +239,7 @@ class Layer(object):
 
     def init(self):
         """ Init Layer random values """
-        if type(self.initf) is list:
+        if isinstance(self.initf, list):
             for initf in self.initf:
                 initf(self)
         elif self.initf is not None:
@@ -244,14 +247,15 @@ class Layer(object):
 
     def _step(self, inp):
         raise NotImplementedError("Call abstract metod Layer._step")
-        
-        
+
+
 class Trainer(object):
+
     """
     Control of network training
-    
+
     """
-    
+
     def __init__(self, Train, epochs=500, goal=0.01, show=100, **kwargs):
         """
         :Parameters:
@@ -265,9 +269,9 @@ class Trainer(object):
                 Print period
             **kwargs: dict
                 other Train parametrs
-        
+
         """
-        
+
         # Sets defaults train params
         self._train_class = Train
         self.defaults = {}
@@ -276,26 +280,26 @@ class Trainer(object):
         self.defaults['epochs'] = epochs
         self.defaults['train'] = kwargs
         if Train.__init__.__defaults__:
-            #cnt = Train.__init__.func_code.co_argcount
+            # cnt = Train.__init__.func_code.co_argcount
             cnt = Train.__init__.__code__.co_argcount
-            #names = Train.__init__.func_code.co_varnames
+            # names = Train.__init__.func_code.co_varnames
             names = Train.__init__.__code__.co_varnames
             vals = Train.__init__.__defaults__
             st = cnt - len(vals)
             for k, v in zip(names[st: cnt], vals):
                 if k not in self.defaults['train']:
                     self.defaults['train'][k] = v
-        
+
         self.params = self.defaults.copy()
         self.error = []
-    
+
     def __str__(self):
         return 'Trainer(' + self._train_class.__name__ + ')'
-            
+
     def __call__(self, net, input, target=None, **kwargs):
         """
         Run train process
-        
+
         :Parameters:
             net: Net instance
                 network
@@ -305,9 +309,9 @@ class Trainer(object):
                 train target patterns - only for train with teacher
             **kwargs: dict
                 other Train parametrs
-        
+
         """
-        
+
         self.params = self.defaults.copy()
         self.params['train'] = self.defaults['train'].copy()
         for key in kwargs:
@@ -315,7 +319,7 @@ class Trainer(object):
                 self.params[key] = kwargs[key]
             else:
                 self.params['train'][key] = kwargs[key]
-        
+
         args = []
         input = np.asfarray(input)
         assert input.ndim == 2
@@ -327,7 +331,7 @@ class Trainer(object):
             assert target.shape[1] == net.co
             assert target.shape[0] == input.shape[0]
             args.append(target)
-        
+
         def epochf(err, net, *args):
             """Need call on each epoch"""
             if err is None:
@@ -340,8 +344,9 @@ class Trainer(object):
             if err < self.params['goal']:
                 raise TrainStop('The goal of learning is reached')
             if epoch >= self.params['epochs']:
-                raise TrainStop('The maximum number of train epochs is reached')
-        
+                raise TrainStop(
+                    'The maximum number of train epochs is reached')
+
         train = self._train_class(net, *args, **self.params['train'])
         Train.__init__(train, epochf, self.params['epochs'])
         self.error = []
@@ -351,24 +356,26 @@ class Trainer(object):
             if self.params['show']:
                 print(msg)
         else:
-            if self.params['show'] and len(self.error) >= self.params['epochs']:
+            if self.params['show'] and len(
+                    self.error) >= self.params['epochs']:
                 print("The maximum number of train epochs is reached")
         return self.error
 
 
 class Train(object):
+
     """Base train abstract class"""
-    
+
     def __init__(self, epochf, epochs):
         self.epochf = epochf
         self.epochs = epochs
-    
+
     def __call__(self, net, *args):
         for epoch in range(self.epochs):
             err = self.error(net, *args)
             self.epochf(err, net, *args)
             self.learn(net, *args)
-    
+
     def error(self, net, input, target, output=None):
         """Only for train with teacher"""
         if output is None:

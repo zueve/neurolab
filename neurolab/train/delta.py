@@ -9,9 +9,10 @@ import neurolab.tool as tool
 
 
 class TrainDelta(Train):
-    """ 
+
+    """
     Train with Delta rule
-    
+
     :Support networks:
         newp (one-layer perceptron)
     :Parameters:
@@ -27,12 +28,12 @@ class TrainDelta(Train):
             The goal of train
         lr: float (default 0.01)
             learning rate
-    
+
     """
-    
+
     def __init__(self, net, input, target, lr=0.01):
         self.lr = lr
-        
+
     def __call__(self, net, input, target):
         layer = net.layers[0]
         while True:
@@ -41,9 +42,9 @@ class TrainDelta(Train):
             for inp, tar in zip(input, target):
                 out = net.step(inp)
                 err = tar - out
-                err.shape =  err.size, 1
+                err.shape = err.size, 1
                 inp.shape = 1, inp.size
                 layer.np['w'] += self.lr * err * inp
-                err.shape =  err.size
+                err.shape = err.size
                 layer.np['b'] += self.lr * err
         return None
