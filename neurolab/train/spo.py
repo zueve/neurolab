@@ -36,7 +36,7 @@ class TrainSO(Train):
         self.x[:] = x
         err = self.error(self.net, self.input, self.target)
         if self.rr:
-            eee = tool.reg_error(err, self.net, self.rr)
+            err = tool.reg_error(err, self.net, self.rr)
         self.lerr = err
         return err
 
