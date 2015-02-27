@@ -82,7 +82,7 @@ class TrainCWTA(TrainWTA):
             # winner
             win = np.argmax(out)
             d = layer.last_dist  # TODO:^^_^^
-            layer.np['conscience'][winner] += 1
+            layer.np['conscience'][win] += 1
             layer.np['w'][win] += self.lr * d[win] * (inp - layer.np['w'][win])
 
         layer.np['conscience'].fill(1.0)

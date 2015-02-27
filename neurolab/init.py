@@ -156,10 +156,9 @@ def initnw(layer):
     w_rand = np.random.rand(cn, ci) * 2 - 1
     # Normalize
     if ci == 1:
-        w_rand = w_rand / np.abs(w_rand)
+        w_rand /= np.abs(w_rand)
     else:
-        w_rand = np.sqrt(
-            1. / np.square(w_rand).sum(axis=1).reshape(cn, 1)) * w_rand
+        w_rand *= np.sqrt(1. / np.square(w_rand).sum(axis=1).reshape(cn, 1))
 
     w = w_fix * w_rand
     b = np.array([0]) if cn == 1 else w_fix * \
