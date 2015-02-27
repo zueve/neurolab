@@ -66,7 +66,7 @@ class TrainGD(Train):
                 e = self.error(net, input, target)
                 # regularization error
                 if self.rr:
-                    e = reg_error(e, self.rr, net)
+                    e = tool.reg_error(e, self.rr, net)
                 self.epochf(e, net, input, target)
         return None
 
