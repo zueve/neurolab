@@ -5,7 +5,6 @@ Train algorithm based on Winner Take All - rule
 """
 
 from neurolab.core import Train
-import neurolab.tool as tool
 import numpy as np
 
 
@@ -36,7 +35,7 @@ class TrainWTA(Train):
 
     def error(self, net, input):
         layer = net.layers[0]
-        winner_output = np.zeros_like(input)
+        # winner_output = np.zeros_like(input)
         output = net.sim(input)
         winners = np.argmax(output, axis=1)
 

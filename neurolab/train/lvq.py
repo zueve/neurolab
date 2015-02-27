@@ -5,7 +5,6 @@ Train algorithms for LVQ networks
 """
 
 from neurolab.core import Train
-import neurolab.tool as tool
 import numpy as np
 
 
@@ -64,7 +63,7 @@ class TrainLVQ(Train):
                 e = self.error(net, input, target, output)
                 self.epochf(e, net, input, target)
 
-                error = target - output
-                sign = np.sign((np.max(error, axis=1) == 0) - 0.5)
+                # error = target - output
+                # sign = np.sign((np.max(error, axis=1) == 0) - 0.5)
                 layer.np['w'][wins] += self.lr * (input - layer.np['w'][wins])
         return None

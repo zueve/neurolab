@@ -5,7 +5,6 @@ Train algorithm based on Delta - rule
 """
 
 from neurolab.core import Train
-import neurolab.tool as tool
 
 
 class TrainDelta(Train):
