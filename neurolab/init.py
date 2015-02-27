@@ -4,7 +4,6 @@ Functions of initialization  layers
 
 """
 
-
 import numpy as np
 
 
@@ -27,10 +26,8 @@ def init_rand(layer, min=-0.5, max=0.5, init_prop='w'):
 
     if init_prop not in layer.np:
         raise ValueError('Layer not have attibute "' + init_prop + '"')
-    layer.np[init_prop] = np.random.uniform(
-        min,
-        max,
-        layer.np[init_prop].shape)
+    shape = layer.np[init_prop].shape
+    layer.np[init_prop] = np.random.uniform(min, max, shape)
 
 
 def initwb_reg(layer):

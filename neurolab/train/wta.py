@@ -47,10 +47,10 @@ class TrainWTA(Train):
 
         for inp in input:
             out = net.step(inp)
-            winner = np.argmax(out)
+            # winner
+            win = np.argmax(out)
             d = layer.last_dist
-            layer.np['w'][winner] += self.lr * \
-                d[winner] * (inp - layer.np['w'][winner])
+            layer.np['w'][win] += self.lr * d[win] * (inp - layer.np['w'][win])
 
         return None
 
@@ -79,11 +79,11 @@ class TrainCWTA(TrainWTA):
 
         for inp in input:
             out = net.step(inp)
-            winner = np.argmax(out)
+            # winner
+            win = np.argmax(out)
             d = layer.last_dist  # TODO:^^_^^
             layer.np['conscience'][winner] += 1
-            layer.np['w'][winner] += self.lr * \
-                d[winner] * (inp - layer.np['w'][winner])
+            layer.np['w'][win] += self.lr * d[win] * (inp - layer.np['w'][win])
 
         layer.np['conscience'].fill(1.0)
         return None

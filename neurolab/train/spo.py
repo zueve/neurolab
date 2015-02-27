@@ -78,7 +78,10 @@ class TrainBFGS(TrainSO):
             self.kwargs['disp'] = 0
         self.kwargs['maxiter'] = self.epochs
 
-        x = fmin_bfgs(self.fcn, self.x.copy(), fprime=self.grad, callback=self.step,
+        x = fmin_bfgs(self.fcn, 
+                      self.x.copy(), 
+                      fprime=self.grad, 
+                      callback=self.step,
                       **self.kwargs)
         self.x[:] = x
 
@@ -112,12 +115,11 @@ class TrainCG(TrainSO):
         from scipy.optimize import fmin_cg
         if 'disp' not in self.kwargs:
             self.kwargs['disp'] = 0
-        x = fmin_cg(
-            self.fcn,
-            self.x.copy(),
-            fprime=self.grad,
-            callback=self.step,
-            **self.kwargs)
+        x = fmin_cg(self.fcn,
+                    self.x.copy(),
+                    fprime=self.grad,
+                    callback=self.step,
+                    **self.kwargs)
         self.x[:] = x
         return None
 
@@ -151,11 +153,10 @@ class TrainNCG(TrainSO):
         from scipy.optimize import fmin_ncg
         # if 'disp' not in self.kwargs:
         #    self.kwargs['disp'] = 0
-        x = fmin_ncg(
-            self.fcn,
-            self.x.copy(),
-            fprime=self.grad,
-            callback=self.step,
-            **self.kwargs)
+        x = fmin_ncg(self.fcn,
+                     self.x.copy(),
+                     fprime=self.grad,
+                     callback=self.step,
+                     **self.kwargs)
         self.x[:] = x
         return None

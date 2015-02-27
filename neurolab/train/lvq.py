@@ -55,17 +55,16 @@ class TrainLVQ(Train):
         else:
             while True:
                 output = []
-                winners = []
+                wins = []
                 for inp, tar in zip(input, target):
                     out = net.step(inp)
                     output.append(out)
-                    winners.append(np.argmax(layer.out))
+                    wins.append(np.argmax(layer.out))
 
                 e = self.error(net, input, target, output)
                 self.epochf(e, net, input, target)
 
                 error = target - output
                 sign = np.sign((np.max(error, axis=1) == 0) - 0.5)
-                layer.np['w'][winners] += self.lr * \
-                    (input - layer.np['w'][winners])
+                layer.np['w'][wins] += self.lr * (input - layer.np['w'][wins])
         return None

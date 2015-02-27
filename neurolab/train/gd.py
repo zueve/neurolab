@@ -33,6 +33,7 @@ class TrainGD(Train):
         rr float (defaults 0.0)
             Regularization ratio
             Must be between {0, 1}
+
     """
 
     def __init__(self, net, input, target, lr=0.01, adapt=False, rr=0.0):
@@ -151,8 +152,8 @@ class TrainGDM(TrainGD):
 
     """
 
-    def __init__(
-            self, net, input, target, lr=0.01, adapt=False, mc=0.9, rr=.0):
+    def __init__(self, net, input, target, 
+                 lr=0.01, adapt=False, mc=0.9, rr=.0):
         super(TrainGDM, self).__init__(net, input, target, lr, adapt, rr)
         self.mc = mc
         self.dw = [0] * len(net.layers)
@@ -269,7 +270,6 @@ class TrainGDX(TrainGDA, TrainGDM):
     def __init__(self, net, input, target, lr=0.01, adapt=False, lr_inc=1.05,
                  lr_dec=0.7, max_perf_inc=1.04,
                  mc=0.9, rr=.0):
-        """ init gdm"""
         super(TrainGDX, self).__init__(net, input, target, lr, adapt, lr_inc,
                                        lr_dec, max_perf_inc, rr)
         self.mc = mc

@@ -313,15 +313,8 @@ def newhem(target, transf=None, max_iter=10, delta=0):
     for i, tar in enumerate(target):
         layer_inp.np['w'][i][:] = tar / 2
 
-    layer_out = layer.Reccurent(
-        cn,
-        cn,
-        trans.SatLinPrm(
-            1,
-            0,
-            1e6),
-        max_iter,
-        delta)
+    layer_out = layer.Reccurent(cn, cn, trans.SatLinPrm(1, 0, 1e6),
+                                max_iter, delta)
     # init output layer
     layer_out.initf = None
     layer_out.np['b'][:] = 0
