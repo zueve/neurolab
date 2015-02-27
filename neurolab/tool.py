@@ -47,8 +47,6 @@ class Norm:
         res = x * self.dist + self.min
         return res
 
-#------------------------------------------------------------
-
 
 def load(fname):
     from pickle import load
@@ -64,8 +62,6 @@ def save(net, fname):
 
     with open(fname, 'wb') as file:
         dump(net, file)
-
-#------------------------------------------------------------
 
 
 def np_size(net):
@@ -144,8 +140,6 @@ def np_get_ref(net):
             l.np[k].shape = v.shape
             st += v.size
     return x
-
-#------------------------------------------------------------
 
 
 def ff_grad_step(net, out, tar, grad=None):

@@ -38,8 +38,8 @@ import functools
 def trainer(Train, **kwargs):
     """ Trainner init """
     from neurolab.core import Trainer
-    #w = functools.wraps(Train)
-    #c = w(Trainer(Train))
+    # w = functools.wraps(Train)
+    # c = w(Trainer(Train))
     c = Trainer(Train, **kwargs)
     c.__doc__ = Train.__doc__
     c.__name__ = Train.__name__
@@ -48,12 +48,12 @@ def trainer(Train, **kwargs):
 
 # Initializing mains train functors
 train_gd = trainer(gd.TrainGD)
-#train_gd2 = trainer(gd.TrainGD2)
+# train_gd2 = trainer(gd.TrainGD2)
 train_gdm = trainer(gd.TrainGDM)
 train_gda = trainer(gd.TrainGDA)
 train_gdx = trainer(gd.TrainGDX)
 train_rprop = trainer(gd.TrainRprop)
-#train_rpropm = trainer(gd.TrainRpropM)
+# train_rpropm = trainer(gd.TrainRpropM)
 
 train_bfgs = trainer(spo.TrainBFGS)
 train_cg = trainer(spo.TrainCG)

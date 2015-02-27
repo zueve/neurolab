@@ -1,5 +1,4 @@
 ﻿import unittest
-#import neurolab.test.doctests as doctests
 from . import doctests
 from .trans import TestTrans
 from .error import TestError

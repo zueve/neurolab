@@ -78,9 +78,9 @@ class TrainBFGS(TrainSO):
             self.kwargs['disp'] = 0
         self.kwargs['maxiter'] = self.epochs
 
-        x = fmin_bfgs(self.fcn, 
-                      self.x.copy(), 
-                      fprime=self.grad, 
+        x = fmin_bfgs(self.fcn,
+                      self.x.copy(),
+                      fprime=self.grad,
                       callback=self.step,
                       **self.kwargs)
         self.x[:] = x

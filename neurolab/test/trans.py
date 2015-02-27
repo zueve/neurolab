@@ -1,7 +1,8 @@
 ﻿# coding: utf-8
 import unittest
 import numpy as np
-from neurolab.trans import TanSig, PureLin, LogSig, HardLim, HardLims, Competitive, SatLin, SatLins, SoftMax, SatLinPrm
+from neurolab.trans import (TanSig, PureLin, LogSig, HardLim, HardLims,
+                            Competitive, SatLin, SatLins, SoftMax, SatLinPrm)
 
 
 class TestTrans(unittest.TestCase):
@@ -93,9 +94,9 @@ class TestTrans(unittest.TestCase):
 
     def test_deriv(self):
         vars = np.arange(-100, 100, 2.5)
-        test_fcns = [
-            TanSig(), PureLin(), LogSig(), HardLim(), HardLims(), SatLin(), 
-            SatLins(), SatLinPrm(1, 0, 1), SatLinPrm(1, -1, 1), SoftMax()]
+        test_fcns = [TanSig(), PureLin(), LogSig(), HardLim(), HardLims(),
+                     SatLin(), SatLins(), SatLinPrm(1, 0, 1),
+                     SatLinPrm(1, -1, 1), SoftMax()]
 
         def diff(f, x, h=1E-6):
             x1 = np.array([x - h])

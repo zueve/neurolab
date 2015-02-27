@@ -152,7 +152,7 @@ class TrainGDM(TrainGD):
 
     """
 
-    def __init__(self, net, input, target, 
+    def __init__(self, net, input, target,
                  lr=0.01, adapt=False, mc=0.9, rr=.0):
         super(TrainGDM, self).__init__(net, input, target, lr, adapt, rr)
         self.mc = mc

@@ -51,8 +51,9 @@ def newff(minmax, size, transf=None):
         minmax: list of list, the outer list is the number of input neurons,
                         inner lists must contain 2 elements: min and max
             Range of input value
-        size: the length of list equal to the number of layers except input layer,
-                        the element of the list is the neuron number for corresponding layer
+        size: the length of list equal to the number of layers
+             except input layer, the element of the list is the neuron number
+             for corresponding layer
             Contains the number of neurons for each layer
         transf: list (default TanSig)
             List of activation function for each layer
@@ -191,15 +192,17 @@ def newelm(minmax, size, transf=None):
         minmax: list of list, the outer list is the number of input neurons,
                         inner lists must contain 2 elements: min and max
             Range of input value
-        size: the length of list equal to the number of layers except input layer,
-                        the element of the list is the neuron number for corresponding layer
-            Contains the number of neurons for each layer
+        size: the length of list equal to the number of layers
+             except input layer, the element of the list is the neuron number
+             for corresponding layer
+             Contains the number of neurons for each layer
     :Returns:
         net: Net
     :Example:
-                >>> # 1 input, input range is [-1, 1], 1 output neuron, 1 layer including output layer
+        >>> # 1 input, input range is [-1, 1], 1 output neuron,
+        >>> # 1 layer including output layer
         >>> net = newelm([[-1, 1]], [1], [trans.PureLin()])
-        >>> net.layers[0].np['w'][:] = 1 # set weight for all input neurons to 1
+        >>> net.layers[0].np['w'][:] = 1 # set weight for input neurons to 1
         >>> net.layers[0].np['b'][:] = 0 # set bias for all input neurons to 0
         >>> net.sim([[1], [1] ,[1], [3]])
         array([[ 1.],
@@ -219,7 +222,7 @@ def newelm(minmax, size, transf=None):
     for i, nn in enumerate(size):
         layer_ci = size[i - 1] if i > 0 else net_ci + size[0]
         l = layer.Perceptron(layer_ci, nn, transf[i])
-        #l.initf = init.InitRand([-0.1, 0.1], 'wb')
+        # l.initf = init.InitRand([-0.1, 0.1], 'wb')
         layers.append(l)
     connect = [[i - 1] for i in range(len(layers) + 1)]
     # recurrent set
