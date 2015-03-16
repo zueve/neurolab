@@ -1,14 +1,11 @@
-all:
-	echo "0"
-
 build:
-	# Создание образа
+	# build image
 	sudo docker build -t="zuev/neurolab" .
 
 create:
-	# Создание и запуск контейнера в интерактивном режиме
+	# create and start container
 	sudo docker run -it --name neurolab -v /home/user/dev/neurolab:/neurolab zuev/neurolab cd neurolab
 start:
-    # Запуск контейнера в интерактивном режиме
+    # Start container
 	sudo docker start -i neurolab
 
