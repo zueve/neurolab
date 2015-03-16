@@ -1,9 +1,11 @@
-﻿**Neurolab** is a simple and powerful Neural Network Library for Python.
+﻿# Neurolab #
+
+**Neurolab** is a simple and powerful Neural Network Library for Python.
 Contains based neural networks, train algorithms and flexible framework 
 to create and explore other neural network types.
 
 
-# Features #
+## Features ##
 
 - Pure python + numpy
 - API like Neural Network Toolbox (NNT) from **MATLAB**
@@ -12,7 +14,7 @@ to create and explore other neural network types.
 - Unlimited number of neural layers and number of neurons in layers
 - Variety of supported types of Artificial Neural Network and learning algorithms
 
-# Example #
+## Example ##
 
 ```
     >>> import numpy as np
@@ -34,14 +36,14 @@ to create and explore other neural network types.
     array([[ 0.28757596]])
 ```
 
-# Links #
+## Links ##
 
 - Home Page: <http://code.google.com/p/neurolab/>
 - PyPI Page: <http://pypi.python.org/pypi/neurolab>
 - Documentation: <http://packages.python.org/neurolab/>
 - Examples: <http://packages.python.org/neurolab/example.html>
 
-# Install #
+## Install ##
 
 Install *neurolab* using pip:
     
