@@ -1,7 +1,7 @@
 ﻿# Neurolab #
 
 **Neurolab** is a simple and powerful Neural Network Library for Python.
-Contains based neural networks, train algorithms and flexible framework 
+Contains based neural networks, train algorithms and flexible framework
 to create and explore other neural network types.
 
 
@@ -46,15 +46,64 @@ to create and explore other neural network types.
 ## Install ##
 
 Install *neurolab* using pip:
-    
+
 ```
     $> pip install neurolab
 ```
-    
-Or, if you don't have setuptools/distribute installed, 
-use the download [link](https://github.com/zueve/neurolab/releases) 
+
+Or, if you don't have setuptools/distribute installed,
+use the download [link](https://github.com/zueve/neurolab/releases)
 at right to download the source package, and install it in the normal fashion. Ungzip and untar the source package, cd to the new directory, and:
 
 ```
     $> python setup.py install
 ```
+
+## Support neural networks types ##
+
+- **Single layer perceptron**
+    - create function: [neurolab.net.newp()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newp)
+    - example of use: [newp](https://pythonhosted.org/neurolab/ex_newp.html)
+    - default train function: [neurolab.train.train_delta()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_delta)
+    - support train functions: [train_gd](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gd),
+                               [train_gda](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gda),
+                               [train_gdm](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdm),
+                               [train_gdx](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdx),
+                               [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
+                               [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
+                               [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
+- *Multilayer feed forward perceptron*
+    - create function: [neurolab.net.newff()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newff)
+    - example of use: [newff](https://pythonhosted.org/neurolab/ex_newff.html)
+    - default train function: [neurolab.train.train_bfgs()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs)
+    - support train functions: [train_gd](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gd),
+                               [train_gda](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gda),
+                               [train_gdm](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdm),
+                               [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
+                               [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
+                               [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
+- *Competing layer (Kohonen Layer)*
+    - create function: [neurolab.net.newc()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newc)
+    - example of use: [newc](https://pythonhosted.org/neurolab/ex_newc.html)
+    - default train function: [neurolab.train.train_cwta()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cwta)
+    - support train functions: [train_wta](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_wta)
+- *Learning Vector Quantization (LVQ)*
+    - create function: [neurolab.net.newlvq()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newlvq)
+    - example of use: [newlvq](https://pythonhosted.org/neurolab/ex_newlvq.html)
+    - default train function: [neurolab.train.train_lvq()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_lvq)
+- *Elman Recurrent network*
+    - create function: [neurolab.net.newelm()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newelm)
+    - example of use: [newelm](https://pythonhosted.org/neurolab/ex_newelm.html)
+    - default train function: [neurolab.train.train_gdx()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdx)
+    - support train functions: [train_gd](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gd),
+                               [train_gda](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gda),
+                               [train_gdm](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdm),
+                               [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
+                               [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
+                               [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
+- *Hopfield Recurrent network*
+    - create function: [neurolab.net.newhop()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newhop)
+    - example of use: [newhop](https://pythonhosted.org/neurolab/ex_newhop.html)
+- *Hemming Recurrent network*
+    - create function: [neurolab.net.newhem()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newhem)
+    - example of use: [newhem](https://pythonhosted.org/neurolab/ex_newhem.html)
