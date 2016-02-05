@@ -72,7 +72,7 @@ at right to download the source package, and install it in the normal fashion. U
                                [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
                                [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
                                [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
-- *Multilayer feed forward perceptron*
+- **Multilayer feed forward perceptron**
     - create function: [neurolab.net.newff()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newff)
     - example of use: [newff](https://pythonhosted.org/neurolab/ex_newff.html)
     - default train function: [neurolab.train.train_bfgs()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs)
@@ -82,16 +82,16 @@ at right to download the source package, and install it in the normal fashion. U
                                [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
                                [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
                                [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
-- *Competing layer (Kohonen Layer)*
+- **Competing layer (Kohonen Layer)**
     - create function: [neurolab.net.newc()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newc)
     - example of use: [newc](https://pythonhosted.org/neurolab/ex_newc.html)
     - default train function: [neurolab.train.train_cwta()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cwta)
     - support train functions: [train_wta](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_wta)
-- *Learning Vector Quantization (LVQ)*
+- **Learning Vector Quantization (LVQ)**
     - create function: [neurolab.net.newlvq()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newlvq)
     - example of use: [newlvq](https://pythonhosted.org/neurolab/ex_newlvq.html)
     - default train function: [neurolab.train.train_lvq()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_lvq)
-- *Elman Recurrent network*
+- **Elman Recurrent network**
     - create function: [neurolab.net.newelm()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newelm)
     - example of use: [newelm](https://pythonhosted.org/neurolab/ex_newelm.html)
     - default train function: [neurolab.train.train_gdx()](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_gdx)
@@ -101,9 +101,9 @@ at right to download the source package, and install it in the normal fashion. U
                                [train_rprop](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_rprop),
                                [train_bfgs](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_bfgs),
                                [train_cg](https://pythonhosted.org/neurolab/lib.html#neurolab.train.train_cg)
-- *Hopfield Recurrent network*
+- **Hopfield Recurrent network**
     - create function: [neurolab.net.newhop()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newhop)
     - example of use: [newhop](https://pythonhosted.org/neurolab/ex_newhop.html)
-- *Hemming Recurrent network*
+- **Hemming Recurrent network**
     - create function: [neurolab.net.newhem()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newhem)
     - example of use: [newhem](https://pythonhosted.org/neurolab/ex_newhem.html)
