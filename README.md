@@ -107,3 +107,9 @@ at right to download the source package, and install it in the normal fashion. U
 - **Hemming Recurrent network**
     - create function: [neurolab.net.newhem()](https://pythonhosted.org/neurolab/lib.html#neurolab.net.newhem)
     - example of use: [newhem](https://pythonhosted.org/neurolab/ex_newhem.html)
+- **Generalized Regression network**
+    - create function: [neurolab.net.newgrnn()]
+    - example of use: [newgrnn]
+- **Probabilistic network**
+    - create function: [neurolab.net.newpnn()]
+    - example of use: [newpnn]
