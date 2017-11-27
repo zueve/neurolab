@@ -148,3 +148,75 @@ class Reccurent(Layer):
             self.outs.append(out)
             inp = out
         return out
+
+
+class RBN(Layer):
+    """
+    Radial-basis Layer class
+
+    :Parameters:
+        ci: int
+            Number of input
+        cn: int
+            Number of neurons
+
+    :Example:
+        >>> import neurolab as nl
+        >>> # create layer with 2 inputs and 4 outputs(neurons)
+        >>> l = RBN(2, 4)
+
+    """
+
+    def __init__(self, ci, cn):
+        Layer.__init__(self, ci, cn, cn, {'w': (cn, ci), 'b': cn})
+        self.transf = trans.RadBas()
+        self.out_minmax[:] = np.array([self.transf.out_minmax] * cn)
+        self.s = np.zeros(self.cn)
+
+    def _step(self, inp):
+        self.s = euclidean(self.np['w'], inp.reshape([1, len(inp)]))
+        self.s *= self.np['b']
+        return self.transf(self.s)
+
+
+class Linear(Layer):
+    """
+    Linear Layer class
+
+    :Parameters:
+        ci: int
+            Number of input
+        cn: int
+            Number of neurons
+        transf: callable
+            Transfer function
+
+    :Example:
+        >>> import neurolab as nl
+        >>> # create layer with 2 inputs and 4 outputs(neurons)
+        >>> l = Linear(2, 4, trans.PureLin())
+
+    """
+
+    def __init__(self, ci, cn, transf):
+
+        Layer.__init__(self, ci, cn, cn, {'w': (cn, ci), 'b': cn})
+
+        self.transf = transf
+        if not hasattr(transf, 'out_minmax'):
+            test = np.array([-1000000, -100, -10, -1, 0, 1, 10, 100, 1000000])
+            val = self.transf(test)
+            self.out_minmax = np.array([val.min(), val.max()] * self.co)
+        else:
+            self.out_minmax = np.asfarray([transf.out_minmax] * self.co)
+        # default init function
+        self.initf = init.initwb_reg
+        #self.initf = init.initwb_nw
+        self.s = np.zeros(self.cn)
+
+    def _step(self, inp):
+        self.s = np.sum(inp * self.np['w'].T, axis=1)
+        self.s += self.np['b']
+        self.s /= inp.sum()
+        return self.transf(self.s)
+
