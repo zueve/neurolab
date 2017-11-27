@@ -390,3 +390,37 @@ class SatLinPrm:
         d[(x > self.out_min) & (x < self.out_max)] = 1
 
         return d
+
+
+class RadBas:
+    """
+    Radial basis function
+
+    :Parameters:
+        x: ndarray
+            Input array
+    :Returns:
+        y : ndarray
+            The corresponding Radial basis function's values
+    :Example:
+        >>> import numpy as np
+        >>> f = RadBas()
+        >>> x = np.array([-1, -0.05, 0, 0.1, 2])
+        >>> f(x).tolist()
+        [0.36787944117144233, 0.9975031223974601, 1.0, 0.9900498337491681, 0.01831563888873418]
+
+    """
+
+
+    out_minmax = [-np.Inf, np.Inf]
+    inp_active = [-np.Inf, np.Inf]
+
+    def __call__(self, x):
+        return np.exp(-x*x)
+
+    def deriv(self, x, y):
+        """
+        Derivative of transfer function HardLims
+
+        """
+        return np.zeros_like(x)
