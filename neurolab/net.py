@@ -331,3 +331,98 @@ def newhem(target, transf=None, max_iter=10, delta=0):
     connect = [[-1], [0], [1]]
     net = Net(minmax, cn, layers, connect, None, None)
     return net
+
+
+def newgrnn(minmax, x, y, bias):
+    """
+    Create Generalized regression neural network
+
+    :Parameters:
+        minmax: list of list, the outer list is the number of input neurons,
+    		inner lists must contain 2 elements: min and max
+            Range of input value
+        x: list of list
+            Contains the values from inputs array of the points
+        y: list of List
+            Contains the values from inputs array of the points
+        bias: float
+            Standard deviation for Radial basis function
+    :Returns:
+        net: Net
+    :Example:
+        >>> # create neural net with 2 inputs
+    	>>> # 2 neurons for hidden layer, 1 neuron for output
+    	>>> # 2 layers including hidden layer and output linear layer
+        >>> x = np.array([[1], [2]])
+        >>> y = np.array([[-3], [-5]])
+        >>> net = newgrnn([[-3, 1], [-5, 2]], x, y, 1)
+        >>> net.ci
+        2
+        >>> net.co
+        1
+        >>> len(net.layers)
+        2
+    """
+
+    ci = len(minmax)
+    assert len(x) != 0
+    assert len(x) == len(y)
+    cn0 = len(x)
+    cn1 = len(x[0])
+    layer_inp = layer.RBN(ci, cn0)
+    layer_out = layer.Linear(cn0, cn1, trans.PureLin())
+    layer_inp.np['b'].fill(bias)
+    layer_inp.np['w'].fill(0.0)
+    layer_out.np['b'].fill(0.0)
+    layer_out.np['w'].fill(0.0)
+    net = Net(minmax, cn1, [layer_inp, layer_out], [[-1], [0], [1]], None, None)
+    net.layers[1].np['b'].fill(0.0)
+    net.layers[0].np['w'] = x
+    net.layers[1].np['w'] = y
+    return net
+
+
+def newpnn(minmax, x, d, bias):
+    """
+    Create Probabilistic network
+
+    :Parameters:
+        minmax: list of list, the outer list is the number of input neurons,
+    		inner lists must contain 2 elements: min and max
+            Range of input value
+        x: list of list
+            Contains the values from inputs array of the points
+        d: list of List
+            Contains the class's values for inputs array of the points
+        bias: float
+            Standard deviation for Radial basis function
+    :Returns:
+        net: Net
+    :Example:
+        >>> # create neural net with 2 inputs
+    	>>> # 2 neurons for hidden layer, 2 neuron for output
+    	>>> # 2 layers including hidden layer and output linear layer
+        >>> x = np.array([[-2, -2], [0, 0]])
+        >>> d = np.array([[1, 0], [0, 1]])
+        >>> net = newpnn([[-2, 0], [-2, 0]], x, d, 2)
+        >>> net.ci
+        2
+        >>> net.co
+        2
+        >>> len(net.layers)
+        2
+    """
+    ci = len(minmax)
+    assert len(x) != 0
+    cn0 = len(x)
+    cn1 = len(x[0])
+    layer_inp = layer.RBN(ci, cn0)
+    layer_out = layer.Competitive(cn0, cn1)
+    layer_inp.np['b'].fill(bias)
+    layer_inp.np['w'].fill(0.0)
+    layer_out.np['w'].fill(0.0)
+    net = Net(minmax, cn1, [layer_inp, layer_out], [[-1], [0], [1]], None, None)
+    net.layers[0].np['w'] = x
+    d = np.transpose(d)
+    net.layers[1].np['w'] = d
+    return net
