@@ -3,6 +3,7 @@
 import unittest
 import numpy as np
 import neurolab as nl
+from neurolab.error import MSE
 import numpy.random as rand
 
 
@@ -132,3 +133,43 @@ class TestNet(unittest.TestCase):
         output = net.sim(target)
         # Test on train samples (must be [0, 1, 2, 3, 4])"
         self.assertEqual(np.argmax(output, axis=0).tolist(), [0, 1, 2, 3, 4])
+
+    def test_newgrnn(self):
+        x = np.linspace(1, 3, 5)
+        y = np.exp(x) * 0.5
+        size = len(x)
+        input = x.reshape(size, 1)
+        target = y.reshape(size, 1)
+
+        # Create and train network with 2 layers: radial basis layer and linear layer; std = 5
+        net = nl.net.newgrnn(nl.tool.minmax(input), input, target, 5)
+
+        # Simulate network
+        output = net.sim(input)
+
+        # Calculate error
+        f = MSE()
+        error = f(output, target)
+
+        # Test on train samples
+        self.assertLess(error, 0.01)
+
+    def test_newpnn(self):
+        input = np.array([[-2, -2], [-0.5, -1], [0, 0], [0.5, -1], [1, 0]])
+        target = np.array([[1., 0.], [0., 1.], [1., 0.], [0., 1.], [1., 0.]])
+
+        # Create and train network with 2 layers: radial basis layer and linear layer; std = 2
+        net = nl.net.newpnn(nl.tool.minmax(input), input, target, 2)
+
+        # Simulate network
+        output = net.sim(input)
+
+        grid1 = input[output[:, 0] > 0]
+        grid2 = input[output[:, 1] > 0]
+
+        class1 = input[target[:, 0] > 0]
+        class2 = input[target[:, 1] > 0]
+
+        # Test on train samples
+        self.assertEqual(grid1.all(), class1.all())
+        self.assertEqual(grid2.all(), class2.all())
