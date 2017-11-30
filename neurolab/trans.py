@@ -424,4 +424,3 @@ class RadBas:
 
         """
         return np.zeros_like(x)
-    
