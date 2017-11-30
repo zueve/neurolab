@@ -2,7 +2,7 @@
 import unittest
 import numpy as np
 from neurolab.trans import (TanSig, PureLin, LogSig, HardLim, HardLims,
-                            Competitive, SatLin, SatLins, SoftMax, SatLinPrm)
+                            Competitive, SatLin, SatLins, SoftMax, SatLinPrm, RadBas)
 
 
 class TestTrans(unittest.TestCase):
@@ -128,3 +128,13 @@ class TestTrans(unittest.TestCase):
                 self.assertEqual(
                     test_fcn.out_minmax[0] <= r <= test_fcn.out_minmax[1],
                     True)
+
+    def test_radbas(self):
+        test_fcn = RadBas()
+        vars = [-1, -0.05, 0, 0.1, 2]
+        from math import exp
+        model = lambda x: exp(-x * x)
+        m_res = map(model, vars)
+        t_res = test_fcn(np.array(vars)).tolist()
+        for m, t in zip(m_res, t_res):
+            self.assertEqual(m, t)
