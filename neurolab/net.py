@@ -181,7 +181,7 @@ def newlvq(minmax, cn0, pc):
     inx = np.floor(cn0 * pc.cumsum())
     for n, i in enumerate(inx):
         st = 0 if n == 0 else inx[n - 1]
-        layer_out.np['w'][n][st:i].fill(1.0)
+        layer_out.np['w'][n][int(st):int(i)].fill(1.0)
     net = Net(minmax, cn1, [layer_inp, layer_out],
               [[-1], [0], [1]], train.train_lvq, error.MSE())
 
