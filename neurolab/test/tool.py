@@ -16,7 +16,9 @@ class TestTool(unittest.TestCase):
                 nl.net.newhem(np.random.random([10, 1])),
                 nl.net.newhop(np.random.random([10, 1])),
                 nl.net.newlvq([[-1, 1]], 4, [.6, .4]),
-                nl.net.newp([[0, 1]], 1)
+                nl.net.newp([[0, 1]], 1),
+                nl.net.newgrnn([[-3, 1], [-5, 2]], [[1], [2]], [[-3], [-5]], 1),
+                nl.net.newpnn([[-2, 0], [-2, 0]], [[-2, -2], [0, 0]], [[1, 0], [0, 1]], 2)
                 ]
         for net in nets:
             input = np.random.random([10, 1])
