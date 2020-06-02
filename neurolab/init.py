@@ -181,8 +181,9 @@ def initnw(layer):
 
     x = 2. / (minmax[:, 1] - minmax[:, 0])
     y = 1. - minmax[:, 1] * x
-    w = w * x
+
     b = np.dot(w, y) + b
+    w = w * x
 
     layer.np['w'][:] = w
     layer.np['b'][:] = b
